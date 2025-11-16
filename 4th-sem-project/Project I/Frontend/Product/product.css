@@ -99,29 +99,6 @@ body {
   height: 100%;
 }
 
-/* Search icon */
-.search-container #icon {
-  background-color: white;
-  color: black;
-  width: 45px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-left: 1px solid black;
-  cursor: pointer;
-  height: 100%;
-}
-
-/* Cart icon */
-.search-container #cart {
-  color: white;
-  font-size: 40px;
-  cursor: pointer;
-}
-
-.card{
-  padding-top: 10px;
-}
 
 #cart {
   font-size: 1.3rem;

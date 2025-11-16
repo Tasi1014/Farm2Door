@@ -1,241 +1,428 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
 
-/* Search container */
-.search-container {
+body {
+  padding-top: 70px; /* space for fixed navbar - matches other pages */
+}
+
+/* ===================== Navbar ===================== */
+.navbar {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  height: 45px;
-  width: 300px;
-  border-radius: 5px;
-  overflow: hidden;
-  border: 1px solid black;
+  padding: 15px 30px;
+  background: #008000;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
-/* Search input */
-.search-container #search {
-  border: none;
-  outline: none;
-  padding: 0 10px;
-  font-size: 0.9rem;
-  flex: 1;
-  height: 100%;
+.logo {
+  font-size: clamp(1.8rem, 3vw, 2rem);
+  font-weight: bold;
 }
 
-/* Search icon */
-.search-container #icon {
-  background-color: white;
+.logo img {
+  height: 70px;
+  width: auto;
+  cursor: pointer;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  transition: all 0.3s ease;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: white;
+  font-size: clamp(1rem, 1.2vw, 1.3rem);
+  font-weight: 600;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
   color: black;
-  width: 45px;
+}
+
+
+footer {
+  background: green;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 60px;
+}
+
+footer p {
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+footer .socials {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
+  gap: 20px;
+}
+
+footer .socials a {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
   align-items: center;
-  border-left: 1px solid black;
-  cursor: pointer;
-  height: 100%;
+  justify-content: center;
+  transition: all 0.3s ease;
+  text-decoration: none;
 }
 
-/* Cart icon */
-#cart {
-  font-size: 1.3rem;
+footer .socials a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+}
+
+footer .socials a i {
+  font-size: 20px;
   color: white;
-  cursor: pointer;
 }
 
-.heading{
-    color: #008000;
-    font-size: 3rem;
-    text-align: center;
-    margin-top: 120px;
+.button{
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
 }
 
-img{
-    margin-left: 100px;
-    width: 900px;
-}
-
-.main{
-    display: flex;
-    margin-bottom:60px;
-}
-
-.formm{
-  height: max-content;
-    margin-left: 4rem;
-    background-color: #F9F9F9;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
-
-input{
-    font-size: 2rem;
-    border-radius: 5px;
-}
-
-input:focus{
-  outline: none;
-  border: 3px solid #008000;
-  box-shadow: 0 0 5px #008000;
-}
-
-textarea:focus{
-  outline: none;
-  border: 3px solid #008000;
-  box-shadow: 0 0 5px #008000;
-}
-
-
-label{
-    color: #008000;
-    font-size: 2rem;
-    font-weight: 500;
-
-}
-
-textarea{
-    width: 500px;
-    height: 300px;
-    font-size: 2rem;
-    border-radius: 5px;
-}
-
-
-
-@media (max-width: 992px) {
-  .main {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  img {
-    width: 80%;
-    margin: 20px auto;
-  }
-
-  .formm {
-    width: 80%;
-    margin: 30px auto;
-  }
-
-  textarea {
-    width: 100%;
-    height: 250px;
-  }
-
-  input {
-    width: 100%;
-    font-size: 1.5rem;
-  }
-
-  label {
-    font-size: 1.5rem;
-  }
-
-  .btn {
-    width: 80%;
-  }
-}
-
-/* For small screens like mobile phones (max-width: 600px) */
-@media (max-width: 600px) {
-  .heading {
-    font-size: 2rem;
-    margin-top: 100px;
-  }
-
-  .navbar {
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding: 15px 20px;
-  }
-
-  .logo img {
+.btn{
+    color: white;
+    background: linear-gradient(135deg, #008000, #00aa00);
+    width: 60%;
     height: 50px;
-  }
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+}
 
-  .hamburger {
-    display: block;
-  }
+.btn:hover {
+    background: linear-gradient(135deg, #006600, #008000);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+}
 
-
-  .nav-links {
-    width: 100%;
-    flex-direction: column;
-    gap: 15px;
-    display: none;
-  }
-
-  .nav-links.mobile-active {
-    display: flex;
-  }
-
-  .nav-links li a {
-    font-size: 1rem;
-  }
-
-  .nav-actions {
-    width: 100%;
-    margin-top: 10px;
-    gap: 10px;
-  }
-
-  .search-container {
-    width: 65%;
-    height: 40px;
-  }
-
-  .search-container #search {
-    font-size: 0.9rem;
-  }
-
-  #cart {
-    font-size: 1.2rem;
-  }
-
-  .main {
-    flex-direction: column;
-    align-items: center;
+/* Heading */
+.heading {
+    color: #008000;
+    font-size: clamp(2rem, 4vw, 2.5rem);
     text-align: center;
-  }
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
 
-  main h1{
-    padding-top: 10px;
-  }
-  img {
-    width: 90%;
-    margin: 10px auto;
-  }
+/* ===================== Form ===================== */
+.main {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 300px);
+}
 
-  .formm {
-    width: 90%;
-    margin: 20px auto;
-    padding: 15px;
-  }
-
-  input {
-    height: 40px;
+.main form {
+    border: 4px solid #008000;
+    border-radius: 10px;
     width: 100%;
-    font-size: 1.2rem;
-  }
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 15px rgba(0, 128, 0, 0.1);
+}
 
-  textarea {
+/* Form Fields Container */
+.main form > label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.main form > input,
+.main form > textarea {
+    display: block;
     width: 100%;
-    font-size: 1.2rem;
-    height: 180px;
-  }
+    margin-bottom: 20px;
+}
 
-  .btn {
+/* Inputs and Textarea */
+input[type="text"],
+input[type="email"],
+textarea {
     width: 100%;
-    height: 45px;
-  }
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    resize: vertical;
+    font-family: "Poppins", sans-serif;
+    transition: all 0.3s ease;
+}
 
-  footer {
-    font-size: 0.9rem;
-    padding: 10px 20px;
-  }
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    outline: none;
+    border: 2px solid #008000;
+    box-shadow: 0 0 0 3px rgba(0, 128, 0, 0.1);
+}
 
-  footer .socials a i {
-    font-size: 24px;
-  }
+textarea {
+    min-height: 150px;
+}
+
+/* Labels */
+label {
+    color: #008000;
+    font-size: 1rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+/* ===================== Footer ===================== */
+footer {
+    background: green;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 60px;
+}
+
+footer p {
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+footer .socials {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+footer .socials a {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+footer .socials a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+footer .socials a i {
+    font-size: 20px;
+    color: white;
+}
+
+/* ===================== Responsive Styles ===================== */
+
+/* Tablets */
+@media (max-width: 992px) {
+    body {
+        padding-top: 90px;
+    }
+
+    .main form {
+        max-width: 90%;
+        padding: 25px;
+    }
+
+    .heading {
+        font-size: clamp(1.8rem, 3.5vw, 2.2rem);
+        margin-top: 10px;
+    }
+}
+
+/* Mobile Phones - 768px and below */
+@media (max-width: 768px) {
+    body {
+        padding-top: 70px;
+    }
+
+    /* Navbar adjustments - matches other pages */
+    .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        padding: 15px 20px;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .logo {
+        margin-left: auto; /* Pushes logo to the right with space between hamburger */
+    }
+
+    .logo img {
+        height: 60px;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .nav-links.mobile-active {
+        display: flex;
+    }
+
+    .nav-links li a {
+        font-size: 1rem;
+        padding: 10px;
+        color: white;
+        display: block;
+        width: 100%;
+    }
+
+    .nav-links li a:hover,
+    .nav-links li a.active {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    .heading {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        margin-top: 30px;
+        margin-bottom: 20px;
+        padding: 0 15px;
+    }
+
+    /* Form adjustments */
+    .main {
+        padding: 15px;
+        min-height: auto;
+    }
+
+    .main form {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 20px;
+        border-width: 3px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    textarea {
+        min-height: 150px;
+    }
+
+    label {
+        font-size: 0.95rem;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
+
+    footer {
+        padding: 30px 15px;
+        font-size: 0.9rem;
+    }
+
+    footer .socials a {
+        width: 45px;
+        height: 45px;
+    }
+
+    footer .socials a i {
+        font-size: 18px;
+    }
+}
+
+/* Small Mobile Phones - 480px and below */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 10px 15px;
+    }
+
+    .nav-links li a {
+        font-size: 0.9rem;
+    }
+
+    .heading {
+        font-size: 1.5rem;
+        padding: 0 10px;
+    }
+
+    .main {
+        padding: 10px;
+    }
+
+    .main form {
+        padding: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+    }
 }
