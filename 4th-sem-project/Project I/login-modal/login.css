@@ -1,0 +1,169 @@
+*{
+    box-sizing: border-box;
+}
+.overlay {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    opacity: 0;
+    transition: 1s;
+    pointer-events: none;   /* 👈 added */
+}
+
+.showOverlay {
+    opacity: 1;
+    pointer-events: all;   /* 👈 added */
+}
+
+
+.modal{
+    width: 500px;
+    box-shadow: 0px 0px 10px 3px wheat;
+    padding: 15px 20px;
+    position: absolute;
+    z-index: 9;
+    left: 50%;
+    top: -50%;
+    transform: translate(-50%,-50%);
+    transition: 1s;
+    background-color: white;
+}
+
+
+
+
+.showModal{
+    top: 50%;
+}
+
+#form-login{
+    background-color: white;
+    padding: 15 20px;
+
+}
+
+#form-login input{
+    width: 100%;
+    height: 55px;
+    border-radius: 5px;
+    font-size: 1.5rem;
+}
+
+
+#form-login input:focus{
+    outline: none;
+    border: 3px solid #008000;
+    box-shadow: 0px 0px 5px #008000;
+}
+
+h1{
+    text-align: center;
+    font-size: 2.5rem;
+    color: #008000;
+}
+#btn-login{
+    display: flex;
+    justify-content: center;
+}
+
+
+#btn-login button{
+    width: 80%;
+    height: 50px;
+    padding: 5px;
+    background-color: #008000;
+    color: white;
+    font-weight: 600;
+    font-size: 1.5rem;
+    border-radius: 7px;
+}
+
+
+.modal-content span{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 35px;
+    width: 35px;
+    text-align: center;
+    line-height: 35px;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    background-color: red;
+    cursor: pointer;
+}  
+
+
+@media (max-width: 480px) {
+
+
+    
+.modal{
+    width: 70%;
+    box-shadow: 0px 0px 10px 3px wheat;
+    padding: 10px 15px;
+    position: absolute;
+    z-index: 9;
+    left: 50%;
+    top: -50%;
+    transform: translate(-50%,-50%);
+    transition: 1s;
+    background-color: white;
+}
+
+.showModal{
+    top: 50%;
+}
+
+#form-login{
+    background-color: white;
+    padding: 15 20px;
+
+}
+
+#form-login input{
+    width: 100%;
+    padding-left: 5px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+
+#form-login input:focus{
+    outline: none;
+    border: 2px solid #008000;
+    box-shadow: 0px 0px 5px #008000;
+}
+
+h1{
+    text-align: center;
+    font-size: 1.5rem;
+    color: #008000;
+}
+#btn-login{
+    display: flex;
+    justify-content: center;
+}
+
+
+#btn-login button{
+    width: 80%;
+    height: 40px;
+    padding: 5px;
+    background-color: #008000;
+    color: white;
+    font-weight: 600;
+    font-size: 1.5rem;
+    border-radius: 7px;
+}
+
+
+
+
+
+}

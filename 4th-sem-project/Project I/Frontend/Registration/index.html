@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - Farm2Door</title>
+    <link rel="stylesheet" href="../../Backend/registration.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="hamburger" id="hamburger">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="logo">
+                <img src="../../Images/logo.png" alt="Farm2Door Logo" />
+            </div>
+            <ul class="nav-links">
+                <li><a href="../Home/index.html">Home</a></li>
+                <li><a href="../Product/product.html">Products</a></li>
+                <li><a href="../About Us/aboutus.html">About Us</a></li>
+                <li><a href="../Contact Us/contactus.html">Contact Us</a></li>
+                <li><a href="../Login/login.php">Login</a></li>
+                <li><a href="index.html ">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Registration Selection Section -->
+    <section class="registration-section">
+        <div class="registration-container">
+            <div class="registration-header">
+                <h1>Join Farm2Door</h1>
+                <p>Choose your registration type to get started</p>
+            </div>
+            
+            <div class="registration-options">
+                <div class="registration-card consumer-registration" onclick="window.location.href='../../Backend/consumer-registration.php'">
+                    <div class="registration-icon">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                    </div>
+                    <h3>Consumer Registration</h3>
+                    <p>Create your account to start ordering fresh vegetables directly from farmers</p>
+                    <div class="registration-features">
+                        <ul>
+                            <li>Browse fresh produce</li>
+                            <li>Order directly from farmers</li>
+                            <li>Fast home delivery</li>
+                            <li>Fair pricing</li>
+                        </ul>
+                    </div>
+                    <button class="registration-btn">Register as Consumer</button>
+                </div>
+                
+                <div class="registration-card farmer-registration" onclick="window.location.href='../../Backend/farmer-registration.php'">
+                    <div class="registration-icon">
+                        <i class="fa-solid fa-tractor"></i>
+                    </div>
+                    <h3>Farmer Registration</h3>
+                    <p>Join our platform to sell your fresh produce directly to consumers</p>
+                    <div class="registration-features">
+                        <ul>
+                            <li>Direct consumer access</li>
+                            <li>Fair pricing</li>
+                            <li>Easy order management</li>
+                            <li>No middlemen</li>
+                        </ul>
+                    </div>
+                    <button class="registration-btn">Register as Farmer</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Farm2Door. All rights reserved.</p>
+        <div class="socials">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <script src="registration.js"></script>
+</body>
+</html>

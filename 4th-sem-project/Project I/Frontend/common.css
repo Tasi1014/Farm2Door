@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 15px 30px;
+  background: #008000;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: clamp(1.8rem, 3vw, 2rem);
+  font-weight: bold;
+}
+
+.logo img {
+  height: 70px; /* adjust size */
+  width: auto;  /* keeps proportions */
+  cursor: pointer;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  transition: all 0.3s ease;
+  margin: auto;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: white;
+  font-size: clamp(1rem, 1.2vw, 1.3rem);
+  font-weight: 600;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+  color: black;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+footer {
+  background: green;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 60px;
+}
+
+footer p {
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+footer .socials {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+footer .socials a {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+footer .socials a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+}
+
+footer .socials a i {
+  font-size: 20px;
+  color: white;
+}
+
+.button{
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn{
+    color: white;
+    background: linear-gradient(135deg, #008000, #00aa00);
+    width: 60%;
+    height: 50px;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #006600, #008000);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+}

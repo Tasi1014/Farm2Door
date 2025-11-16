@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Registration - Farm2Door</title>
+    <link rel="stylesheet" href="registration.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="hamburger" id="hamburger">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="logo">
+                <img src="../Images/logo.png" alt="Farm2Door Logo" />
+            </div>
+            <ul class="nav-links">
+                <li><a href="../Home/index.html">Home</a></li>
+                <li><a href="../Product/product.html">Products</a></li>
+                <li><a href="../About Us/aboutus.html">About Us</a></li>
+                <li><a href="../Contact Us/contactus.html">Contact Us</a></li>
+                <li><a href="../Login/login.html">Login</a></li>
+                <li><a href="../Registration/index.html " class="active">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Registration Section -->
+    <section class="registration-section">
+        <div class="registration-container">
+            <div class="registration-header">
+                <h1>Join Farm2Door as a Farmer</h1>
+                <p>Create your account to start selling fresh vegetables directly to consumers</p>
+            </div>
+            
+            <div class="registration-form-container">
+                <div class="registration-form">
+                    <h2>Farmer Registration</h2>
+                    <form id="farmer-registration-form"  method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="farmer-first-name">First Name</label>
+                                <input type="text" id="farmer-first-name" name="first-name" placeholder="Enter your first name" required>
+                                <p class="error" ><?php echo $errors['first-name'] ?? ''; ?> </p>
+                            </div>
+                            <div class="form-group">
+                                <label for="farmer-last-name">Last Name</label>
+                                <input type="text" id="farmer-last-name" name="last-name" placeholder="Enter your last name" required>
+                                <p class="error" ><?php ?></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="farmer-email">Email Address</label>
+                            <input type="email" id="farmer-email" name="email" placeholder="Enter your email address" required>
+                            <p class="error" id="email-error"> <?php echo $errors['email'] ?? ''; ?> </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="farmer-phone">Phone Number</label>
+                            <input type="tel" id="farmer-phone" name="phone" placeholder="Enter your phone number" required>
+                            <p class="error" id="phone-error"> <?php echo $errors['phone'] ?? ''; ?> </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="farmer-city">City</label>
+                            <input type="text" id="farmer-city" name="city" placeholder="Enter your city" required>
+                            <p class="error" id="city-error"> <?php echo $errors['city'] ?? ''; ?> </p>
+                        </div>
+
+                            <div class="form-group">
+                                <label for="farmer-province">Province</label>
+                                <input type="text" id="farmer-province" name="province" placeholder="Enter your Province" required>
+                                <p class="error" id="province-error"> <?php echo $errors['province'] ?? ''; ?> </p>
+                            </div>
+
+                        <div class="form-group">
+                            <label for="farmer-experience">Years of Farming Experience</label>
+                            <select id="farmer-experience" name="experience" required>
+                                <option value="">Select experience</option>
+                                <option value="0-2">0-2 years</option>
+                                <option value="3-5">3-5 years</option>
+                                <option value="6-10">6-10 years</option>
+                                <option value="10+">10+ years</option>
+                            </select>
+                            <p class="error" id="experience-error"> <?php echo $errors['experience'] ?? ''; ?> </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="farmer-crops">Types of Crops Grown</label>
+                            <input type="text" id="farmer-crops" name="crops" placeholder="e.g., Tomatoes, Potatoes, Spinach" required>
+                            <p class="error" id="crops-error"> <?php echo $errors['crops'] ?? ''; ?> </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="farmer-password">Password</label>
+                            <input type="password" id="farmer-password" name="password" placeholder="Create a strong password" required>
+                            <p class="error" id="password-error"> <?php echo $errors['password'] ?? ''; ?> </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="farmer-confirm-password">Confirm Password</label>
+                            <input type="password" id="farmer-confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                            <p class="error" id="confirm-password-error"> <?php echo $errors['confirm-password'] ?? ''; ?> </p>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="farmer-terms" name="terms" required>
+                            <label for="farmer-terms">I agree to the <a href="#" class="terms-link">Terms and Conditions</a></label>
+                            <p class="error" id="terms-error"> <?php echo $errors['terms'] ?? ''; ?> </p>
+                        </div>
+
+                        <button type="submit" class="register-btn">Register as Farmer</button>
+                        <p class="login-link">Already have an account? <a href="../Login/login.html">Login here</a></p>
+                        <p class="success" id="registration-success"> <?php echo $successMessage ?? ''; ?> </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Farm2Door. All rights reserved.</p>
+        <div class="socials">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <script src="registration.js"></script>
+</body>
+</html>

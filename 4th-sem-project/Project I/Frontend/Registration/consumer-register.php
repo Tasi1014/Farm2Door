@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumer Registration - Farm2Door</title>
+    <link rel="stylesheet" href="registration.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="hamburger" id="hamburger">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="logo">
+                <img src="../../Images/logo.png" alt="Farm2Door Logo" />
+            </div>
+            <ul class="nav-links">
+                <li><a href="../Home/index.html">Home</a></li>
+                <li><a href="../Product/product.html">Products</a></li>
+                <li><a href="../About Us/aboutus.html">About Us</a></li>
+                <li><a href="../Contact Us/contactus.html">Contact Us</a></li>
+                <li><a href="../Login/login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Registration Section -->
+    <section class="registration-section">
+        <div class="registration-container">
+            <div class="registration-header">
+                <h1>Join Farm2Door as a Consumer</h1>
+                <p>Create your account to start ordering fresh vegetables</p>
+            </div>
+            
+            <div class="registration-form-container">
+                <div class="registration-form">
+                    <h2>Consumer Registration</h2>
+                    <form id="consumer-registration-form" action="../../Backend/consumer-registration.php" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="consumer-first-name">First Name</label>
+                                <input type="text" id="consumer-first-name" name="first-name" placeholder="Enter your first name" required>
+                                <p class="error" id="first-name-error"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="consumer-last-name">Last Name</label>
+                                <input type="text" id="consumer-last-name" name="last-name" placeholder="Enter your last name" required>
+                                <p class="error" id="last-name-error"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consumer-email">Email Address</label>
+                            <input type="email" id="consumer-email" name="email" placeholder="Enter your email address" required>
+                            <p class="error" id="email-error"></p>
+                            <!-- <span class="success"> <?php echo $errors['email']  ?></span> -->
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consumer-phone">Phone Number</label>
+                            <input type="tel" id="consumer-phone" name="phone" placeholder="Enter your phone number" required>
+                            <p class="error" id="phone-error"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consumer-address">Address</label>
+                            <textarea id="consumer-address" name="address" placeholder="Enter your complete address" rows="3" required></textarea>
+                            <p class="error" id="address-error"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consumer-city">City</label>
+                            <input type="text" id="consumer-city" name="city" placeholder="Enter your city" required>
+                            <p class="error" id="city-error"></p>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="province-state">Province</label>
+                                <input type="text" id="consumer-province" name="province" placeholder="Enter your province" required>
+                                <p class="error" id="province-error"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consumer-password">Password</label>
+                            <input type="password" id="consumer-password" name="password" placeholder="Create a strong password" required>
+                            <p class="error" id="password-error"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consumer-confirm-password">Confirm Password</label>
+                            <input type="password" id="consumer-confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                            <p class="error" id="confirm-password-error"></p>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="consumer-terms" name="terms" required>
+                            <label for="consumer-terms">I agree to the <a href="#" class="terms-link">Terms and Conditions</a></label>
+                            <p class="error" id="terms-error"></p>
+                        </div>
+
+                        <button type="submit" class="register-btn">Register as Consumer</button>
+                        <p class="login-link">Already have an account? <a href="../Login/login.html">Login here</a></p>
+                        <p class="success" id="registration-success"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Farm2Door. All rights reserved.</p>
+        <div class="socials">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <script src="registration.js"></script>
+</body>
+</html>
