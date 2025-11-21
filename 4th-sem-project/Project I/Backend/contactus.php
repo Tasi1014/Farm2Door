@@ -21,7 +21,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_bind_param($stmt, "sss", $name, $email, $message);
     
     if (mysqli_stmt_execute($stmt)) {
-        // Database insertion successful, now send email to admin
+        // Database insertion successful
+        
+        // 1. Prepare the success response
+        $response = json_encode(['status' => 'success', 'message' => 'Thank you ' . $name . ' for contacting us. We will reach you soon']);
+
+        // 2. Tell PHP to keep running even if user "disconnects" (which happens when we close connection)
+        ignore_user_abort(true);
+        
+        // 3. Buffer the output
+        ob_start();
+        echo $response;
+        $size = ob_get_length();
+        
+        // 4. Send headers to tell browser "We are done"
+        header("Content-Encoding: none");
+        header("Content-Length: {$size}");
+        header("Connection: close");
+        
+        // 5. Flush the buffer to the browser
+        ob_end_flush();
+        @ob_flush();
+        flush();
+        
+        // ---------------------------------------------------------
+        // BROWSER HAS RECEIVED RESPONSE. SCRIPT CONTINUES IN BACKGROUND
+        // ---------------------------------------------------------
+
+        // Now send email to admin
         $mail = new PHPMailer(true);
         try {
             // SMTP server settings
@@ -32,11 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Password   = 'cminnsnqbatexstg';               // App password
             $mail->SMTPSecure = 'tls';
             $mail->Port       = 587;
-
             // Email recipients
             $mail->setFrom('tashisherpa10010@gmail.com', 'Farm2Door Contact');
             $mail->addAddress('sherpajack3@gmail.com', 'Admin'); // admin inbox
-
             // Email content
             $mail->isHTML(true);
             $mail->Subject = 'New Contact Form Submission';
@@ -53,9 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             error_log("Admin mail error: {$mail->ErrorInfo}");
         }
 
-        // -------------------------------
-        // Send confirmation email to user
-        // -------------------------------
         $confirmationMail = new PHPMailer(true);
         try {
             $confirmationMail->isSMTP();
@@ -83,9 +105,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } catch (Exception $e) {
             error_log("Confirmation mail error: {$confirmationMail->ErrorInfo}");
         }
-
-        // Send JSON response back to front-end
-        echo json_encode(['status' => 'success', 'message' => 'Thank you ' . $name . ' for contacting us. We will reach you soon']);
         
     } else {
         // DB insertion failed
