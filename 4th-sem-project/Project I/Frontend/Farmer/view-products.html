@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Products - Farm2Door</title>
+    <link rel="stylesheet" href="farmer.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Farm2Door</h2>
+      <ul>
+        <li>
+          <a href="dashboard.html"
+            ><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a
+          >
+        </li>
+        <li>
+          <a href="add-product.html"
+            ><i class="fa-solid fa-plus"></i> <span>Add Product</span></a
+          >
+        </li>
+        <li>
+          <a href="view-products.html" class="active"
+            ><i class="fa-solid fa-eye"></i> <span>View/Update Product</span></a
+          >
+        </li>
+        <li>
+          <a href="orders.html"
+            ><i class="fa-solid fa-list"></i> <span>Orders</span></a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="header">
+        <h1>View/Update Products</h1>
+        <div class="user-profile">
+          <div class="profile-icon" onclick="toggleDropdown()">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="dropdown-menu" id="userDropdown">
+            <div class="user-info">
+              <span class="name">Ramesh Thapa</span>
+              <span class="role">Farmer</span>
+            </div>
+            <a href="../Home/index.html" class="logout-item">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Management -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Product Image</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <img
+                  src="../../Images/Tomatoes-sh769524253.jpg.webp"
+                  alt="Tomato"
+                />
+              </td>
+              <td>Tomato</td>
+              <td>Rs. 40/kg</td>
+              <td>20</td>
+              <td><button class="action-btn">Edit</button></td>
+            </tr>
+            <tr>
+              <td>
+                <img
+                  src="../../Images/cauliflower.jpg"
+                  alt="Cauliflower"
+                  onerror="this.src='https://cdn.britannica.com/24/140624-050-A8237BB9/Cauliflower-plant-form-cauliflower-cabbage-flower-structures.jpg'"
+                />
+              </td>
+              <td>Cauliflower</td>
+              <td>Rs. 55/kg</td>
+              <td>12</td>
+              <td><button class="action-btn">Edit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="farmer.js"></script>
+  </body>
+</html>

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Farm2Door - Products</title>
-    <link rel="stylesheet" href="product.css">
-     <link
+    <link rel="stylesheet" href="product.css" />
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
 
-    <link rel="stylesheet" href="../../login-modal/login.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../../login-modal/login.css" />
+  </head>
+  <body>
     <!-- Navbar -->
-   <header>
+    <header>
       <nav class="navbar">
         <div class="hamburger" id="hamburger">
           <i class="fa fa-bars"></i>
@@ -24,12 +24,12 @@
         </div>
 
         <ul class="nav-links">
-          <li><a href="../Home/index.html" >Home</a></li>
+          <li><a href="../Home/index.html">Home</a></li>
           <li><a href="product.html" class="active">Products</a></li>
           <li><a href="../About Us/aboutus.html">About Us</a></li>
           <li><a href="../Contact Us/contactus.html">Contact Us</a></li>
-           <li><a href="../Login/login.php">Login</a></li>
-           <li><a href="../Registration/index.html ">Sign Up</a></li>
+          <li><a href="../Login/login.php">Login</a></li>
+          <li><a href="../Registration/index.html ">Sign Up</a></li>
         </ul>
         <div class="nav-actions">
           <i class="fa-solid fa-cart-shopping" id="cart"></i>
@@ -39,42 +39,53 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-text">
-            <h1>Fresh Vegetables & Fruits Direct from Farmers</h1>
-            <button onclick="scrollToProducts()" class="btn" >Browse Our Products</button>
+      <div class="hero-overlay"></div>
+      <div class="hero-text">
+        <h1>Fresh Vegetables & Fruits Direct from Farmers</h1>
+        <button onclick="scrollToProducts()" class="btn">
+          Browse Our Products
+        </button>
+      </div>
 
-            <button class="hero-btn prev-hero" id="hero-prev">&#10094;</button>
+      <button class="hero-btn prev-hero" id="hero-prev">&#10094;</button>
       <button class="hero-btn next-hero" id="hero-next">&#10095;</button>
-        </div>
     </section>
 
     <!-- Filter Section -->
     <section class="filter-section">
-        <div class="filter-container">
-            <h2>Find Your Perfect Products</h2>
-            <div class="filters">
-                <div class="filter-group">
-                    <label for="searchInput">Search Products</label>
-                    <input type="text" id="searchInput" placeholder="Search by name...">
-                </div>
-                <div class="filter-group">
-                    <label for="priceFilter">Max Price (Rs.)</label>
-                    <input type="number" id="priceFilter" placeholder="Enter max price">
-                </div>
-                <div class="filter-group">
-                    <label for="categoryFilter">Category</label>
-                    <select id="categoryFilter">
-                        <option value="">All Categories</option>
-                        <option value="vegetables">Vegetables</option>
-                        <option value="fruits">Fruits</option>
-                        <option value="herbs">Herbs</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <button id="clearFilters" class="btn-clear">Clear All</button>
-                </div>
-            </div>
+      <div class="filter-container">
+        <h2>Find Your Perfect Products</h2>
+        <div class="filters">
+          <div class="filter-group">
+            <label for="searchInput">Search Products</label>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search by name..."
+            />
+          </div>
+          <div class="filter-group">
+            <label for="priceFilter">Max Price (Rs.)</label>
+            <input
+              type="number"
+              id="priceFilter"
+              placeholder="Enter max price"
+            />
+          </div>
+          <div class="filter-group">
+            <label for="categoryFilter">Category</label>
+            <select id="categoryFilter">
+              <option value="">All Categories</option>
+              <option value="vegetables">Vegetables</option>
+              <option value="fruits">Fruits</option>
+              <option value="herbs">Herbs</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <button id="clearFilters" class="btn-clear">Clear All</button>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Products Section -->
@@ -85,153 +96,214 @@
       </div>
       <div class="product-cards">
         <div class="card" data-category="vegetables">
-          <img src="../../Images/spinach.webp" alt="Spinach" />
+          <div class="image-container">
+            <img src="../../Images/spinach.webp" alt="Spinach" />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Spinach</h3>
           <p class="para">Rs 300/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="vegetables">
-          <img src="../../Images/carrots on wood-1.webp" alt="Carrot" />
+          <div class="image-container">
+            <img src="../../Images/carrots on wood-1.webp" alt="Carrot" />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Carrot</h3>
           <p class="para">Rs 180/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="vegetables">
-          <img src="../../Images/Tomatoes-sh769524253.jpg.webp" alt="Tomato" />
+          <div class="image-container">
+            <img
+              src="../../Images/Tomatoes-sh769524253.jpg.webp"
+              alt="Tomato"
+            />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Tomato</h3>
           <p class="para">Rs 250/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="vegetables">
-          <img src="../../Images/types-of-potatoes-66b3a38f1ecd5.avif" alt="Potato" />
+          <div class="image-container">
+            <img
+              src="../../Images/types-of-potatoes-66b3a38f1ecd5.avif"
+              alt="Potato"
+            />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Potato</h3>
           <p class="para">Rs 350/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="vegetables">
-          <img
-            src="https://snaped.fns.usda.gov/sites/default/files/styles/crop_ratio_7_5/public/seasonal-produce/2018-05/mushrooms.jpg.webp?itok=MWwjXYav"
-            alt="Mushroom"
-          />
+          <div class="image-container">
+            <img
+              src="https://snaped.fns.usda.gov/sites/default/files/styles/crop_ratio_7_5/public/seasonal-produce/2018-05/mushrooms.jpg.webp?itok=MWwjXYav"
+              alt="Mushroom"
+            />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Mushroom</h3>
           <p class="para">Rs 200/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="vegetables">
-          <img
-            src="https://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2013/9/16/0/Where_do_pumpkins_grow_overhead_view_on_vine_s4x3.jpg.rend.hgtvcom.1280.960.85.suffix/1400982091403.webp"
-            alt="Pumpkin"
-          />
+          <div class="image-container">
+            <img
+              src="https://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2013/9/16/0/Where_do_pumpkins_grow_overhead_view_on_vine_s4x3.jpg.rend.hgtvcom.1280.960.85.suffix/1400982091403.webp"
+              alt="Pumpkin"
+            />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Pumpkin</h3>
           <p class="para">Rs 100/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="herbs">
-          <img
-            src="https://tildaricelive.s3.eu-central-1.amazonaws.com/wp-content/uploads/2022/04/25115428/Full-garlics-edit-1440x970.jpg"
-            alt="Garlic"
-          />
+          <div class="image-container">
+            <img
+              src="https://tildaricelive.s3.eu-central-1.amazonaws.com/wp-content/uploads/2022/04/25115428/Full-garlics-edit-1440x970.jpg"
+              alt="Garlic"
+            />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Garlic</h3>
           <p class="para">Rs 400/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="vegetables">
-          <img
-            src="https://cdn-prod.medicalnewstoday.com/content/images/articles/311/311977/okra-raw.jpg"
-            alt="Okra"
-          />
+          <div class="image-container">
+            <img
+              src="https://cdn-prod.medicalnewstoday.com/content/images/articles/311/311977/okra-raw.jpg"
+              alt="Okra"
+            />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Okra</h3>
           <p class="para">Rs 230/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="vegetables">
-          <img
-            src="https://images-prod.healthline.com/hlcmsresource/images/AN_images/farmer-holding-cabbage-1296x728.jpg"
-            alt="Cabbage"
-          />
+          <div class="image-container">
+            <img
+              src="https://images-prod.healthline.com/hlcmsresource/images/AN_images/farmer-holding-cabbage-1296x728.jpg"
+              alt="Cabbage"
+            />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Cabbage</h3>
           <p class="para">Rs 400/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="vegetables">
-          <img
-            src="https://cdn.britannica.com/24/140624-050-A8237BB9/Cauliflower-plant-form-cauliflower-cabbage-flower-structures.jpg"
-            alt="Cauliflower"
-          />
+          <div class="image-container">
+            <img
+              src="https://cdn.britannica.com/24/140624-050-A8237BB9/Cauliflower-plant-form-cauliflower-cabbage-flower-structures.jpg"
+              alt="Cauliflower"
+            />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Cauliflower</h3>
           <p class="para">Rs 70/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="vegetables">
-          <img
-            src="https://cdn-prod.medicalnewstoday.com/content/images/articles/279/279359/two-eggplants-on-a-wooden-table.jpg"
-            alt="Egg plant"
-          />
+          <div class="image-container">
+            <img
+              src="https://cdn-prod.medicalnewstoday.com/content/images/articles/279/279359/two-eggplants-on-a-wooden-table.jpg"
+              alt="Egg plant"
+            />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Egg plant</h3>
           <p class="para">Rs 90/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="vegetables">
-          <img
-            src="https://images-prod.healthline.com/hlcmsresource/images/AN_images/AN172-Beets-1296x728-Header.jpg"
-            alt="Beetroot"
-          />
-          <h3>Beetroot</h3><p class="para">Rs 400/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <div class="image-container">
+            <img
+              src="https://images-prod.healthline.com/hlcmsresource/images/AN_images/AN172-Beets-1296x728-Header.jpg"
+              alt="Beetroot"
+            />
+            <span class="stock-badge">In Stock</span>
+          </div>
+          <h3>Beetroot</h3>
+          <p class="para">Rs 400/kg</p>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="vegetables">
-          <img
-            src="https://i0.wp.com/deepgreenpermaculture.com/wp-content/uploads/2024/08/Capsicum-215200.png?ssl=1"
-            alt="Capsicum"
-          />
+          <div class="image-container">
+            <img
+              src="https://i0.wp.com/deepgreenpermaculture.com/wp-content/uploads/2024/08/Capsicum-215200.png?ssl=1"
+              alt="Capsicum"
+            />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Capsicum</h3>
           <p class="para">Rs 60/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
         <div class="card" data-category="vegetables">
-          <img
-            src="https://quanshuiwetmarket.com/cdn/shop/products/Radish2.jpg?v=1602651290"
-            alt="Radish"
-          />
+          <div class="image-container">
+            <img
+              src="https://quanshuiwetmarket.com/cdn/shop/products/Radish2.jpg?v=1602651290"
+              alt="Radish"
+            />
+            <span class="stock-badge">In Stock</span>
+          </div>
           <h3>Radish</h3>
           <p class="para">Rs 400/kg</p>
-          <button class="card-btn">Add to Cart</button>
-          <button class="card-btn">In stock</button>
+          <button class="card-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+          </button>
         </div>
       </div>
     </section>
 
-
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Farm2Door. All rights reserved.</p>
-            <div class="socials">
-                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            </div>
+      <div class="footer-content">
+        <p>&copy; 2025 Farm2Door. All rights reserved.</p>
+        <div class="socials">
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
         </div>
+      </div>
     </footer>
 
     <div class="overlay"></div>
     <div id="loginModal" class="modal"></div>
     <script src="../../login-modal/login.js"></script>
 
-
     <script src="product.js"></script>
-</body>
+  </body>
 </html>

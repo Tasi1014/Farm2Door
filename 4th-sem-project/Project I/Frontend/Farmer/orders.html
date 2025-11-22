@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orders - Farm2Door</title>
+    <link rel="stylesheet" href="farmer.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Farm2Door</h2>
+      <ul>
+        <li>
+          <a href="dashboard.html"
+            ><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a
+          >
+        </li>
+        <li>
+          <a href="add-product.html"
+            ><i class="fa-solid fa-plus"></i> <span>Add Product</span></a
+          >
+        </li>
+        <li>
+          <a href="view-products.html"
+            ><i class="fa-solid fa-eye"></i> <span>View/Update Product</span></a
+          >
+        </li>
+        <li>
+          <a href="orders.html" class="active"
+            ><i class="fa-solid fa-list"></i> <span>Orders</span></a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="header">
+        <h1>Orders</h1>
+        <div class="user-profile">
+          <div class="profile-icon" onclick="toggleDropdown()">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="dropdown-menu" id="userDropdown">
+            <div class="user-info">
+              <span class="name">Ramesh Thapa</span>
+              <span class="role">Farmer</span>
+            </div>
+            <a href="../Home/index.html" class="logout-item">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Total</th>
+
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#ORD001</td>
+              <td>Ramesh Thapa</td>
+              <td>Tomato</td>
+              <td>5 kg</td>
+              <td>Rs. 200</td>
+
+              <td><button class="action-btn">View</button></td>
+            </tr>
+            <tr>
+              <td>#ORD002</td>
+              <td>Sita Sharma</td>
+              <td>Cauliflower</td>
+              <td>2 kg</td>
+              <td>Rs. 110</td>
+
+              <td><button class="action-btn">View</button></td>
+            </tr>
+            <tr>
+              <td>#ORD003</td>
+              <td>Hari Krishna</td>
+              <td>Spinach</td>
+              <td>10 kg</td>
+              <td>Rs. 300</td>
+
+              <td><button class="action-btn">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
+    <script src="farmer.js"></script>
+  </body>
+</html>
