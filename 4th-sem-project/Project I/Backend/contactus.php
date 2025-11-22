@@ -44,10 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         @ob_flush();
         flush();
         
-        // ---------------------------------------------------------
-        // BROWSER HAS RECEIVED RESPONSE. SCRIPT CONTINUES IN BACKGROUND
-        // ---------------------------------------------------------
-
         // Now send email to admin
         $mail = new PHPMailer(true);
         try {

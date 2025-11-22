@@ -1,144 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farmer Registration - Farm2Door</title>
-    <link rel="stylesheet" href="registration.css">
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-</head>
-<body>
-    <!-- Navbar -->
-    <header>
-        <nav class="navbar">
-            <div class="hamburger" id="hamburger">
-                <i class="fa fa-bars"></i>
-            </div>
-            <div class="logo">
-                <img src="../Images/logo.png" alt="Farm2Door Logo" />
-            </div>
-            <ul class="nav-links">
-                <li><a href="../Home/index.html">Home</a></li>
-                <li><a href="../Product/product.html">Products</a></li>
-                <li><a href="../About Us/aboutus.html">About Us</a></li>
-                <li><a href="../Contact Us/contactus.html">Contact Us</a></li>
-                <li><a href="../Login/login.html">Login</a></li>
-                <li><a href="../Registration/index.html " class="active">Sign Up</a></li>
-            </ul>
-        </nav>
-    </header>
+<?php
+include 'connection.php';
+include 'validation.php';
 
-    <!-- Registration Section -->
-    <section class="registration-section">
-        <div class="registration-container">
-            <div class="registration-header">
-                <h1>Join Farm2Door as a Farmer</h1>
-                <p>Create your account to start selling fresh vegetables directly to consumers</p>
-            </div>
-            
-            <div class="registration-form-container">
-                <div class="registration-form">
-                    <h2>Farmer Registration</h2>
-                    <form id="farmer-registration-form"  method="POST">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="farmer-first-name">First Name</label>
-                                <input type="text" id="farmer-first-name" name="first-name" placeholder="Enter your first name" required>
-                                <p class="error" ><?php echo $errors['first-name'] ?? ''; ?> </p>
-                            </div>
-                            <div class="form-group">
-                                <label for="farmer-last-name">Last Name</label>
-                                <input type="text" id="farmer-last-name" name="last-name" placeholder="Enter your last name" required>
-                                <p class="error" ><?php ?></p>
-                            </div>
-                        </div>
+header('Content-Type: application/json');
 
-                        <div class="form-group">
-                            <label for="farmer-email">Email Address</label>
-                            <input type="email" id="farmer-email" name="email" placeholder="Enter your email address" required>
-                            <p class="error" id="email-error"> <?php echo $errors['email'] ?? ''; ?> </p>
-                        </div>
+// Main Processing
+$response = [
+    'success' => false,
+    'errors' => [],
+    'message' => ''
+];
 
-                        <div class="form-group">
-                            <label for="farmer-phone">Phone Number</label>
-                            <input type="tel" id="farmer-phone" name="phone" placeholder="Enter your phone number" required>
-                            <p class="error" id="phone-error"> <?php echo $errors['phone'] ?? ''; ?> </p>
-                        </div>
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-                        <div class="form-group">
-                            <label for="farmer-city">City</label>
-                            <input type="text" id="farmer-city" name="city" placeholder="Enter your city" required>
-                            <p class="error" id="city-error"> <?php echo $errors['city'] ?? ''; ?> </p>
-                        </div>
+    // Create table with correct schema
+    $createTbl = "CREATE TABLE IF NOT EXISTS farmer_registration (
+    farmer_id INT AUTO_INCREMENT PRIMARY KEY,
+    firstName VARCHAR(100) NOT NULL,
+    lastName VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    Password VARCHAR(255) NOT NULL,
+    Phone VARCHAR(15),
+    Address VARCHAR(255),
+    Terms TINYINT(1) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)";
+     $tbl = mysqli_query($conn, $createTbl);
+     if(!$tbl){
+        die("Table creation failed: " . mysqli_connect_error());
+     }
 
-                            <div class="form-group">
-                                <label for="farmer-province">Province</label>
-                                <input type="text" id="farmer-province" name="province" placeholder="Enter your Province" required>
-                                <p class="error" id="province-error"> <?php echo $errors['province'] ?? ''; ?> </p>
-                            </div>
 
-                        <div class="form-group">
-                            <label for="farmer-experience">Years of Farming Experience</label>
-                            <select id="farmer-experience" name="experience" required>
-                                <option value="">Select experience</option>
-                                <option value="0-2">0-2 years</option>
-                                <option value="3-5">3-5 years</option>
-                                <option value="6-10">6-10 years</option>
-                                <option value="10+">10+ years</option>
-                            </select>
-                            <p class="error" id="experience-error"> <?php echo $errors['experience'] ?? ''; ?> </p>
-                        </div>
+    // Get and sanitize inputs
+    $firstName = trim($_POST['first-name'] ?? '');
+    $lastName = trim($_POST['last-name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $phone = trim($_POST['phone'] ?? '');
+    $address = trim($_POST['address'] ?? '');
+    $password = trim($_POST['password'] ?? '');
+    $confirmPassword = trim($_POST['confirm-password'] ?? '');
+    $terms = isset($_POST['terms']) ? $_POST['terms'] : '';
 
-                        <div class="form-group">
-                            <label for="farmer-crops">Types of Crops Grown</label>
-                            <input type="text" id="farmer-crops" name="crops" placeholder="e.g., Tomatoes, Potatoes, Spinach" required>
-                            <p class="error" id="crops-error"> <?php echo $errors['crops'] ?? ''; ?> </p>
-                        </div>
+    // Validate all fields
+    $isFormValid = true;
+    $errors = [];
 
-                        <div class="form-group">
-                            <label for="farmer-password">Password</label>
-                            <input type="password" id="farmer-password" name="password" placeholder="Create a strong password" required>
-                            <p class="error" id="password-error"> <?php echo $errors['password'] ?? ''; ?> </p>
-                        </div>
+    $isFormValid = validateName($firstName, $errors, 'firstName') && $isFormValid;
+    $isFormValid = validateName($lastName, $errors, 'lastName') && $isFormValid;
+    $isFormValid = validateEmail($email, $errors) && $isFormValid;
+    $isFormValid = validatePhone($phone, $errors) && $isFormValid;
+    $isFormValid = validateAddress($address, $errors) && $isFormValid;
+    $isFormValid = validatePassword($password, $errors) && $isFormValid;
 
-                        <div class="form-group">
-                            <label for="farmer-confirm-password">Confirm Password</label>
-                            <input type="password" id="farmer-confirm-password" name="confirm-password" placeholder="Confirm your password" required>
-                            <p class="error" id="confirm-password-error"> <?php echo $errors['confirm-password'] ?? ''; ?> </p>
-                        </div>
+    // Validate confirm password
+    if (trim($confirmPassword) === "") {
+        $errors['confirmPassword'] = "Please confirm your password";
+        $isFormValid = false;
+    } elseif ($password !== $confirmPassword) {
+        $errors['confirmPassword'] = "Passwords do not match";
+        $isFormValid = false;
+    }
 
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="farmer-terms" name="terms" required>
-                            <label for="farmer-terms">I agree to the <a href="#" class="terms-link">Terms and Conditions</a></label>
-                            <p class="error" id="terms-error"> <?php echo $errors['terms'] ?? ''; ?> </p>
-                        </div>
+    $isFormValid = validateTerms($terms, $errors) && $isFormValid;
 
-                        <button type="submit" class="register-btn">Register as Farmer</button>
-                        <p class="login-link">Already have an account? <a href="../Login/login.html">Login here</a></p>
-                        <p class="success" id="registration-success"> <?php echo $successMessage ?? ''; ?> </p>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+    // Check if email already exists
+    if ($isFormValid) {
+        $checkEmailSql = "SELECT * FROM `farmer_registration` WHERE Email = ?";
+        $checkStmt = mysqli_prepare($conn, $checkEmailSql);
+        mysqli_stmt_bind_param($checkStmt, "s", $email);
+        mysqli_stmt_execute($checkStmt);
+        $checkResult = mysqli_stmt_get_result($checkStmt);
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Farm2Door. All rights reserved.</p>
-        <div class="socials">
-            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        </div>
-    </footer>
+        if (mysqli_num_rows($checkResult) > 0) {
+            $errors['email'] = "This email is already registered!";
+            $isFormValid = false;
+        }
+        mysqli_stmt_close($checkStmt);
+    }
 
-    <script src="registration.js"></script>
-</body>
-</html>
+    // If all validations pass, insert into database
+    if ($isFormValid) {
+
+        // Hash the password for security
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // Convert terms to boolean (1 for true, 0 for false)
+        $termsAccepted = 1;
+
+        // Prepare INSERT query
+        $sql = "INSERT INTO `farmer_registration` 
+                (firstName, lastName, Email, Phone, Address, Password, Terms) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = mysqli_prepare($conn, $sql);
+
+        if ($stmt) {
+            // Bind parameters (s = string, i = integer)
+            mysqli_stmt_bind_param(
+                $stmt,
+                "ssssssi",
+                $firstName,
+                $lastName,
+                $email,
+                $phone,
+                $address,
+                $hashedPassword,
+                $termsAccepted
+            );
+
+            // Execute the statement
+            if (mysqli_stmt_execute($stmt)) {
+                $response['success'] = true;
+                $response['message'] = "Registration successful! Welcome to Farm2Door!";
+            } else {
+                $errors['database'] = "Registration failed: " . mysqli_error($conn);
+                $response['success'] = false;
+            }
+
+            mysqli_stmt_close($stmt);
+        } else {
+            $errors['database'] = "Database error: " . mysqli_error($conn);
+            $response['success'] = false;
+        }
+    } else {
+        $response['success'] = false;
+    }
+    
+    $response['errors'] = $errors;
+}
+
+echo json_encode($response);
+mysqli_close($conn);
+?>

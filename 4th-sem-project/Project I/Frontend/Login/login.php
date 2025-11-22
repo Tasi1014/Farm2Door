@@ -118,7 +118,7 @@ unset($_SESSION['login_errors'], $_SESSION['login_old'], $_SESSION['login_active
                         <input type="checkbox" name="c-chk" class="chk" id="c-chk"><label style="color: green; margin-left: 4px;">Remember me</label>
                         <button type="submit" class="login-btn">Login as Consumer</button>
                         <p class="error" style="color:red;"> <?php echo isset($errors['result']) ? $errors['result'] : ''; ?> </p>
-                        <p class="signup-link">Don't have an account? <a href="../../Backend/consumer-registration.php">Register as Consumer</a></p>
+                        <p class="signup-link">Don't have an account? <a href="../Registration/consumer-register.html">Register as Consumer</a></p>
                          <p class="success" ></p>
                     </form>
                 </div>

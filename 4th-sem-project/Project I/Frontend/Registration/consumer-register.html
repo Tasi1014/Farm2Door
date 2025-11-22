@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Farmer Registration - Farm2Door</title>
+    <title>Consumer Registration - Farm2Door</title>
     <link rel="stylesheet" href="registration.css" />
     <link
       rel="stylesheet"
@@ -14,6 +14,7 @@
       rel="stylesheet"
     />
   </head>
+
   <body>
     <!-- Navbar -->
     <header>
@@ -29,7 +30,10 @@
           <li><a href="../Product/product.html">Products</a></li>
           <li><a href="../About Us/aboutus.html">About Us</a></li>
           <li><a href="../Contact Us/contactus.html">Contact Us</a></li>
-          <li><a href="../Login/login.html">Login</a></li>
+          <li><a href="../Login/login.php">Login</a></li>
+          <li>
+            <a href="../Registration/index.html " class="active">Sign Up</a>
+          </li>
         </ul>
       </nav>
     </header>
@@ -38,23 +42,20 @@
     <section class="registration-section">
       <div class="registration-container">
         <div class="registration-header">
-          <h1>Join Farm2Door as a Farmer</h1>
-          <p>
-            Create your account to start selling fresh vegetables directly to
-            consumers
-          </p>
+          <h1>Join Farm2Door as a Consumer</h1>
+          <p>Create your account to start ordering fresh vegetables</p>
         </div>
 
         <div class="registration-form-container">
           <div class="registration-form">
-            <h2>Farmer Registration</h2>
-            <form id="farmer-registration-form">
+            <h2>Consumer Registration</h2>
+            <form id="consumer-registration-form">
               <div class="form-row">
                 <div class="form-group">
-                  <label for="farmer-first-name">First Name</label>
+                  <label for="consumer-first-name">First Name</label>
                   <input
                     type="text"
-                    id="farmer-first-name"
+                    id="consumer-first-name"
                     name="first-name"
                     placeholder="Enter your first name"
                     required
@@ -62,10 +63,10 @@
                   <p class="error" id="first-name-error"></p>
                 </div>
                 <div class="form-group">
-                  <label for="farmer-last-name">Last Name</label>
+                  <label for="consumer-last-name">Last Name</label>
                   <input
                     type="text"
-                    id="farmer-last-name"
+                    id="consumer-last-name"
                     name="last-name"
                     placeholder="Enter your last name"
                     required
@@ -75,10 +76,10 @@
               </div>
 
               <div class="form-group">
-                <label for="farmer-email">Email Address</label>
+                <label for="consumer-email">Email Address</label>
                 <input
                   type="email"
-                  id="farmer-email"
+                  id="consumer-email"
                   name="email"
                   placeholder="Enter your email address"
                   required
@@ -87,10 +88,10 @@
               </div>
 
               <div class="form-group">
-                <label for="farmer-phone">Phone Number</label>
+                <label for="consumer-phone">Phone Number</label>
                 <input
-                  type="tel"
-                  id="farmer-phone"
+                  type="phone"
+                  id="consumer-phone"
                   name="phone"
                   placeholder="Enter your phone number"
                   required
@@ -99,22 +100,10 @@
               </div>
 
               <div class="form-group">
-                <label for="farmer-address">Address</label>
-                <textarea
-                  id="farmer-address"
-                  name="address"
-                  placeholder="Enter your full address"
-                  rows="3"
-                  required
-                ></textarea>
-                <p class="error" id="address-error"></p>
-              </div>
-
-              <div class="form-group">
-                <label for="farmer-password">Password</label>
+                <label for="consumer-password">Password</label>
                 <input
                   type="password"
-                  id="farmer-password"
+                  id="consumer-password"
                   name="password"
                   placeholder="Create a strong password"
                   required
@@ -123,10 +112,10 @@
               </div>
 
               <div class="form-group">
-                <label for="farmer-confirm-password">Confirm Password</label>
+                <label for="consumer-confirm-password">Confirm Password</label>
                 <input
                   type="password"
-                  id="farmer-confirm-password"
+                  id="consumer-confirm-password"
                   name="confirm-password"
                   placeholder="Confirm your password"
                   required
@@ -137,11 +126,11 @@
               <div class="form-group checkbox-group">
                 <input
                   type="checkbox"
-                  id="farmer-terms"
+                  id="consumer-terms"
                   name="terms"
                   required
                 />
-                <label for="farmer-terms"
+                <label for="consumer-terms"
                   >I agree to the
                   <a href="#" class="terms-link">Terms and Conditions</a></label
                 >
@@ -149,11 +138,11 @@
               </div>
 
               <button type="submit" class="register-btn">
-                Register as Farmer
+                Register as Consumer
               </button>
               <p class="login-link">
                 Already have an account?
-                <a href="../Login/login.html">Login here</a>
+                <a href="../Login/login.php">Login here</a>
               </p>
               <p class="success" id="registration-success"></p>
             </form>
