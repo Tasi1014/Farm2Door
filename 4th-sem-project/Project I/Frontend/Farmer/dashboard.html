@@ -38,11 +38,17 @@
       </ul>
     </div>
 
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
     <!-- Main Content -->
     <div class="main-content">
       <!-- Header -->
       <div class="header">
-        <h1>Farmer Dashboard</h1>
+        <div style="display: flex; align-items: center;">
+            <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
+            <h1>Farmer Dashboard</h1>
+        </div>
         <div class="user-profile">
           <div class="profile-icon" onclick="toggleDropdown()">
             <i class="fa-solid fa-user"></i>

@@ -39,9 +39,15 @@
     </div>
 
     <!-- Main Content -->
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
     <div class="main-content">
       <div class="header">
-        <h1>Add New Product</h1>
+        <div style="display: flex; align-items: center;">
+            <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
+            <h1>Add New Product</h1>
+        </div>
         <div class="user-profile">
           <div class="profile-icon" onclick="toggleDropdown()">
             <i class="fa-solid fa-user"></i>
