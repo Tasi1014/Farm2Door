@@ -87,15 +87,15 @@ unset($_SESSION['login_errors'], $_SESSION['login_old'], $_SESSION['login_active
                     <form action="../../Backend/farmer_login.php" method="POST">
                         <div class="form-group">
                             <label for="farmer-email">Email Address</label>
-                            <input type="email" id="farmer-email" name="farmer-email" placeholder="Enter your email" required>
+                            <input type="email" id="farmer-email" name="farmer-email" placeholder="Enter your email" value="<?php echo isset($_COOKIE['f_email']) ? $_COOKIE['f_email'] : ''; ?>" required>
                             <p class="error" id="e1"></p>
                         </div>
                         <div class="form-group">
                             <label for="farmer-password">Password</label>
-                            <input type="password" name="farmer-password" id="farmer-password" placeholder="Enter your password" required>
+                            <input type="password" name="farmer-password" id="farmer-password" placeholder="Enter your password" value="<?php echo isset($_COOKIE['f_pass']) ? $_COOKIE['f_pass'] : ''; ?>" required>
                             <p class="error" id="e2"></p>
                         </div>
-                        <input type="checkbox" name="f-chk" class="chk" id="f-chk"><label style="color: green; margin-left: 4px;">Remember me</label>
+                        <input type="checkbox" name="f-chk" class="chk" id="f-chk" <?php echo isset($_COOKIE['f_email']) ? 'checked' : ''; ?>><label style="color: green; margin-left: 4px;">Remember me</label>
                         <button type="submit" class="login-btn">Login as Farmer</button>
                         <p class="signup-link">Don't have an account? <a href="../Registration/farmer-register.html">Register as Farmer</a></p>
                         <p class="success" id="farmer-success"></p>
