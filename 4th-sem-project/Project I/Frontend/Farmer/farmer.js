@@ -34,3 +34,32 @@ function toggleSidebar() {
   sidebar.classList.toggle("active");
   overlay.classList.toggle("active");
 }
+
+const product = document.getElementById("product");
+const earnings = document.getElementById("earnings");
+const orders = document.getElementById("orders");
+const lowStock = document.getElementById("lowStock");
+
+function updateAnimation(name, maxCount, startCount = 0) {
+  let counterNumber = startCount;
+  const counter = setInterval(() => {
+    counterNumber++;
+    name.textContent = counterNumber;
+    if (counterNumber == maxCount) {
+      clearInterval(counter);
+      if (name === earnings) {
+        name.textContent = "Rs. " + counterNumber;
+      }
+      if(name === lowStock){
+        name.style.color = "red";
+      }
+
+      name.style.color = "green"
+    }
+  }, 100);
+}
+
+updateAnimation(product, 30);
+updateAnimation(earnings, 5345, 5300);
+updateAnimation(orders, 33);
+updateAnimation(lowStock, 10);
