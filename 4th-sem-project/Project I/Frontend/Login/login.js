@@ -101,3 +101,53 @@ if (farmerForm) {
       });
   });
 }
+
+// Admin Login Logic
+const adminForm = document.getElementById("admin-form").querySelector("form");
+if (adminForm) {
+  adminForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(adminForm);
+    const emailError = document.getElementById("e5");
+    const passwordError = document.getElementById("e6");
+    const successElement = document.getElementById("admin-success");
+
+    // Clear previous errors
+    emailError.textContent = "";
+    passwordError.textContent = "";
+    successElement.textContent = "";
+
+    fetch("../../Backend/admin_login.php", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          successElement.textContent = data.message;
+          successElement.style.color = "green";
+
+          // Redirect after short delay
+          setTimeout(() => {
+            window.location.href = "../Admin/dashboard.html";
+          }, 1000);
+        } else {
+          if (data.errors) {
+            if (data.errors.email) emailError.textContent = data.errors.email;
+            if (data.errors.password)
+              passwordError.textContent = data.errors.password;
+            if (data.errors.result) {
+              successElement.textContent = data.errors.result;
+              successElement.style.color = "red";
+            }
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        successElement.textContent = "An error occurred. Please try again.";
+        successElement.style.color = "red";
+      });
+  });
+}

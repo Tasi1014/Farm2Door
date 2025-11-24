@@ -7,7 +7,6 @@
 }
 
 body {
-  display: flex;
   min-height: 100vh;
   background-color: #f9f9f9;
 }
@@ -330,15 +329,23 @@ td img {
     display: block !important; /* Force visible on mobile */
   }
 
+  body {
+    display: block; /* Disable flex layout on mobile */
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
   .sidebar {
-    transform: translateX(-100%);
+    transform: translateX(-100%) !important;
     width: 250px;
     z-index: 1000;
     transition: transform 0.3s ease;
   }
 
   .sidebar.active {
-    transform: translateX(0);
+    transform: translateX(0) !important;
   }
 
   .sidebar h2,
@@ -351,8 +358,22 @@ td img {
   }
 
   .main-content {
-    margin-left: 0;
+    margin-left: 0 !important;
     padding: 20px;
+    width: 100%; /* Full width */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+  }
+
+  /* Make tables scrollable on tablet/mobile */
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+  }
+
+  table {
+    min-width: 600px; /* Force scroll if squeezed */
   }
 
   .stats-container {
@@ -385,54 +406,51 @@ td img {
 
   .stats-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 50px;
+    grid-template-columns: 1fr; /* Stack cards on very small screens */
+    gap: 15px;
+    margin-bottom: 30px;
   }
 
   .stat-card {
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    min-height: 100px;
-    transition: transform 0.3s ease;
-  }
-
-  .stat-card {
-    padding: 30px 20px;
-    min-height: 200px;
+    padding: 20px;
+    min-height: auto; /* Allow height to adjust */
   }
 
   .stat-card h3 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
   }
 
   .stat-card .value {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   /* Optimize Table for Small Screens */
   .table-container {
-    padding: 10px; /* Reduce padding */
+    padding: 0; /* Remove padding to maximize space */
     border-radius: 10px;
+    box-shadow: none; /* Remove shadow to save space/cleaner look */
+    background: transparent; /* Remove white bg if needed, or keep it */
+    width: 100%;
+    overflow-x: auto; /* Enable horizontal scroll */
+    -webkit-overflow-scrolling: touch;
+    display: block;
+  }
+
+  table {
+    width: 100%;
+    min-width: 600px; /* Force table to be wide enough to scroll */
   }
 
   th,
   td {
-    padding: 10px 8px; /* Reduce cell padding */
-    font-size: 0.85rem; /* Smaller font */
+    padding: 10px 8px;
+    font-size: 0.85rem;
+    white-space: nowrap; /* Prevent text wrapping */
   }
 
   .action-btn {
     padding: 5px 10px;
     font-size: 0.8rem;
-  }
-
-  /* Ensure table scrolls properly */
-  .table-container {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
-    display: block;
   }
 }

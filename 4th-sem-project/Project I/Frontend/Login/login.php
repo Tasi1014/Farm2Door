@@ -128,15 +128,14 @@ unset($_SESSION['login_errors'], $_SESSION['login_old'], $_SESSION['login_active
                     <form action="../../Backend/admin_login.php" method="POST">
                         <div class="form-group">
                             <label for="admin-email">Email Address</label>
-                            <input type="email" id="admin-email" name="admin-email" placeholder="Enter your email" required>
+                            <input type="email" id="admin-email" name="admin-email" placeholder="Enter your email">
                             <p class="error" id="e5"></p>
                         </div>
                         <div class="form-group">
                             <label for="admin-password">Password</label>
-                            <input type="password" id="admin-password"  name="admin-password" placeholder="Enter your password" required>
+                            <input type="password" id="admin-password"  name="admin-password" placeholder="Enter your password">
                             <p class="error" id="e6"></p>
                         </div>
-                        <input type="checkbox" name="a-chk" class="chk"  id="a-chk"><label style="color: green; margin-left: 4px;">Remember me</label>
                         <button type="submit" class="login-btn">Login as Admin</button>
                          <p class="success" id="admin-success"></p>
                     </form>
