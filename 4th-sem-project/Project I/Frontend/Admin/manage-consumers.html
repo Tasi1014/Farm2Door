@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Consumers - Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Farm2Door Admin</h2>
+      <ul>
+        <li>
+          <a href="dashboard.html"
+            ><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-farmers.html"
+            ><i class="fa-solid fa-tractor"></i> <span>Manage Farmers</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-consumers.html" class="active"
+            ><i class="fa-solid fa-users"></i> <span>Manage Consumers</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-products.html"
+            ><i class="fa-solid fa-box"></i> <span>Manage Products</span></a
+          >
+        </li>
+        <li>
+          <a href="orders.html"
+            ><i class="fa-solid fa-list"></i> <span>Orders</span></a
+          >
+        </li>
+        <li>
+          <a href="reports.html"
+            ><i class="fa-solid fa-file-invoice-dollar"></i>
+            <span>Reports</span></a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="header">
+        <div style="display: flex; align-items: center">
+          <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
+          <h1>Manage Consumers</h1>
+        </div>
+        <div class="user-profile">
+          <div class="profile-icon" onclick="toggleDropdown()">
+            <i class="fa-solid fa-user-tie"></i>
+          </div>
+          <div class="dropdown-menu" id="userDropdown">
+            <div class="user-info">
+              <span class="name">Neha Mahto</span>
+              <span class="role">Administrator</span>
+            </div>
+            <a href="../Home/index.html" class="logout-item">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="consumersTableBody">
+            <!-- Mock Data -->
+            <tr>
+              <td>1</td>
+              <td>Hari Kumar</td>
+              <td>hari@example.com</td>
+              <td>9822222222</td>
+              <td>Lalitpur</td>
+              <td>
+                <button class="action-btn delete" onclick="deleteItem(this)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Gita Sharma</td>
+              <td>gita@example.com</td>
+              <td>9833333333</td>
+              <td>Bhaktapur</td>
+              <td>
+                <button class="action-btn delete" onclick="deleteItem(this)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

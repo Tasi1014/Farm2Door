@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Farm2Door</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Farm2Door</h2>
+      <ul>
+        <li>
+          <a href="dashboard.html" class="active"
+            ><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-farmers.html"
+            ><i class="fa-solid fa-tractor"></i> <span>Manage Farmers</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-consumers.html"
+            ><i class="fa-solid fa-users"></i> <span>Manage Consumers</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-products.html"
+            ><i class="fa-solid fa-box"></i> <span>Manage Products</span></a
+          >
+        </li>
+        <li>
+          <a href="orders.html"
+            ><i class="fa-solid fa-list"></i> <span>Orders</span></a
+          >
+        </li>
+        <li>
+          <a href="reports.html"
+            ><i class="fa-solid fa-file-invoice-dollar"></i>
+            <span>Reports</span></a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="header">
+        <div style="display: flex; align-items: center">
+          <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
+          <h1>Admin Dashboard</h1>
+        </div>
+        <div class="user-profile">
+          <div class="profile-icon" onclick="toggleDropdown()">
+            <i class="fa-solid fa-user-tie"></i>
+          </div>
+          <div class="dropdown-menu" id="userDropdown">
+            <div class="user-info">
+              <span class="name">Neha Mahto</span>
+              <span class="role">Administrator</span>
+            </div>
+            <a href="../Login/login.html" class="logout-item">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-container">
+        <div class="stat-card">
+          <h3>Total Revenue</h3>
+          <div class="value" id="revenue">Rs. 0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Total Orders</h3>
+          <div class="value" id="orders">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Total Products</h3>
+          <div class="value" id="products">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Total Farmers</h3>
+          <div class="value" id="farmers">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Total Consumers</h3>
+          <div class="value" id="consumers">0</div>
+        </div>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

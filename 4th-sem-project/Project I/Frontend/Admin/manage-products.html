@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Products - Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Farm2Door Admin</h2>
+      <ul>
+        <li>
+          <a href="dashboard.html"
+            ><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-farmers.html"
+            ><i class="fa-solid fa-tractor"></i> <span>Manage Farmers</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-consumers.html"
+            ><i class="fa-solid fa-users"></i> <span>Manage Consumers</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-products.html" class="active"
+            ><i class="fa-solid fa-box"></i> <span>Manage Products</span></a
+          >
+        </li>
+        <li>
+          <a href="orders.html"
+            ><i class="fa-solid fa-list"></i> <span>Orders</span></a
+          >
+        </li>
+        <li>
+          <a href="reports.html"
+            ><i class="fa-solid fa-file-invoice-dollar"></i>
+            <span>Reports</span></a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="header">
+        <div style="display: flex; align-items: center">
+          <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
+          <h1>Manage Products</h1>
+        </div>
+        <div class="user-profile">
+          <div class="profile-icon" onclick="toggleDropdown()">
+            <i class="fa-solid fa-user-tie"></i>
+          </div>
+          <div class="dropdown-menu" id="userDropdown">
+            <div class="user-info">
+              <span class="name">Neha Mahto</span>
+              <span class="role">Administrator</span>
+            </div>
+            <a href="../Home/index.html" class="logout-item">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Farmer</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody">
+            <!-- Mock Data -->
+            <tr>
+              <td><img src="../../Images/tomato.jpg" alt="Tomato" /></td>
+              <td>Fresh Tomato</td>
+              <td>Vegetables</td>
+              <td>Rs. 50/kg</td>
+              <td>Ram Bahadur</td>
+              <td>
+                <button class="action-btn delete" onclick="deleteItem(this)">
+                  Remove
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td><img src="../../Images/potato.jpg" alt="Potato" /></td>
+              <td>Organic Potato</td>
+              <td>Vegetables</td>
+              <td>Rs. 40/kg</td>
+              <td>Sita Devi</td>
+              <td>
+                <button class="action-btn delete" onclick="deleteItem(this)">
+                  Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

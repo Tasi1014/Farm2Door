@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports - Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Farm2Door Admin</h2>
+      <ul>
+        <li>
+          <a href="dashboard.html"
+            ><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-farmers.html"
+            ><i class="fa-solid fa-tractor"></i> <span>Manage Farmers</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-consumers.html"
+            ><i class="fa-solid fa-users"></i> <span>Manage Consumers</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-products.html"
+            ><i class="fa-solid fa-box"></i> <span>Manage Products</span></a
+          >
+        </li>
+        <li>
+          <a href="orders.html"
+            ><i class="fa-solid fa-list"></i> <span>Orders</span></a
+          >
+        </li>
+        <li>
+          <a href="reports.html" class="active"
+            ><i class="fa-solid fa-file-invoice-dollar"></i>
+            <span>Reports</span></a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="header">
+        <div style="display: flex; align-items: center">
+          <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
+          <h1>Sales Reports</h1>
+        </div>
+        <div class="user-profile">
+          <div class="profile-icon" onclick="toggleDropdown()">
+            <i class="fa-solid fa-user-tie"></i>
+          </div>
+          <div class="dropdown-menu" id="userDropdown">
+            <div class="user-info">
+              <span class="name">Neha Mahto</span>
+              <span class="role">Administrator</span>
+            </div>
+            <a href="../Home/index.html" class="logout-item">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Report Filters -->
+      <div class="form-container" style="margin-bottom: 30px; max-width: 100%">
+        <h3 class="section-title">Generate Report</h3>
+        <div
+          style="
+            display: flex;
+            gap: 20px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+          "
+        >
+          <div
+            class="form-group"
+            style="margin-bottom: 0; flex: 1; min-width: 200px"
+          >
+            <label for="reportType">Report Type</label>
+            <select id="reportType">
+              <option value="daily">Daily Sales</option>
+              <option value="monthly">Monthly Revenue</option>
+              <option value="farmers">Top Farmers</option>
+            </select>
+          </div>
+          <div
+            class="form-group"
+            style="margin-bottom: 0; flex: 1; min-width: 200px"
+          >
+            <label for="dateRange">Date Range</label>
+            <input type="date" id="dateRange" />
+          </div>
+          <button
+            class="add-btn"
+            style="margin-bottom: 0"
+            onclick="generateReport()"
+          >
+            Generate Report
+          </button>
+        </div>
+      </div>
+
+      <!-- Report Results -->
+      <div class="table-container" id="reportResult" style="display: none">
+        <h3 class="section-title" id="reportTitle">Monthly Revenue Report</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Total Orders</th>
+              <th>Total Revenue</th>
+              <th>Commission (5%)</th>
+            </tr>
+          </thead>
+          <tbody id="reportTableBody">
+            <!-- Mock Data -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

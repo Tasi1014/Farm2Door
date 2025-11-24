@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orders - Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Farm2Door Admin</h2>
+      <ul>
+        <li>
+          <a href="dashboard.html"
+            ><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-farmers.html"
+            ><i class="fa-solid fa-tractor"></i> <span>Manage Farmers</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-consumers.html"
+            ><i class="fa-solid fa-users"></i> <span>Manage Consumers</span></a
+          >
+        </li>
+        <li>
+          <a href="manage-products.html"
+            ><i class="fa-solid fa-box"></i> <span>Manage Products</span></a
+          >
+        </li>
+        <li>
+          <a href="orders.html" class="active"
+            ><i class="fa-solid fa-list"></i> <span>Orders</span></a
+          >
+        </li>
+        <li>
+          <a href="reports.html"
+            ><i class="fa-solid fa-file-invoice-dollar"></i>
+            <span>Reports</span></a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="header">
+        <div style="display: flex; align-items: center">
+          <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
+          <h1>All Orders</h1>
+        </div>
+        <div class="user-profile">
+          <div class="profile-icon" onclick="toggleDropdown()">
+            <i class="fa-solid fa-user-tie"></i>
+          </div>
+          <div class="dropdown-menu" id="userDropdown">
+            <div class="user-info">
+              <span class="name">Neha Mahto</span>
+              <span class="role">Administrator</span>
+            </div>
+            <a href="../Home/index.html" class="logout-item">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Consumer</th>
+              <th>Product</th>
+              <th>Amount</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <!-- Mock Data -->
+            <tr>
+              <td>#ORD-001</td>
+              <td>Hari Krishna</td>
+              <td>Fresh Tomato (5kg)</td>
+              <td>Rs. 250</td>
+              <td>2023-10-25</td>
+            </tr>
+            <tr>
+              <td>#ORD-002</td>
+              <td>Gita Sharma</td>
+              <td>Organic Potato (10kg)</td>
+              <td>Rs. 400</td>
+              <td>2023-10-26</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
