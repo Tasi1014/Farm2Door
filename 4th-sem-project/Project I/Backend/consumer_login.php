@@ -2,8 +2,16 @@
 session_start();
 include 'connection.php';
 
-$errors = array();
-$old = array();
+header('Content-Type: application/json');
+
+// Main Processing
+$response = [
+    'success' => false,
+    'errors' => [],
+    'message' => ''
+];
+
+$errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = isset($_POST['consumer-email']) ? trim($_POST['consumer-email']) : '';
@@ -12,16 +20,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $old['consumer-email'] = $email;
 
     if ($email === '') {
-        $errors['email'] = "Email cannot be empty!";
+        $response['errors']['email'] = "Email cannot be empty!";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors['email'] = "Invalid email format!";
+        $response['errors']['email'] = "Invalid email format!";
     }
 
     if ($password === '') {
-        $errors['password'] = "Password cannot be empty!";
+        $response['errors']['password'] = "Password cannot be empty!";
     }
 
-    if (empty($errors)) {
+    if (empty($response['errors'])) {
         $sql = "SELECT * FROM `customer_registration` WHERE Email = ? LIMIT 1";
         $stmt = mysqli_prepare($conn, $sql);
         if ($stmt === false) {
