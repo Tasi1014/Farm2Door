@@ -225,7 +225,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
               // Redirect after 2 seconds
               setTimeout(() => {
-                window.location.href = "../Login/login.php";
+                window.location.href = "../Login/login.html";
               }, 2000);
             } else {
               // Display backend errors
@@ -354,7 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
               // Redirect after 2 seconds
               setTimeout(() => {
-                window.location.href = "../Login/login.php";
+                window.location.href = "../Login/login.html";
               }, 2000);
             } else {
               // Display backend errors

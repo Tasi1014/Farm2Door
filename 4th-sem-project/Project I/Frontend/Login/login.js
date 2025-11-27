@@ -10,6 +10,42 @@ hamburger.addEventListener("click", () => {
   navLinks.classList.toggle("mobile-active");
 });
 
+// Helper to get cookie
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+  return "";
+}
+
+// Pre-fill forms from cookies
+window.addEventListener("DOMContentLoaded", () => {
+  // Farmer
+  const fEmail = getCookie("f_email");
+  const fPass = getCookie("f_pass");
+  if (fEmail) {
+    document.getElementById("farmer-email").value = decodeURIComponent(fEmail);
+    document.getElementById("f-chk").checked = true;
+  }
+  if (fPass) {
+    document.getElementById("farmer-password").value =
+      decodeURIComponent(fPass);
+  }
+
+  // Consumer
+  const cEmail = getCookie("c_email");
+  const cPass = getCookie("c_pass");
+  if (cEmail) {
+    document.getElementById("consumer-email").value =
+      decodeURIComponent(cEmail);
+    document.getElementById("c-chk").checked = true;
+  }
+  if (cPass) {
+    document.getElementById("consumer-password").value =
+      decodeURIComponent(cPass);
+  }
+});
+
 // Login form functionality
 function showLoginForm(type) {
   // Get all forms
@@ -98,6 +134,58 @@ if (farmerForm) {
         console.error("Error:", error);
         successElement.textContent = "An error occurred. Please try again.";
         successElement.style.color = "red";
+      });
+  });
+}
+
+// Consumer Login Logic
+const consumerForm = document
+  .getElementById("consumer-form")
+  .querySelector("form");
+if (consumerForm) {
+  consumerForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(consumerForm);
+    const emailError = document.getElementById("e3");
+    const passwordError = document.getElementById("e4");
+    const generalError = document.getElementById("consumer-general-error");
+    const successElement = document.getElementById("consumer-success");
+
+    // Clear previous errors
+    emailError.textContent = "";
+    passwordError.textContent = "";
+    generalError.textContent = "";
+    successElement.textContent = "";
+
+    fetch("../../Backend/consumer_login.php", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          successElement.textContent = data.message;
+          successElement.style.color = "green";
+
+          // Redirect after short delay
+          setTimeout(() => {
+            window.location.href = "../Home/index.html";
+          }, 1000);
+        } else {
+          if (data.errors) {
+            if (data.errors.email) emailError.textContent = data.errors.email;
+            if (data.errors.password)
+              passwordError.textContent = data.errors.password;
+            if (data.errors.result) {
+              generalError.textContent = data.errors.result;
+            }
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        generalError.textContent = "An error occurred. Please try again.";
       });
   });
 }
