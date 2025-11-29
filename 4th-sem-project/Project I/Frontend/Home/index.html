@@ -32,9 +32,18 @@
           <li><a href="../Product/product.html">Products</a></li>
           <li><a href="../About Us/aboutus.html">About Us</a></li>
           <li><a href="../Contact Us/contactus.html">Contact Us</a></li>
-          <li><a href="../Login/login.html">Login</a></li>
-          <li>
+          <li id="login-link"><a href="../Login/login.html">Login</a></li>
+          <li id="signup-link">
             <a href="../Registration/index.html " class="sign-up">Sign Up</a>
+          </li>
+          <li id="profile-link" style="display: none">
+            <a href="#" id="profile-btn"
+              ><i class="fa-solid fa-user"></i>
+              <span id="user-name">User</span></a
+            >
+            <div class="dropdown-content" id="profile-dropdown">
+              <a href="#" id="logout-btn">Logout</a>
+            </div>
           </li>
         </ul>
         <div class="nav-actions">
@@ -282,5 +291,6 @@
     <script src="../../login-modal/login.js"></script>
 
     <script src="app.js"></script>
+    <script src="auth.js"></script>
   </body>
 </html>
