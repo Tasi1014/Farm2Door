@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Us - Farm2Door</title>
     <link rel="stylesheet" href="aboutus.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
     <link rel="stylesheet" href="../../login-modal/login.css" />
     <link
       rel="stylesheet"
@@ -25,8 +26,19 @@
           <li><a href="../Product/product.html">Products</a></li>
           <li><a href="aboutus.html" class="active">About Us</a></li>
           <li><a href="../Contact Us/contactus.html">Contact Us</a></li>
-          <li><a href="../Login/login.html">Login</a></li>
-          <li><a href="../Registration/index.html ">Sign Up</a></li>
+          <li id="login-link"><a href="../Login/login.html">Login</a></li>
+          <li id="signup-link">
+            <a href="../Registration/index.html ">Sign Up</a>
+          </li>
+          <li id="profile-link" style="display: none">
+            <a href="#" id="profile-btn"
+              ><i class="fa-solid fa-user"></i>
+              <span id="user-name">User</span></a
+            >
+            <div class="dropdown-content" id="profile-dropdown">
+              <a href="#" id="logout-btn">Logout</a>
+            </div>
+          </li>
         </ul>
       </nav>
     </header>
@@ -95,5 +107,6 @@
     <script src="../../login-modal/login.js"></script>
 
     <script src="aboutus.js"></script>
+    <script src="../js/auth.js"></script>
   </body>
 </html>
