@@ -50,16 +50,34 @@ function updateAnimation(name, maxCount, startCount = 0) {
       if (name === earnings) {
         name.textContent = "Rs. " + counterNumber;
       }
-      if(name === lowStock){
+      if (name === lowStock) {
         name.style.color = "red";
       }
 
-      name.style.color = "green"
+      name.style.color = "green";
     }
   }, 100);
 }
 
-updateAnimation(product, 30);
-updateAnimation(earnings, 5345, 5300);
-updateAnimation(orders, 33);
-updateAnimation(lowStock, 10);
+if (product) updateAnimation(product, 30);
+if (earnings) updateAnimation(earnings, 5345, 5300);
+if (orders) updateAnimation(orders, 33);
+if (lowStock) updateAnimation(lowStock, 10);
+
+// Logout Logic
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      fetch("../../Backend/logout.php")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            window.location.href = "../Login/login.html";
+          }
+        })
+        .catch((error) => console.error("Error logging out:", error));
+    });
+  }
+});

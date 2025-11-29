@@ -147,3 +147,21 @@ function generateReport() {
     tableBody.innerHTML += row;
   });
 }
+
+// Logout Logic
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      fetch("../../Backend/logout.php")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            window.location.href = "../Login/login.html";
+          }
+        })
+        .catch((error) => console.error("Error logging out:", error));
+    });
+  }
+});

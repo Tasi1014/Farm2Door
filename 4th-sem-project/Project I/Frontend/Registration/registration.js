@@ -178,7 +178,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const lastNameError = document.getElementById("last-name-error");
       const emailError = document.getElementById("email-error");
       const phoneError = document.getElementById("phone-error");
-      const addressError = document.getElementById("address-error");
       const passwordError = document.getElementById("password-error");
       const confirmPasswordError = document.getElementById(
         "confirm-password-error"
@@ -197,7 +196,6 @@ document.addEventListener("DOMContentLoaded", function () {
       isFormValid = validateName(lastName, lastNameError) && isFormValid;
       isFormValid = validateEmail(email, emailError) && isFormValid;
       isFormValid = validatePhone(phone, phoneError) && isFormValid;
-      isFormValid = validateAddress(address, addressError) && isFormValid;
       isFormValid = validatePassword(password, passwordError) && isFormValid;
       isFormValid =
         validateConfirmPassword(
