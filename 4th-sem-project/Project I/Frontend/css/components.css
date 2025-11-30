@@ -1,0 +1,334 @@
+/* Product Cards */
+.product-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+  border: 1px solid rgba(76, 175, 80, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 128, 0, 0.2);
+  border-color: rgba(0, 128, 0, 0.3);
+}
+
+/* Card Images */
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card:hover img {
+  transform: scale(1.08);
+}
+
+/* Stock Badges */
+.card-badge,
+.stock-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card-badge.in-stock,
+.stock-badge.in-stock {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+}
+
+.card-badge.out-of-stock,
+.stock-badge.out-of-stock {
+  background: linear-gradient(135deg, #f44336, #ef5350);
+  color: white;
+}
+
+/* Card Content */
+.card h3 {
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
+  color: #008000;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Rating Stars */
+.rating {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.rating i {
+  color: #ffc107;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.card:hover .rating i {
+  transform: scale(1.1);
+}
+
+/* Price Display */
+.card p.para,
+.para {
+  font-weight: bold;
+  margin-bottom: 15px;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  color: #008000;
+}
+
+.card p.para .unit,
+.para .unit {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Buttons */
+.btn {
+  padding: 15px 40px;
+  background: linear-gradient(135deg, #008000, #00aa00);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  display: inline-block;
+  box-shadow: 0 6px 20px rgba(0, 128, 0, 0.4);
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+  width: 400px;
+  height: 400px;
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, #006600, #008800);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 128, 0, 0.5);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+}
+
+/* Card Buttons */
+.card-btn {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #008000, #00aa00);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 25px;
+  margin: 8px 0;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 128, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+}
+
+.card-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.card-btn:hover {
+  background: linear-gradient(135deg, #006600, #008800);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 128, 0, 0.4);
+}
+
+.card-btn:active {
+  transform: translateY(0);
+}
+
+/* Hero Slider Buttons */
+.hero-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 128, 0, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 2rem;
+  padding: 15px 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 5;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.hero-btn:hover {
+  background: rgba(0, 128, 0, 0.9);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 128, 0, 0.4);
+}
+
+.prev-hero {
+  left: 15px;
+}
+
+.next-hero {
+  right: 15px;
+}
+
+/* Responsive Design for Cards */
+@media (max-width: 768px) {
+  .product-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+    gap: 20px;
+    width: 100%;
+    padding: 0 12px;
+    align-items: start;
+  }
+
+  .card {
+    max-width: none;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .card h3 {
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+  }
+
+  .card p {
+    font-size: clamp(0.9rem, 2.2vw, 0.95rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .product-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 0 10px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    justify-items: center;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 170px;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .card img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+  }
+
+  .card h3 {
+    font-size: 1rem;
+    margin: 5px 0 3px;
+  }
+
+  .card-badge,
+  .stock-badge {
+    font-size: 0.65rem;
+    padding: 4px 10px;
+  }
+
+  .rating i {
+    font-size: 0.8rem;
+  }
+}
