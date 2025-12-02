@@ -9,7 +9,7 @@
 body {
   font-family: "Poppins", Arial, sans-serif;
   background: #f9f9f9;
-  padding-top: 70px; /* space for navbar */
+  padding-top: 110px; /* Increased to prevent navbar overlap */
 }
 
 /* Navbar */
@@ -403,4 +403,4 @@ footer .socials a i {
     width: 100%;
     justify-items: center;
   }
-  }
+}

@@ -1,3 +1,4 @@
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +7,8 @@
 }
 
 body {
-  padding-top: 70px; /* space for fixed navbar - matches other pages */
+  padding-top: 110px; /* Increased to prevent navbar overlap */
+  background: #f9f9f9; /* Match login page background */
 }
 
 /* ===================== Navbar ===================== */
@@ -64,13 +66,105 @@ body {
   color: black;
 }
 
+/* ===================== Form Section ===================== */
+.main {
+  padding: 40px 20px;
+  min-height: calc(100vh - 180px); /* Adjusted for taller navbar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
+.heading {
+  color: #008000;
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+/* Form Container - Matches .login-container */
+.main form {
+  max-width: 600px;
+  width: 100%;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  border: none;
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #008000;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Inputs & Textarea - Matches .form-group input */
+input,
+textarea {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e8f5e8;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+  margin-bottom: 25px;
+  display: block;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: green;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* Button Container */
+.button {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* Button - Matches .login-btn */
+.btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #008000, #00aa00);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, #006600, #008000);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+}
+
+/* ===================== Footer ===================== */
 footer {
   background: green;
   color: white;
   text-align: center;
   padding: 40px 20px;
-  margin-top: 60px;
+  margin-top: auto; /* Pushes footer to bottom if content is short */
 }
 
 footer p {
@@ -109,329 +203,67 @@ footer .socials a i {
   color: white;
 }
 
-.button{
-  display: flex;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-}
-
-.btn{
-    color: white;
-    background: linear-gradient(135deg, #008000, #00aa00);
-    width: 60%;
-    height: 50px;
-    border-radius: 10px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
-}
-
-.btn:hover {
-    background: linear-gradient(135deg, #006600, #008000);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
-}
-
-/* Heading */
-.heading {
-    color: #008000;
-    font-size: clamp(2rem, 4vw, 2.5rem);
-    text-align: center;
-    margin-top: 50px;
-    /* margin-bottom: 30px; */
-    font-weight: 700;
-}
-
-/* ===================== Form ===================== */
-.main {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 300px);
-}
-
-.main form {
-    border: none;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 30px;
-    background-color: #f9f9f9;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-/* Form Fields Container */
-.main form > label {
-    display: block;
-    margin-bottom: 8px;
-}
-
-.main form > input,
-.main form > textarea {
-    display: block;
-    width: 100%;
-    margin-bottom: 20px;
-}
-label {
-    display: block;
-    margin-bottom: 8px;
-    color: #008000;
-    font-weight: 500;
-}
-
-input {
-    width: 100%;
-    padding: 15px;
-    border: 2px solid #e8f5e8;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: white;
-}
-
-input:focus {
-    outline: none;
-    border-color: green;
-    box-shadow: green 0px 2px 5px;
-}
-
-
-textarea {
-    min-height: 150px;
-    border-radius: 10px;
-    padding: 10px;
-}
-
-textarea:focus {
-    outline: none;
-    border-color: green;
-    box-shadow: green 0px 2px 5px;
-}
-
-/* Labels */
-label {
-    color: #008000;
-    font-size: 1rem;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 5px;
-}
-
-
-/* ===================== Footer ===================== */
-footer {
-    background: green;
-    color: white;
-    text-align: center;
-    padding: 40px 20px;
-    margin-top: 60px;
-}
-
-footer p {
-    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-    margin-bottom: 20px;
-    font-weight: 500;
-}
-
-footer .socials {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-footer .socials a {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    text-decoration: none;
-}
-
-footer .socials a:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-3px);
-}
-
-footer .socials a i {
-    font-size: 20px;
-    color: white;
-}
-
 /* ===================== Responsive Styles ===================== */
 
 /* Tablets */
 @media (max-width: 992px) {
-    body {
-        padding-top: 90px;
-    }
-
-    .main form {
-        max-width: 90%;
-        padding: 25px;
-    }
-
-    .heading {
-        font-size: clamp(1.8rem, 3.5vw, 2.2rem);
-        margin-top: 10px;
-    }
+  .main form {
+    padding: 30px;
+  }
 }
 
-/* Mobile Phones - 768px and below */
+/* Mobile Phones */
 @media (max-width: 768px) {
-    body {
-        padding-top: 70px;
-    }
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 15px 20px;
+  }
 
-    /* Navbar adjustments - matches other pages */
-    .navbar {
-        flex-direction: row;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        padding: 15px 20px;
-    }
+  .hamburger {
+    display: block;
+  }
 
-    .hamburger {
-        display: block;
-    }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+    margin-top: 10px;
+  }
 
-    .logo {
-        margin-left: auto; /* Pushes logo to the right with space between hamburger */
-    }
+  .nav-links.mobile-active {
+    display: flex;
+  }
 
-    .logo img {
-        height: 60px;
-    }
+  .main {
+    padding: 40px 20px;
+  }
 
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        gap: 15px;
-        margin-top: 10px;
-    }
+  .main form {
+    padding: 25px;
+  }
 
-    .nav-links.mobile-active {
-        display: flex;
-    }
-
-    .nav-links li a {
-        font-size: 1rem;
-        padding: 10px;
-        color: white;
-        display: block;
-        width: 100%;
-    }
-
-    .nav-links li a:hover,
-    .nav-links li a.active {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: white;
-    }
-
-    .heading {
-        font-size: clamp(1.5rem, 5vw, 2rem);
-        margin-top: 30px;
-        margin-bottom: 20px;
-        padding: 0 15px;
-    }
-
-    /* Form adjustments */
-    .main {
-        padding: 15px;
-        min-height: auto;
-    }
-
-    .main form {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 20px;
-        border-width: 3px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    textarea {
-        padding: 12px;
-        font-size: 16px;
-    }
-
-    textarea {
-        min-height: 150px;
-    }
-
-    label {
-        font-size: 0.95rem;
-    }
-
-    .btn {
-        width: 100%;
-        padding: 14px 20px;
-        font-size: 1rem;
-    }
-
-    footer {
-        padding: 30px 15px;
-        font-size: 0.9rem;
-    }
-
-    footer .socials a {
-        width: 45px;
-        height: 45px;
-    }
-
-    footer .socials a i {
-        font-size: 18px;
-    }
+  .heading {
+    margin-bottom: 30px;
+  }
 }
 
-/* Small Mobile Phones - 480px and below */
 @media (max-width: 480px) {
-    .navbar {
-        padding: 10px 15px;
-    }
+  .main form {
+    padding: 20px;
+    border-radius: 15px;
+  }
 
-    .nav-links li a {
-        font-size: 0.9rem;
-    }
+  input,
+  textarea {
+    padding: 12px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
 
-    .heading {
-        font-size: 1.5rem;
-        padding: 0 10px;
-    }
-
-    .main {
-        padding: 10px;
-    }
-
-    .main form {
-        padding: 15px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    textarea {
-        padding: 10px;
-        font-size: 16px;
-    }
-
-    label {
-        font-size: 0.9rem;
-    }
-
-    .btn {
-        padding: 12px 15px;
-        font-size: 0.95rem;
-    }
+  .btn {
+    padding: 12px;
+    font-size: 1rem;
+  }
 }
