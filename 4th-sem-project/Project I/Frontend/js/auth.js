@@ -11,6 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// Prepare page revalidation for back button
+window.addEventListener("pageshow", function (event) {
+  // If page is loaded from back/forward cache, force reload to re-run auth check
+  if (event.persisted) {
+    window.location.reload();
+  }
+});
+
 function checkAuth() {
   // Path relative to the HTML file executing this script
   // All main pages (Home, Product, About Us, Contact Us) are 2 levels deep from Project Root

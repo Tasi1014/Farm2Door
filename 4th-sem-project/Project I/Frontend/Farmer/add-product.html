@@ -69,13 +69,14 @@
             <input
               type="text"
               id="productName"
+              name="productName"
               placeholder="e.g. Fresh Spinach"
             />
           </div>
 
           <div class="form-group">
             <label for="category">Category</label>
-            <select id="category">
+            <select id="category" name="category">
               <option value="vegetables">Vegetables</option>
               <option value="fruits">Fruits</option>
               <option value="herbs">Herbs</option>
@@ -84,18 +85,19 @@
 
           <div class="form-group">
             <label for="price">Price (per kg)</label>
-            <input type="number" id="price" placeholder="e.g. 50" />
+            <input type="number" id="price" name="price" placeholder="e.g. 50" />
           </div>
 
           <div class="form-group">
             <label for="quantity">Quantity Available (kg)</label>
-            <input type="number" id="quantity" placeholder="e.g. 100" />
+            <input type="number" id="quantity" name="quantity" placeholder="e.g. 100" />
           </div>
 
           <div class="form-group">
             <label for="description">Description</label>
             <textarea
               id="description"
+              name="description"
               rows="4"
               placeholder="Describe your product..."
             ></textarea>
@@ -103,7 +105,7 @@
 
           <div class="form-group">
             <label for="image">Product Image</label>
-            <input type="file" id="image" />
+            <input type="file" id="image" name="image" />
           </div>
 
           <button
@@ -117,6 +119,10 @@
       </div>
     </div>
     </div>
+    <div id="loginModal" class="modal"></div>
+    <!-- Link to the specific add product script -->
+    <!-- Link to the specific add product script -->
+    <script src="js/add_product.js?v=2"></script>
     <script src="farmer.js"></script>
   </body>
 </html>

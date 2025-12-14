@@ -1,5 +1,20 @@
 // Mobile menu toggle
 const hamburger = document.querySelector(".hamburger");
+
+// Check if user is already logged in
+fetch("../../Backend/get_user_info.php")
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.loggedIn) {
+      if (data.userType === "consumer") {
+        window.location.href = "../Home/index.html";
+      } else if (data.userType === "farmer") {
+        window.location.href = "../Farmer/dashboard.html";
+      }
+    }
+  })
+  .catch((error) => console.error("Error checking auth:", error));
+
 const navLinks = document.querySelector(".nav-links");
 
 const consumer_success = document.getElementById("consumer-success");
