@@ -4,15 +4,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.querySelector(".close-btn");
   const editForm = document.getElementById("editForm");
 
+  // Simple array to store our products
+  let productList = [];
+
   // Fetch and Display Products
   function loadProducts() {
     fetch("../../Backend/get_products.php")
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          renderTable(data.products);
+          // Store the data in our simple array
+          productList = data.products;
+          renderTable(productList);
         } else {
-          // If simply no products, that's fine, handle unauthorized or error
           if (data.message === "Unauthorized") {
             window.location.href = "../Login/login.html";
           } else {
@@ -33,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     products.forEach((product) => {
       const tr = document.createElement("tr");
-      // Use fallback image if specific one fails
       const imgSrc = `../../Images/products/${product.image}`;
 
       tr.innerHTML = `
@@ -45,47 +48,40 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>Rs. ${product.price}/kg</td>
         <td>${product.stock_quantity} kg</td>
         <td>
-            <button class="action-btn edit-btn" data-id="${product.product_id}" style="background-color: #2196F3; margin-right: 5px;">Edit</button>
-            <button class="action-btn delete-btn" data-id="${product.product_id}" style="background-color: #ff4444;">Delete</button>
+            <!-- We add a class and the ID directly -->
+            <button class="action-btn edit-btn" id="edit-${product.product_id}" style="background-color: #2196F3; margin-right: 5px;">Edit</button>
+            <button class="action-btn delete-btn" id="delete-${product.product_id}" style="background-color: #ff4444;">Delete</button>
         </td>
       `;
-
-      // Store product data on row
-      tr.dataset.product = JSON.stringify(product);
       tableBody.appendChild(tr);
     });
-
-    // No need to re-attach listeners if we use delegation on the parent!
   }
 
-  // Event Delegation for Edit and Delete
+  // Handle Clicks (New Simple Way)
   tableBody.addEventListener("click", (e) => {
-    // Handle Edit
-    const editBtn = e.target.closest(".edit-btn");
+    // Check if we clicked an Edit button
+    if (e.target.classList.contains("edit-btn")) {
+      // Get the ID string (e.g., "edit-5")
+      const fullId = e.target.id;
+      // Split it to get just the number "5"
+      const id = fullId.split("-")[1];
 
-    if (editBtn) {
-      const tr = editBtn.closest("tr");
+      // Find the product in our list
+      const product = productList.find((p) => p.product_id == id);
 
-      if (tr && tr.dataset.product) {
-        try {
-          const product = JSON.parse(tr.dataset.product);
-          openEditModal(product);
-        } catch (err) {
-          console.error("Error parsing product data:", err);
-          alert("Error reading product data. Check console.");
-        }
+      if (product) {
+        openEditModal(product);
       }
-      return;
     }
 
-    // Handle Delete
-    const deleteBtn = e.target.closest(".delete-btn");
-    if (deleteBtn) {
-      const id = deleteBtn.dataset.id;
+    // Check if we clicked a Delete button
+    if (e.target.classList.contains("delete-btn")) {
+      const fullId = e.target.id;
+      const id = fullId.split("-")[1];
+
       if (confirm("Are you sure you want to delete this product?")) {
         deleteProduct(id);
       }
-      return;
     }
   });
 
