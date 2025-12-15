@@ -11,63 +11,62 @@
     />
     <style>
       .modal {
-  display: none; /* Hidden by default */
-  position: fixed;
-  z-index: 2000; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
-  backdrop-filter: blur(4px); /* Blur the background slightly */
-}
+        display: none; /* Hidden by default */
+        position: fixed;
+        z-index: 2000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+        backdrop-filter: blur(4px); /* Blur the background slightly */
+      }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 5vh auto; /* 5% from top instead of 10% */
-  padding: 25px;
-  border: 1px solid #888;
-  width: 90%;
-  max-width: 450px; /* Slightly narrower */
-  border-radius: 12px;
-  position: relative;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  animation: slideIn 0.3s ease-out; /* Add animation */
-  max-height: 90vh; /* Prevent overflowing screen height */
-  overflow-y: auto; /* Scroll inside modal if needed */
-}
+      .modal-content {
+        background-color: #fefefe;
+        margin: 5vh auto; /* 5% from top instead of 10% */
+        padding: 25px;
+        border: 1px solid #888;
+        width: 90%;
+        max-width: 450px; /* Slightly narrower */
+        border-radius: 12px;
+        position: relative;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        animation: slideIn 0.3s ease-out; /* Add animation */
+        max-height: 90vh; /* Prevent overflowing screen height */
+        overflow-y: auto; /* Scroll inside modal if needed */
+      }
 
-@keyframes slideIn {
-  from {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
+      @keyframes slideIn {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
 
-.close-btn {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  position: absolute;
-  right: 20px;
-  top: 15px;
-  transition: 0.2s;
-}
+      .close-btn {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        transition: 0.2s;
+      }
 
-.close-btn:hover,
-.close-btn:focus {
-  color: #d32f2f; /* Red on hover */
-  text-decoration: none;
-  cursor: pointer;
-}
-
+      .close-btn:hover,
+      .close-btn:focus {
+        color: #d32f2f; /* Red on hover */
+        text-decoration: none;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -118,7 +117,7 @@
               <span class="name">Farmer User</span>
               <span class="role">Farmer</span>
             </div>
-            <a href="#" class="logout-item"
+            <a href="../Login/login.html" class="logout-item"
               ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
             >
           </div>
@@ -196,6 +195,6 @@
     </div>
 
     <script src="js/view_products.js?v=2"></script>
-    <script src="farmer.js"></script>
+    <script src="farmer.js?v=3"></script>
   </body>
 </html>

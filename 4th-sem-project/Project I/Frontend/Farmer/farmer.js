@@ -5,10 +5,14 @@ function checkAuth() {
     .then((data) => {
       // If not logged in, OR if logged in but NOT a farmer, redirect to login
       if (!data.loggedIn || data.userType !== "farmer") {
+        console.log("Not logged in or not farmer. Redirecting...");
         window.location.href = "../Login/login.html";
       } else {
+        console.log("Logged in as:", data.name);
         // Update Profile Info
         const nameEl = document.querySelector(".user-info .name");
+        console.log("Target Element:", nameEl);
+
         const roleEl = document.querySelector(".user-info .role");
         if (nameEl) nameEl.textContent = data.name;
         if (roleEl) roleEl.textContent = "Farmer"; // Or specific role if we had it
@@ -95,9 +99,10 @@ if (lowStock) updateAnimation(lowStock, 10);
 
 // Logout Logic
 document.addEventListener("DOMContentLoaded", () => {
-  const logoutBtn = document.getElementById("logout-btn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", (e) => {
+  const logoutBtns = document.querySelectorAll(".logout-item, #logout-btn");
+
+  logoutBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
       e.preventDefault();
       fetch("../../Backend/logout.php")
         .then((response) => response.json())
@@ -108,5 +113,5 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch((error) => console.error("Error logging out:", error));
     });
-  }
+  });
 });
