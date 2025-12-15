@@ -6,6 +6,12 @@ function checkAuth() {
       // If not logged in, OR if logged in but NOT a farmer, redirect to login
       if (!data.loggedIn || data.userType !== "farmer") {
         window.location.href = "../Login/login.html";
+      } else {
+        // Update Profile Info
+        const nameEl = document.querySelector(".user-info .name");
+        const roleEl = document.querySelector(".user-info .role");
+        if (nameEl) nameEl.textContent = data.name;
+        if (roleEl) roleEl.textContent = "Farmer"; // Or specific role if we had it
       }
     })
     .catch((error) => console.error("Error checking auth:", error));
