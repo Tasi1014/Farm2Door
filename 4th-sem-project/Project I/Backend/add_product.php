@@ -19,6 +19,27 @@ if (!isset($_SESSION['farmer_id'])) {
 
 $farmer_id = $_SESSION['farmer_id'];
 
+// 1.5 Ensure Table Exists
+$createTableSql = "CREATE TABLE IF NOT EXISTS `products` (
+    `product_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `farmer_id` INT(11) NOT NULL,
+    `name` VARCHAR(100) NOT NULL,
+    `category` VARCHAR(50) NOT NULL,
+    `price` DECIMAL(10, 2) NOT NULL,
+    `stock_quantity` INT(11) NOT NULL,
+    `description` TEXT,
+    `image` VARCHAR(255) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`product_id`),
+    FOREIGN KEY (`farmer_id`) REFERENCES `farmer_registration`(`farmer_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+
+if (!mysqli_query($conn, $createTableSql)) {
+    $response['message'] = "Table creation failed: " . mysqli_error($conn);
+    echo json_encode($response);
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // 2. Get Input
     $name = isset($_POST['productName']) ? trim($_POST['productName']) : '';
