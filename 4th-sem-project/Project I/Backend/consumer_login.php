@@ -40,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $user = mysqli_fetch_assoc($result);
                 if (password_verify($password, $user['Password'])) {
                     $_SESSION['consumer_email'] = $user['Email'];
+                    $_SESSION['customer_id'] = $user['customer_id'];
                     
                     // Handle Remember Me (Cookies)
                     if ($remember) {

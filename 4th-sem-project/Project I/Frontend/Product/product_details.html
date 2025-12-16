@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details - Farm2Door</title>
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="product.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+        /* Simple Details Page Styles */
+        .product-details-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+        
+        .product-image {
+            flex: 1;
+            max-width: 50%;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            object-fit: cover;
+            max-height: 500px;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 2.5rem;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .product-category {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            text-transform: capitalize;
+        }
+
+        .product-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .product-price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: normal;
+        }
+
+        .product-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .stock-status {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn-large {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .add-cart-btn {
+            background: #2e7d32;
+            color: white;
+        }
+        
+        .add-cart-btn:hover {
+            background: #1b5e20;
+        }
+
+        .back-btn {
+            background: #f5f5f5;
+            color: #333;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .product-details-container {
+                flex-direction: column;
+            }
+            .product-image {
+                max-width: 100%;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav class="navbar">
+        <div class="hamburger" id="hamburger">
+          <i class="fa fa-bars"></i>
+        </div>
+        <div class="logo">
+          <img src="../../Images/logo.png" alt="Farm2Door Logo" onclick="window.location.href='../Home/index.html'"/>
+        </div>
+
+        <ul class="nav-links">
+          <li><a href="../Home/index.html">Home</a></li>
+          <li><a href="product.html">Products</a></li>
+          <li><a href="../About Us/aboutus.html">About Us</a></li>
+          <li><a href="../Contact Us/contactus.html">Contact Us</a></li>
+          <li id="login-link"><a href="../Login/login.html">Login</a></li>
+          <li id="signup-link">
+            <a href="../Registration/index.html " class="sign-up">Sign Up</a>
+          </li>
+          <li id="profile-link" style="display: none">
+            <a href="#" id="profile-btn"
+              ><i class="fa-solid fa-user"></i>
+              <span id="user-name">User</span></a
+            >
+            <div class="dropdown-content" id="profile-dropdown">
+              <a href="#" id="logout-btn">Logout</a>
+            </div>
+          </li>
+        </ul>
+        <div class="nav-actions">
+           <i class="fa-solid fa-cart-shopping" id="cart"></i>
+        </div>
+      </nav>
+    </header>
+
+    <div class="product-details-container" id="details-container">
+        <!-- Content will be loaded here -->
+        <p>Loading product details...</p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <p>&copy; 2025 Farm2Door. All rights reserved.</p>
+        <div class="socials">
+          <a href="javascript:void(0)"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="javascript:void(0)"><i class="fa-brands fa-twitter"></i></a>
+          <a href="javascript:void(0)"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Login Modal Container -->
+    <div class="overlay" onclick="closeModal()"></div>
+    <div id="loginModal" class="modal"></div>
+    
+    <script src="../../login-modal/login.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/product_details.js"></script>
+    <script src="../js/cart.js"></script>
+  </body>
+</html>
