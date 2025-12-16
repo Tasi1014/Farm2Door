@@ -1,185 +1,237 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Initial Cart Count
+  // 1. Initial Cart Count Load
   updateCartCount();
 
-  // 2. Attach Listener to Cart Icon
-  const cartIcon = document.getElementById("cart");
-  if (cartIcon) {
-    cartIcon.addEventListener("click", openCartModal);
+  // 2. Setup Cart Icon Interactions
+  setupCartIcon();
 
-    // Add cursor pointer style
-    cartIcon.style.cursor = "pointer";
+  // 3. Inject Modal & Toast HTML (Lazy load UI)
+  injectCartUI();
+});
 
-    // Add Badge Element if not exists
-    if (!document.getElementById("cart-count")) {
-      const badge = document.createElement("span");
-      badge.id = "cart-count";
-      badge.style.cssText = `
-                position: absolute;
-                top: -8px;
-                right: -8px;
-                background-color: #e74c3c;
-                color: white;
-                border-radius: 50%;
-                padding: 2px 6px;
-                font-size: 10px;
-                display: none;
-            `;
-      // Parent needs relative position
-      cartIcon.parentElement.style.position = "relative";
-      cartIcon.parentElement.appendChild(badge);
-    }
-  }
+// --- UI Injection ---
+function injectCartUI() {
+  // Cart Badge (if not present)
+  // Usually handled in setupCartIcon but we ensure styles are ready
 
-  // 3. Inject Modal HTML if not exists
+  // Modal HTML
   if (!document.getElementById("cartModal")) {
     const modalHTML = `
-            <div id="cartModal" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.5);">
-                <div class="modal-content" style="background-color:#fefefe; margin:10% auto; padding:20px; border:1px solid #888; width:90%; max-width:600px; border-radius:10px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #ddd; padding-bottom:10px;">
-                        <h2>Your Cart</h2>
-                        <span class="close-cart" style="font-size:28px; font-weight:bold; cursor:pointer;">&times;</span>
-                    </div>
-                    <div id="cart-items" style="margin-top:20px;">
-                        <p>Loading cart...</p>
-                    </div>
-                    <div id="cart-footer" style="margin-top:20px; border-top:1px solid #ddd; padding-top:15px; text-align:right;">
-                        <h3>Total: Rs <span id="cart-total">0</span></h3>
-                        <button id="checkout-btn" style="background-color:#2ecc71; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; font-size:16px; margin-top:10px;">Proceed to Checkout</button>
-                    </div>
-                </div>
+      <div id="cartModal" class="cart-overlay">
+        <div class="cart-modal-content">
+          <div class="cart-header">
+            <span class="close-cart">&times;</span>
+            <h2>Your Cart</h2>
+          </div>
+          
+          <div id="cart-items">
+            <!-- Items injected here -->
+            <p style="text-align:center; padding: 20px; color:#666;">Loading cart...</p>
+          </div>
+          
+          <div class="cart-footer">
+            <div class="cart-total">
+              <h3>Total:</h3>
+              <span id="cart-total-amount" class="cart-total-amount">Rs 0</span>
             </div>
-        `;
+            <button id="checkout-btn" class="checkout-btn">Proceed to Checkout</button>
+          </div>
+        </div>
+      </div>
+    `;
     document.body.insertAdjacentHTML("beforeend", modalHTML);
 
-    // Modal Close Logic
-    document.querySelector(".close-cart").addEventListener("click", () => {
-      document.getElementById("cartModal").style.display = "none";
-    });
+    // Event Listeners for Modal
+    const modal = document.getElementById("cartModal");
+    const closeBtn = document.querySelector(".close-cart");
+    const checkoutBtn = document.getElementById("checkout-btn");
 
-    window.onclick = function (event) {
-      const modal = document.getElementById("cartModal");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => (modal.style.display = "none"));
+    }
+
+    // Close on click outside
+    window.addEventListener("click", (event) => {
       if (event.target == modal) {
         modal.style.display = "none";
       }
-    };
-
-    // Checkout Placeholder
-    document.getElementById("checkout-btn").addEventListener("click", () => {
-      alert("Proceeding to checkout (Phase 3)...");
-      // Implement actual checkout logic later
     });
+
+    // Checkout Logic
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener("click", () => {
+        alert("Proceeding to checkout... (This feature is coming soon!)");
+      });
+    }
   }
-});
 
-// Global Function to Add to Cart (can be called from other scripts)
-function addToCart(event) {
-  if (event) event.stopPropagation(); // prevent card click
+  // Toast HTML
+  if (!document.getElementById("toast")) {
+    const toastHTML = `<div id="toast">Item added to cart successfully!</div>`;
+    document.body.insertAdjacentHTML("beforeend", toastHTML);
+  }
+}
 
-  // Determine ID
+function setupCartIcon() {
+  const cartIcon = document.getElementById("cart");
+
+  if (cartIcon) {
+    cartIcon.style.cursor = "pointer";
+    cartIcon.parentElement.style.position = "relative";
+
+    // Create Badge if missing
+    if (!document.getElementById("cart-count")) {
+      const badge = document.createElement("span");
+      badge.id = "cart-count";
+      cartIcon.parentElement.appendChild(badge);
+    }
+
+    // Click Handler - Remove old listeners if any by cloning (optional but safe) or just add new one
+    // We'll just add one.
+    cartIcon.onclick = function (e) {
+      e.preventDefault();
+      openCartModal();
+    };
+  } else {
+    console.error("Cart Icon (id='cart') NOT FOUND in DOM");
+  }
+}
+
+// --- Core Actions ---
+
+// Exposed Function for "Add to Cart" buttons
+window.addToCart = function (event, quantity = 1) {
+  console.log("addToCart called. Quantity:", quantity); // DEBUG LOG
+  if (event) event.stopPropagation();
+
   let btn = event.currentTarget || event.target;
-  let id = btn.dataset.id;
+  if (!btn.classList.contains("add-cart-btn")) {
+    btn = btn.closest(".add-cart-btn");
+  }
+  if (!btn) return;
 
+  const id = btn.dataset.id;
   if (!id) return;
 
-  // Optimistic UI update (optional)? No, let's wait for server to be sure.
+  // Optimistic UI Feedback
+  const originalText = btn.innerHTML;
+  btn.innerText = "Adding...";
+  btn.disabled = true;
+
   fetch("../../Backend/add_to_cart.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ product_id: id, quantity: 1 }),
+    body: JSON.stringify({ product_id: id, quantity: parseInt(quantity) }), // Ensure INT
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.success) {
-        updateCartCount();
-        alert("Product added to cart!");
-      } else {
-        if (data.not_logged_in) {
-          // Try to open login modal if exists, else redirect
-          if (typeof openLoginModal === "function") {
-            openLoginModal();
-          } else {
-            window.location.href = "../Login/login.html";
-          }
-        } else {
-          alert(data.message);
-        }
-      }
-    })
-    .catch((err) => console.error(err));
-}
+      console.log("Add to Cart Response:", data); // DEBUG LOG
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      // ... rest of function
 
-function updateCartCount() {
-  // We can fetch just the count, or get full cart and count it.
-  // add_to_cart.php returns count too, but let's have a dedicated fetch for page load
-  fetch("../../Backend/get_cart.php")
-    .then((res) => res.json())
-    .then((data) => {
       if (data.success) {
-        const badge = document.getElementById("cart-count");
-        if (badge) {
-          if (data.total_items > 0) {
-            badge.textContent = data.total_items;
-            badge.style.display = "block";
-          } else {
-            badge.style.display = "none";
-          }
-        }
+        showToast("Added to Cart Successfully!");
+        updateCartBadge(data.cart_count); // Use count from response if available
+        // Fallback update if count missing
+        if (data.cart_count === undefined) updateCartCount();
+      } else {
+        handleAuthError(data);
       }
     })
-    .catch((err) => console.error(err));
-}
+    .catch((err) => {
+      console.error("Cart Error:", err);
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      alert("Something went wrong. Please try again.");
+    });
+};
 
 function openCartModal() {
   const modal = document.getElementById("cartModal");
   const container = document.getElementById("cart-items");
-  const totalSpan = document.getElementById("cart-total");
+  const totalSpan = document.getElementById("cart-total-amount");
 
-  modal.style.display = "block";
-  container.innerHTML = "<p>Loading...</p>";
+  if (!modal) {
+    return;
+  }
 
+  // 1. Check Login & Fetch Data
   fetch("../../Backend/get_cart.php")
-    .then((res) => res.json())
+    .then((res) => {
+      return res.json();
+    })
     .then((data) => {
-      if (data.success) {
-        if (data.items.length === 0) {
-          container.innerHTML = "<p>Your cart is empty.</p>";
-          totalSpan.textContent = "0";
-        } else {
-          let html = '<ul style="list-style:none; padding:0;">';
-          data.items.forEach((item) => {
-            html += `
-                        <li style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
-                            <div style="display:flex; align-items:center; gap:10px;">
-                                <img src="../../Images/products/${item.image}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
-                                <div>
-                                    <div style="font-weight:bold;">${item.name}</div>
-                                    <div style="font-size:12px; color:#666;">Rs ${item.price} x ${item.quantity}</div>
-                                </div>
-                            </div>
-                            <div style="display:flex; align-items:center; gap:10px;">
-                                <span style="font-weight:bold;">Rs ${item.subtotal}</span>
-                                <button onclick="removeFromCart(${item.cart_id})" style="background:none; border:none; color:red; cursor:pointer;"><i class="fa fa-trash"></i></button>
-                            </div>
-                        </li>
-                    `;
-          });
-          html += "</ul>";
-          container.innerHTML = html;
-          totalSpan.textContent = data.total_price;
+      // Handle Not Logged In
+      if (
+        data.success === false &&
+        (data.message === "Not logged in" || data.not_logged_in)
+      ) {
+        if (
+          confirm(
+            "You must be logged in to view your cart. \n\nClick OK to Login."
+          )
+        ) {
+          window.location.href = "../Login/login.html";
         }
+        return;
+      }
+
+      // If success
+      if (data.success) {
+        modal.style.display = "block"; // Show modal only if logged in
+        renderCartItems(data.items, container, totalSpan, data.total_price);
       } else {
-        container.innerHTML = `<p>${data.message}</p>`;
+        container.innerHTML = `<p style="text-align:center; padding:20px;">${
+          data.message || "Error loading cart."
+        }</p>`;
+        modal.style.display = "block"; // Show modal with error
       }
     })
     .catch((err) => {
-      container.innerHTML = "<p>Error loading cart.</p>";
-      console.error(err);
+      alert("Failed to load cart.");
     });
 }
 
-function removeFromCart(cartId) {
-  if (!confirm("Remove this item?")) return;
+function renderCartItems(items, container, totalSpan, totalPrice) {
+  if (items.length === 0) {
+    container.innerHTML = `<div style="text-align:center; padding:40px; color:#888;">
+      <i class="fa fa-shopping-basket" style="font-size:3rem; margin-bottom:15px; display:block;"></i>
+      <p>Your cart is empty.</p>
+    </div>`;
+    totalSpan.textContent = "Rs 0";
+    return;
+  }
+
+  console.log("Rendering Cart Items:", items); // DEBUG LOG
+  let html = "";
+  items.forEach((item) => {
+    console.log(`Render Item: ${item.name}, Qty: ${item.quantity}`); // DEBUG LOG
+    html += `
+      <div class="cart-item">
+        <div class="cart-item-details">
+          <img src="../../Images/products/${item.image}" alt="${item.name}" class="cart-item-img">
+          <div class="cart-item-info">
+            <h4>${item.name}</h4>
+            <p>Rs ${item.price} x ${item.quantity}</p>
+          </div>
+        </div>
+        <div class="cart-item-actions">
+          <span class="cart-item-total">Rs ${item.subtotal}</span>
+          <button class="remove-btn" onclick="removeFromCart(${item.cart_id})">
+            <i class="fa fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+  totalSpan.textContent = `Rs ${totalPrice}`;
+}
+
+window.removeFromCart = function (cartId) {
+  if (!confirm("Are you sure you want to remove this item?")) return;
 
   fetch("../../Backend/remove_from_cart.php", {
     method: "POST",
@@ -189,11 +241,71 @@ function removeFromCart(cartId) {
     .then((res) => res.json())
     .then((data) => {
       if (data.success) {
-        openCartModal(); // Refresh list
-        updateCartCount(); // Refresh badge
+        // Refresh Modal Content
+        openCartModal();
+        // Refresh Badge
+        updateCartCount();
       } else {
-        alert(data.message);
+        alert(data.message || "Failed to remove item.");
       }
     })
     .catch((err) => console.error(err));
+};
+
+function updateCartCount() {
+  fetch("../../Backend/get_cart.php")
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        updateCartBadge(data.total_items);
+      } else {
+        // likely not logged in, hide badge
+        updateCartBadge(0);
+      }
+    })
+    .catch(() => updateCartBadge(0));
+}
+
+function updateCartBadge(count) {
+  const badge = document.getElementById("cart-count");
+  if (!badge) return;
+
+  if (count > 0) {
+    badge.textContent = count;
+    badge.style.display = "block";
+    // Trigger pop animation
+    badge.style.animation = "none";
+    badge.offsetHeight; /* trigger reflow */
+    badge.style.animation =
+      "popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+  } else {
+    badge.style.display = "none";
+  }
+}
+
+// Helper for Login Redirects
+function handleAuthError(data) {
+  if (
+    data.not_logged_in ||
+    (data.message && data.message.toLowerCase().includes("login"))
+  ) {
+    if (
+      confirm("You need to login to perform this action.\n\nGo to Login page?")
+    ) {
+      window.location.href = "../Login/login.html";
+    }
+  } else {
+    alert(data.message || "Operation failed.");
+  }
+}
+
+function showToast(message) {
+  const x = document.getElementById("toast");
+  if (x) {
+    x.innerText = message;
+    x.className = "show";
+    setTimeout(() => {
+      x.className = x.className.replace("show", "");
+    }, 3000);
+  }
 }

@@ -1,8 +1,24 @@
 <?php
+// Prevent caching
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+// Standardize Session
 session_set_cookie_params(0, '/');
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Buffer Output to catch any spurious text/errors
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ob_start();
+
 include 'connection.php';
 
+// Clear buffer before sending JSON
+ob_clean();
 header('Content-Type: application/json');
 
 $response = [
@@ -11,77 +27,83 @@ $response = [
     'errors' => []
 ];
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = isset($_POST['consumer-email']) ? trim($_POST['consumer-email']) : '';
-    $password = isset($_POST['consumer-password']) ? trim($_POST['consumer-password']) : '';
-    $remember = isset($_POST['c-chk']);
+try {
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $email = isset($_POST['consumer-email']) ? trim($_POST['consumer-email']) : '';
+        $password = isset($_POST['consumer-password']) ? trim($_POST['consumer-password']) : '';
+        $remember = isset($_POST['c-chk']);
 
-    // Validation
-    if (empty($email)) {
-        $response['errors']['email'] = "Email cannot be empty!";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $response['errors']['email'] = "Invalid email format!";
-    }
+        // Validation
+        if (empty($email)) {
+            $response['errors']['email'] = "Email cannot be empty!";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $response['errors']['email'] = "Invalid email format!";
+        }
 
-    if (empty($password)) {
-        $response['errors']['password'] = "Password cannot be empty!";
-    }
+        if (empty($password)) {
+            $response['errors']['password'] = "Password cannot be empty!";
+        }
 
-    if (empty($response['errors'])) {
-        $sql = "SELECT * FROM `customer_registration` WHERE Email = ? LIMIT 1";
-        $stmt = mysqli_prepare($conn, $sql);
-        
-        if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "s", $email);
-            mysqli_stmt_execute($stmt);
-            $result = mysqli_stmt_get_result($stmt);
+        if (empty($response['errors'])) {
+            $sql = "SELECT * FROM `customer_registration` WHERE Email = ? LIMIT 1";
+            $stmt = mysqli_prepare($conn, $sql);
+            
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "s", $email);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
 
-            if ($result && mysqli_num_rows($result) === 1) {
-                $user = mysqli_fetch_assoc($result);
-                if (password_verify($password, $user['Password'])) {
-                    $_SESSION['consumer_email'] = $user['Email'];
-                    $_SESSION['customer_id'] = $user['customer_id'];
-                    
-                    // Handle Remember Me (Cookies)
-                    if ($remember) {
-                        $cookie_options = [
-                            'expires' => time() + (86400 * 30),
-                            'path' => '/',
-                            'secure' => false, 
-                            'httponly' => false,
-                            'samesite' => 'Lax'
-                        ];
-                        setcookie('c_email', $email, $cookie_options);
-                        setcookie('c_pass', $password, $cookie_options);
+                if ($result && mysqli_num_rows($result) === 1) {
+                    $user = mysqli_fetch_assoc($result);
+                    if (password_verify($password, $user['Password'])) {
+                        $_SESSION['consumer_email'] = $user['Email'];
+                        $_SESSION['customer_id'] = $user['id']; // Fixed column name based on user feedback
+                        
+                        // Handle Remember Me (Cookies)
+                        if ($remember) {
+                            $cookie_options = [
+                                'expires' => time() + (86400 * 30),
+                                'path' => '/', // Global path
+                                'secure' => false, // Localhost isn't https
+                                'httponly' => false, // JS needs to read it for autofill
+                                'samesite' => 'Lax'
+                            ];
+                            setcookie('c_email', $email, $cookie_options['expires'], $cookie_options['path'], '', $cookie_options['secure'], $cookie_options['httponly']);
+                            setcookie('c_pass', $password, $cookie_options['expires'], $cookie_options['path'], '', $cookie_options['secure'], $cookie_options['httponly']);
+                        } else {
+                             // Clear cookies
+                            if (isset($_COOKIE['c_email'])) {
+                                setcookie('c_email', '', time() - 3600, '/');
+                            }
+                            if (isset($_COOKIE['c_pass'])) {
+                                setcookie('c_pass', '', time() - 3600, '/');
+                            }
+                        }
+
+                        $response['success'] = true;
+                        $response['message'] = "Logged In successfully";
                     } else {
-                        $cookie_options = [
-                            'expires' => time() - 3600,
-                            'path' => '/',
-                            'samesite' => 'Lax'
-                        ];
-                        if (isset($_COOKIE['c_email'])) {
-                            setcookie('c_email', '', $cookie_options);
-                        }
-                        if (isset($_COOKIE['c_pass'])) {
-                            setcookie('c_pass', '', $cookie_options);
-                        }
+                        $response['errors']['result'] = "Invalid email or password!";
                     }
-
-                    $response['success'] = true;
-                    $response['message'] = "Logged In successfully";
                 } else {
                     $response['errors']['result'] = "Invalid email or password!";
                 }
+                mysqli_stmt_close($stmt);
             } else {
-                $response['errors']['result'] = "Invalid email or password!";
+                $response['errors']['result'] = "Database prep error";
             }
-            mysqli_stmt_close($stmt);
-        } else {
-            $response['errors']['result'] = "Database error: " . mysqli_error($conn);
         }
     }
+} catch (Exception $e) {
+    $response['errors']['result'] = "Server Error: " . $e->getMessage();
 }
 
-echo json_encode($response);
+$json = json_encode($response);
+if ($json === false) {
+    // JSON encode failed
+    echo json_encode(['success' => false, 'message' => 'JSON Encode Error']);
+} else {
+    echo $json;
+}
+
 mysqli_close($conn);
-?>

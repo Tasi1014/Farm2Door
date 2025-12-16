@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((res) => res.json())
     .then((data) => {
       if (data.success) {
+        populateCategoryFilter(data.products); // Populate filter dropdown dynamically
         renderProducts(data.products);
       } else {
         productsContainer.innerHTML = "<p>No products found.</p>";
@@ -107,27 +108,77 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- MERGED FILTER LOGIC ---
-  function filterProducts() {
-    // If we are on Home page, we might not have filter inputs. Check first.
-    if (!searchInput || !priceFilter || !categoryFilter) return;
+  // --- DYNAMIC CATEGORY POPULATION ---
+  function populateCategoryFilter(products) {
+    if (!categoryFilter) return;
 
-    const searchTerm = searchInput.value.toLowerCase();
-    const maxPrice = parseFloat(priceFilter.value) || Infinity;
-    const selectedCategory = categoryFilter.value.toLowerCase();
+    // 1. Extract Unique Categories
+    const categories = new Set();
+    products.forEach((p) => {
+      if (p.category && p.category.trim() !== "") {
+        categories.add(p.category.trim());
+      }
+    });
+
+    // 2. Preserve existing selection if possible
+    const currentSelection = categoryFilter.value;
+
+    // 3. Rebuild Options
+    // Keep the first "All Categories" option
+    categoryFilter.innerHTML = '<option value="">All Categories</option>';
+
+    categories.forEach((cat) => {
+      const option = document.createElement("option");
+      option.value = cat.toLowerCase(); // Value is lowercase for matching
+
+      // Display Mapping (Visualize Herbs as Spices)
+      if (cat.toLowerCase() === "herbs") {
+        option.textContent = "Spices";
+      } else {
+        option.textContent = cat;
+      }
+
+      categoryFilter.appendChild(option);
+    });
+
+    // Restore selection if it still exists
+    if (
+      [...categoryFilter.options].some((opt) => opt.value === currentSelection)
+    ) {
+      categoryFilter.value = currentSelection;
+    }
+  }
+
+  // --- FILTER LOGIC ---
+  function filterProducts() {
+    // Safety check for elements
+    if (!productsContainer) return;
+
+    // Get filter values (safe defaults)
+    const searchTerm = searchInput
+      ? searchInput.value.toLowerCase().trim()
+      : "";
+    const maxPrice =
+      priceFilter && priceFilter.value
+        ? parseFloat(priceFilter.value)
+        : Infinity;
+    const selectedCategory = categoryFilter
+      ? categoryFilter.value.toLowerCase()
+      : "";
 
     const cards = productsContainer.querySelectorAll(".card");
     let visibleCount = 0;
 
     cards.forEach((card) => {
-      const name = card.getAttribute("data-name");
-      const price = parseFloat(card.getAttribute("data-price"));
-      const category = card.getAttribute("data-category");
+      const name = card.getAttribute("data-name") || "";
+      const price = parseFloat(card.getAttribute("data-price")) || 0;
+      const category = card.getAttribute("data-category") || "";
 
+      // Logic
       const matchesSearch = name.includes(searchTerm);
       const matchesPrice = price <= maxPrice;
       const matchesCategory =
-        !selectedCategory || category === selectedCategory;
+        selectedCategory === "" || category === selectedCategory;
 
       if (matchesSearch && matchesPrice && matchesCategory) {
         card.style.display = "block";
@@ -149,9 +200,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (clearButton) {
     clearButton.addEventListener("click", () => {
-      searchInput.value = "";
-      priceFilter.value = "";
-      categoryFilter.value = "";
+      if (searchInput) searchInput.value = "";
+      if (priceFilter) priceFilter.value = "";
+      if (categoryFilter) categoryFilter.value = "";
       filterProducts();
     });
   }
