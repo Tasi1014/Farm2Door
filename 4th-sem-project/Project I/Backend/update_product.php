@@ -31,8 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Validation
     if (empty($product_id)) $response['errors']['product_id'] = "Product ID missing.";
     if (empty($name)) $response['errors']['name'] = "Product name is required.";
-    if (empty($price) || !is_numeric($price)) $response['errors']['price'] = "Valid price is required.";
-    if (empty($quantity) || !is_numeric($quantity)) $response['errors']['quantity'] = "Valid quantity is required.";
+    if (empty($price) || !is_numeric($price) || $price < 0) $response['errors']['price'] = "Price must be a positive number.";
+    if (!is_numeric($quantity) || $quantity < 0) $response['errors']['quantity'] = "Stock must be a non-negative number.";
     
     // We are NOT handling image update in this iteration to keep logic simple as requested, 
     // but the form allows updating other fields.

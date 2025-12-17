@@ -73,29 +73,34 @@ const earnings = document.getElementById("earnings");
 const orders = document.getElementById("orders");
 const lowStock = document.getElementById("lowStock");
 
-function updateAnimation(name, maxCount, startCount = 0) {
-  let counterNumber = startCount;
-  const counter = setInterval(() => {
-    counterNumber++;
-    name.textContent = counterNumber;
-    if (counterNumber == maxCount) {
-      clearInterval(counter);
-      if (name === earnings) {
-        name.textContent = "Rs. " + counterNumber;
+function fetchDashboardStats() {
+  fetch("../../Backend/get_farmer_stats.php")
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        const stats = data.stats;
+        // Update DOM elements with real data
+        if (product) product.textContent = stats.total_products;
+        if (earnings) earnings.textContent = "Rs. " + stats.total_earnings;
+        if (orders) orders.textContent = stats.total_orders;
+        if (lowStock) {
+          lowStock.textContent = stats.low_stock;
+          // Apply user requested styling logic
+          if (stats.low_stock > 0) {
+            lowStock.style.color = "red";
+          } else {
+            lowStock.style.color = "green";
+          }
+        }
+      } else {
+        console.error("Failed to load stats:", data.message);
       }
-      if (name === lowStock) {
-        name.style.color = "red";
-      }
-
-      name.style.color = "green";
-    }
-  }, 100);
+    })
+    .catch((err) => console.error("Error fetching stats:", err));
 }
 
-if (product) updateAnimation(product, 30);
-if (earnings) updateAnimation(earnings, 5345, 5300);
-if (orders) updateAnimation(orders, 33);
-if (lowStock) updateAnimation(lowStock, 10);
+// Call on load
+document.addEventListener("DOMContentLoaded", fetchDashboardStats);
 
 // Logout Logic
 document.addEventListener("DOMContentLoaded", () => {

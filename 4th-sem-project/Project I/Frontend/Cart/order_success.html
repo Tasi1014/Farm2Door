@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout - Farm2Door</title>
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+     <style>
+      body {
+        font-family: sans-serif;
+        background-color: #f9f9f9;
+        text-align: center;
+        padding: 50px 20px;
+      }
+      .success-card {
+        background: white;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+      .icon-circle {
+        width: 80px;
+        height: 80px;
+        background-color: #e8f5e9;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+      }
+      .icon-circle i {
+        font-size: 40px;
+        color: #4caf50;
+      }
+      h1 {
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      p {
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 30px;
+      }
+      .btn {
+        display: inline-block;
+        background-color: #4caf50;
+        color: white;
+        padding: 12px 30px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+      .btn:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="success-card">
+      <div class="icon-circle">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h1>Order Placed Successfully!</h1>
+      <p>
+        Thank you for shopping with Farm2Door. <br />
+        Your order has been forwarded to the farmer. <br />
+        <strong
+          >They will contact you shortly to confirm the delivery times.</strong
+        >
+      </p>
+      <a href="../Home/index.html" class="btn">Continue Shopping</a>
+    </div>
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 Farm2Door. All rights reserved.</p>
+      <div class="socials">
+        <a href="javascript:void(0)"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="javascript:void(0)"><i class="fa-brands fa-twitter"></i></a>
+        <a href="javascript:void(0)"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../Home/app.js"></script>
+    <!-- Required for Hamburger -->
+    <script src="checkout.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/cart.js"></script>
+    <!-- Required for Cart interactions -->
+  </body>
+</html>

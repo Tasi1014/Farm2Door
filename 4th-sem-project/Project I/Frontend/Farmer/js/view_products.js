@@ -113,6 +113,19 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const formData = new FormData(editForm);
 
+    // Validation
+    const price = parseFloat(formData.get("price"));
+    const quantity = parseInt(formData.get("stock_quantity"));
+
+    if (price < 0) {
+      alert("Price cannot be negative.");
+      return;
+    }
+    if (quantity < 0) {
+      alert("Quantity cannot be negative.");
+      return;
+    }
+
     fetch("../../Backend/update_product.php", {
       method: "POST",
       body: formData,
@@ -125,7 +138,9 @@ document.addEventListener("DOMContentLoaded", () => {
           loadProducts(); // Reload table
         } else {
           if (data.errors) {
-            alert("Error: " + JSON.stringify(data.errors));
+            // Convert error object to readable string
+            const errorMsg = Object.values(data.errors).join("\n");
+            alert(errorMsg);
           } else {
             alert(data.message || "Update failed");
           }

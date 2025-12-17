@@ -60,7 +60,7 @@ function injectCartUI() {
     // Checkout Logic
     if (checkoutBtn) {
       checkoutBtn.addEventListener("click", () => {
-        alert("Proceeding to checkout... (This feature is coming soon!)");
+        window.location.href = "../Cart/checkout.html";
       });
     }
   }

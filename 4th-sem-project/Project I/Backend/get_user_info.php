@@ -19,7 +19,7 @@ $response = [
 // Check for Farmer Login
 if (isset($_SESSION['farmer_email'])) {
     $email = $_SESSION['farmer_email'];
-    $sql = "SELECT firstName, lastName FROM `farmer_registration` WHERE Email = ?";
+    $sql = "SELECT firstName, lastName, Phone, Address FROM `farmer_registration` WHERE Email = ?";
     $stmt = mysqli_prepare($conn, $sql);
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "s", $email);
@@ -29,6 +29,8 @@ if (isset($_SESSION['farmer_email'])) {
             $response['loggedIn'] = true;
             $response['userType'] = 'farmer';
             $response['name'] = $row['firstName'] . ' ' . $row['lastName'];
+            $response['phone'] = $row['Phone'];
+            $response['address'] = $row['Address'];
         }
         mysqli_stmt_close($stmt);
     }
@@ -36,7 +38,7 @@ if (isset($_SESSION['farmer_email'])) {
 // Check for Consumer Login
 elseif (isset($_SESSION['consumer_email'])) {
     $email = $_SESSION['consumer_email'];
-    $sql = "SELECT firstName, lastName FROM `customer_registration` WHERE Email = ?";
+    $sql = "SELECT firstName, lastName, Phone, Address FROM `customer_registration` WHERE Email = ?";
     $stmt = mysqli_prepare($conn, $sql);
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "s", $email);
@@ -46,6 +48,8 @@ elseif (isset($_SESSION['consumer_email'])) {
             $response['loggedIn'] = true;
             $response['userType'] = 'consumer';
             $response['name'] = $row['firstName'] . ' ' . $row['lastName'];
+            $response['phone'] = $row['Phone'];
+            $response['address'] = $row['Address'];
         }
         mysqli_stmt_close($stmt);
     }

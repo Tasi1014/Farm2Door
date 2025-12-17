@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout - Farm2Door</title>
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../Home/style.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      body {
+        background-color: #f9f9f9;
+        font-family: 'Poppins', sans-serif;
+      }
+      .checkout-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 30px;
+      }
+      .section-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
+      h2 {
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        color: #2c3e50;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #555;
+      }
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+      }
+      .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+      }
+      .order-item img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+        margin-right: 15px;
+      }
+      .item-info {
+        flex: 1;
+      }
+      .payment-option {
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        transition: 0.2s;
+      }
+      .payment-option:hover {
+        border-color: #4caf50;
+      }
+      .payment-option.selected {
+        border-color: #4caf50;
+        background-color: #f0fdf4;
+      }
+      .payment-option input {
+        margin-right: 15px;
+        width: 20px;
+        height: 20px;
+      }
+      .checkout-btn {
+        width: 100%;
+        padding: 15px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: 0.3s;
+      }
+      .checkout-btn:hover {
+        background-color: #45a049;
+      }
+      /* Responsive */
+      @media (max-width: 768px) {
+        .checkout-container {
+          grid-template-columns: 1fr;
+        }
+        .order-summary {
+          order: -1; /* Show summary first on mobile */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav class="navbar">
+        <div class="logo">
+          <img src="../../Images/logo.png" alt="Farm2Door Logo" />
+        </div>
+        <ul class="nav-links">
+          <li><a href="../Home/index.html" class="active">Home</a></li>
+          <li><a href="../Product/product.html">Products</a></li>
+          <li><a href="../About Us/aboutus.html">About Us</a></li>
+          <li><a href="../Contact Us/contactus.html">Contact Us</a></li>
+          <li id="login-link"><a href="../Login/login.html">Login</a></li>
+          <li id="signup-link">
+            <a href="../Registration/index.html " class="sign-up">Sign Up</a>
+          </li>
+          <li id="profile-link" style="display: none">
+            <a href="#" id="profile-btn"
+              ><i class="fa-solid fa-user"></i>
+              <span id="user-name">User</span></a
+            >
+            <div class="dropdown-content" id="profile-dropdown">
+              <a href="#" id="logout-btn">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="checkout-container">
+      <!-- Left: Delivery Details -->
+      <div class="delivery-details section-card">
+        <h2>1. Delivery Details</h2>
+        <form id="checkoutForm">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="fullName" required placeholder="John Doe" />
+          </div>
+          <div class="form-group">
+            <label>Phone Number (Important for delivery call)</label>
+            <input
+              type="tel"
+              id="phone"
+              required
+              placeholder="98XXXXXXXX"
+              pattern="[0-9]{10}"
+            />
+          </div>
+          <div class="form-group">
+            <label>Delivery Address</label>
+            <textarea
+              id="address"
+              rows="3"
+              required
+              placeholder="Street, Chowk, City"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label>Order Notes (Optional)</label>
+            <textarea
+              id="notes"
+              rows="2"
+              placeholder="Example: Call me when you arrive at landmarks."
+            ></textarea>
+          </div>
+        </form>
+
+        <h2 style="margin-top: 30px">2. Payment Method</h2>
+        <div class="payment-options">
+          <label class="payment-option selected">
+            <input type="radio" name="payment" value="COD" checked />
+            <div>
+              <strong>Cash on Delivery (COD)</strong>
+              <p style="font-size: 0.9rem; color: #666; margin: 0">
+                Pay cash to the farmer upon delivery.
+              </p>
+            </div>
+          </label>
+          <label
+            class="payment-option"
+            style="opacity: 0.6; cursor: not-allowed"
+          >
+            <input type="radio" name="payment" value="ONLINE" disabled />
+            <div>
+              <strong>Online Payment (Esewa/Khalti)</strong>
+              <p style="font-size: 0.9rem; color: #666; margin: 0">
+                Coming Soon...
+              </p>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Right: Order Summary -->
+      <div class="order-summary section-card">
+        <h2>Order Summary</h2>
+        <div id="orderItems">
+          <!-- Items injected via JS -->
+          <p>Loading items...</p>
+        </div>
+
+        <div
+          class="total-section"
+          style="
+            margin-top: 20px;
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              font-size: 1.2rem;
+              font-weight: bold;
+            "
+          >
+            <span>Total Amount:</span>
+            <span id="finalTotal">Rs 0</span>
+          </div>
+        </div>
+
+        <button type="button" class="checkout-btn" id="placeOrderBtn">
+          Confirm Order
+        </button>
+      </div>
+    </div>
+     <footer>
+      <p>&copy; 2025 Farm2Door. All rights reserved.</p>
+      <div class="socials">
+        <a href="javascript:void(0)"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="javascript:void(0)"><i class="fa-brands fa-twitter"></i></a>
+        <a href="javascript:void(0)"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="checkout.js"></script>
+    <script src="../js/auth.js"></script>
+        <script src="../js/load_products.js"></script>
+    <script src="../js/cart.js"></script>
+  </body>
+</html>

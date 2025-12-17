@@ -96,6 +96,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
          $response['errors']['image'] = "Product image is required.";
     }
 
+    // Check if product with same name exists for this farmer
+    if (empty($response['errors'])) {
+        $checkSql = "SELECT product_id FROM products WHERE farmer_id = ? AND name = ?";
+        $checkStmt = mysqli_prepare($conn, $checkSql);
+        mysqli_stmt_bind_param($checkStmt, "is", $farmer_id, $name);
+        mysqli_stmt_execute($checkStmt);
+        mysqli_stmt_store_result($checkStmt);
+        
+        if (mysqli_stmt_num_rows($checkStmt) > 0) {
+            $response['errors']['name'] = "You have already added a product with this name.";
+        }
+        mysqli_stmt_close($checkStmt);
+    }
+
     if (empty($response['errors'])) {
         // 5. Insert into Database
         $sql = "INSERT INTO `products` (farmer_id, name, category, price, stock_quantity, description, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
