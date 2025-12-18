@@ -76,6 +76,14 @@
       </div>
 
       <div class="table-container">
+        <div class="search-bar-admin">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            id="adminSearch"
+            placeholder="Search products by name or category..."
+          />
+        </div>
         <table>
           <thead>
             <tr>
@@ -88,31 +96,7 @@
             </tr>
           </thead>
           <tbody id="productsTableBody">
-            <!-- Mock Data -->
-            <tr>
-              <td><img src="../../Images/tomato.jpg" alt="Tomato" /></td>
-              <td>Fresh Tomato</td>
-              <td>Vegetables</td>
-              <td>Rs. 50/kg</td>
-              <td>Ram Bahadur</td>
-              <td>
-                <button class="action-btn delete" onclick="deleteItem(this)">
-                  Remove
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td><img src="../../Images/potato.jpg" alt="Potato" /></td>
-              <td>Organic Potato</td>
-              <td>Vegetables</td>
-              <td>Rs. 40/kg</td>
-              <td>Sita Devi</td>
-              <td>
-                <button class="action-btn delete" onclick="deleteItem(this)">
-                  Remove
-                </button>
-              </td>
-            </tr>
+            <!-- Data loaded dynamically -->
           </tbody>
         </table>
       </div>

@@ -1,4 +1,14 @@
-// Toggle Sidebar
+// Toggle Sidebar (Mobile)
+function toggleSidebar() {
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.querySelector(".sidebar-overlay");
+  if (sidebar && overlay) {
+    sidebar.classList.toggle("active");
+    overlay.classList.toggle("active");
+  }
+}
+
+// Sidebar Active State
 const sidebarLinks = document.querySelectorAll(".sidebar ul li a");
 sidebarLinks.forEach((link) => {
   if (link.href === window.location.href) {
@@ -9,14 +19,11 @@ sidebarLinks.forEach((link) => {
 // Toggle Profile Dropdown
 function toggleDropdown() {
   const dropdown = document.getElementById("userDropdown");
-  dropdown.classList.toggle("show");
+  if (dropdown) dropdown.classList.toggle("show");
 }
 
-// Close dropdown when clicking outside
 window.onclick = function (event) {
   const dropdown = document.getElementById("userDropdown");
-
-  // Check if the click is OUTSIDE the profile icon AND OUTSIDE the dropdown menu
   if (
     !event.target.closest(".profile-icon") &&
     !event.target.closest(".dropdown-menu")
@@ -27,15 +34,7 @@ window.onclick = function (event) {
   }
 };
 
-// Toggle Sidebar (Mobile)
-function toggleSidebar() {
-  const sidebar = document.querySelector(".sidebar");
-  const overlay = document.querySelector(".sidebar-overlay");
-  sidebar.classList.toggle("active");
-  overlay.classList.toggle("active");
-}
-
-// Mock Data for Dashboard Stats
+// --- Dashboard Stats ---
 function animateValue(id, start, end, duration) {
   const obj = document.getElementById(id);
   if (!obj) return;
@@ -44,7 +43,6 @@ function animateValue(id, start, end, duration) {
   const step = (timestamp) => {
     if (!startTimestamp) startTimestamp = timestamp;
     const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-
     let value = Math.floor(progress * (end - start) + start);
 
     if (id === "revenue") {
@@ -52,116 +50,205 @@ function animateValue(id, start, end, duration) {
     } else {
       obj.innerHTML = value.toLocaleString();
     }
-
-    if (progress < 1) {
-      window.requestAnimationFrame(step);
-    }
+    if (progress < 1) window.requestAnimationFrame(step);
   };
   window.requestAnimationFrame(step);
 }
 
-// Initialize Dashboard Stats if on dashboard page
-if (document.getElementById("revenue")) {
-  animateValue("revenue", 0, 150000, 2000);
-  animateValue("orders", 0, 120, 2000);
-  animateValue("products", 0, 45, 2000);
-  animateValue("farmers", 0, 12, 2000);
-  animateValue("consumers", 0, 85, 2000);
-}
+async function fetchDashboardStats() {
+  try {
+    const res = await fetch("../../Backend/Admin/get_admin_stats.php");
+    const data = await res.json();
 
-// Delete Item Function (Mock)
-function deleteItem(btn) {
-  if (confirm("Are you sure you want to delete this item?")) {
-    const row = btn.closest("tr");
-    row.style.opacity = "0";
-    setTimeout(() => {
-      row.remove();
-    }, 300);
+    if (data.success) {
+      animateValue("revenue", 0, data.stats.total_revenue, 1500);
+      animateValue("orders", 0, data.stats.total_orders, 1500);
+      animateValue("products", 0, data.stats.total_products, 1500);
+      animateValue("farmers", 0, data.stats.total_farmers, 1500);
+      animateValue("consumers", 0, data.stats.total_consumers, 1500);
+    } else {
+      console.error("Failed to load stats:", data.message);
+    }
+  } catch (err) {
+    console.error("Fetch error for stats:", err);
   }
 }
 
-// Generate Report Function
-function generateReport() {
-  const reportResult = document.getElementById("reportResult");
-  const tableBody = document.getElementById("reportTableBody");
-  const reportType = document.getElementById("reportType").value;
+// --- Management Tables ---
+let allData = []; // Local cache for filtering
 
-  if (!reportResult || !tableBody) return;
+async function fetchTableData(pageType) {
+  let url = "";
+  if (pageType === "farmers") url = "../../Backend/Admin/get_all_farmers.php";
+  else if (pageType === "consumers")
+    url = "../../Backend/Admin/get_all_consumers.php";
+  else if (pageType === "products") url = "../../Backend/get_all_products.php";
 
-  // Clear existing data
-  tableBody.innerHTML = "";
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.success) {
+      allData = data.farmers || data.consumers || data.products;
+      renderTable(pageType, allData);
+    }
+  } catch (err) {
+    console.error("Error fetching table data:", err);
+  }
+}
 
-  // Show the table
-  reportResult.style.display = "block";
+function renderTable(pageType, data) {
+  const tbody = document.getElementById(`${pageType}TableBody`);
+  if (!tbody) return;
+  tbody.innerHTML = "";
 
-  // Mock Data Generation based on type
-  let data = [];
-  if (reportType === "monthly") {
-    document.getElementById("reportTitle").innerText = "Monthly Revenue Report";
-    data = [
-      { date: "2023-10-01", orders: 15, revenue: 5000 },
-      { date: "2023-10-02", orders: 12, revenue: 4200 },
-      { date: "2023-10-03", orders: 18, revenue: 6100 },
-      { date: "2023-10-04", orders: 20, revenue: 7500 },
-      { date: "2023-10-05", orders: 14, revenue: 4800 },
-    ];
-  } else if (reportType === "daily") {
-    document.getElementById("reportTitle").innerText = "Daily Sales Report";
-    data = [
-      { date: "10:00 AM", orders: 2, revenue: 500 },
-      { date: "11:00 AM", orders: 4, revenue: 1200 },
-      { date: "12:00 PM", orders: 5, revenue: 1500 },
-      { date: "01:00 PM", orders: 3, revenue: 800 },
-    ];
-  } else {
-    document.getElementById("reportTitle").innerText = "Top Farmers Report";
-    // Different structure for farmers
-    tableBody.innerHTML = `
-            <tr>
-                <td>Ram Bahadur</td>
-                <td>50 Orders</td>
-                <td>Rs. 25,000</td>
-                <td>Rs. 1,250</td>
-            </tr>
-            <tr>
-                <td>Sita Devi</td>
-                <td>45 Orders</td>
-                <td>Rs. 22,000</td>
-                <td>Rs. 1,100</td>
-            </tr>
-        `;
+  if (data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center">No data found</td></tr>`;
     return;
   }
 
-  // Populate Table
   data.forEach((item) => {
-    const commission = item.revenue * 0.05;
-    const row = `
-            <tr>
-                <td>${item.date}</td>
-                <td>${item.orders}</td>
-                <td>Rs. ${item.revenue.toLocaleString()}</td>
-                <td>Rs. ${commission.toLocaleString()}</td>
-            </tr>
-        `;
-    tableBody.innerHTML += row;
+    let row = "";
+    if (pageType === "farmers" || pageType === "consumers") {
+      row = `
+        <tr>
+          <td>${item.id}</td>
+          <td>${item.firstName} ${item.lastName}</td>
+          <td>${item.email}</td>
+          <td>${item.phone || "N/A"}</td>
+          <td>${item.address || "N/A"}</td>
+          <td>
+            <button class="action-btn delete" onclick="deleteUser('${pageType}', ${
+        item.id
+      }, this)">Delete</button>
+          </td>
+        </tr>
+      `;
+    } else if (pageType === "products") {
+      row = `
+        <tr>
+          <td><img src="../../Images/products/${item.image}" alt="${item.name}" style="width:50px; border-radius:4px" onerror="this.src='../../Images/logo.png'"></td>
+          <td>${item.name}</td>
+          <td>${item.category}</td>
+          <td>Rs. ${item.price}</td>
+          <td>${item.firstName} ${item.lastName}</td>
+          <td>
+            <button class="action-btn delete" onclick="deleteProduct(${item.product_id}, this)">Remove</button>
+          </td>
+        </tr>
+      `;
+    }
+    tbody.innerHTML += row;
   });
 }
 
-// Logout Logic
+// --- Real-time Search Logic ---
+function setupSearch(pageType) {
+  const searchInput = document.getElementById("adminSearch");
+  if (!searchInput) return;
+
+  searchInput.addEventListener("input", (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    const filtered = allData.filter((item) => {
+      if (pageType === "products") {
+        return (
+          item.name.toLowerCase().includes(query) ||
+          item.category.toLowerCase().includes(query)
+        );
+      } else {
+        return (
+          item.firstName.toLowerCase().includes(query) ||
+          item.lastName.toLowerCase().includes(query) ||
+          item.email.toLowerCase().includes(query)
+        );
+      }
+    });
+    renderTable(pageType, filtered);
+  });
+}
+
+// --- Actions ---
+async function deleteUser(type, id, btn) {
+  if (
+    confirm(
+      `Are you sure you want to delete this ${type.slice(
+        0,
+        -1
+      )}? This will remove them from the system.`
+    )
+  ) {
+    try {
+      const res = await fetch("../../Backend/Admin/delete_user.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, type }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        btn.closest("tr").remove();
+        // Update local cache
+        allData = allData.filter((item) => item.id !== id);
+      } else {
+        alert("Failed to delete: " + data.message);
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("An error occurred while deleting.");
+    }
+  }
+}
+
+async function deleteProduct(id, btn) {
+  if (
+    confirm("Are you sure you want to remove this product from the database?")
+  ) {
+    try {
+      const res = await fetch("../../Backend/Admin/delete_product.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        btn.closest("tr").remove();
+        // Update local cache
+        allData = allData.filter((item) => item.product_id !== id);
+      } else {
+        alert("Failed to delete product: " + data.message);
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("An error occurred while deleting.");
+    }
+  }
+}
+
+// --- Initialization ---
 document.addEventListener("DOMContentLoaded", () => {
+  // Stats
+  if (document.getElementById("revenue")) fetchDashboardStats();
+
+  // Tables
+  if (document.getElementById("farmersTableBody")) {
+    fetchTableData("farmers");
+    setupSearch("farmers");
+  } else if (document.getElementById("consumersTableBody")) {
+    fetchTableData("consumers");
+    setupSearch("consumers");
+  } else if (document.getElementById("productsTableBody")) {
+    fetchTableData("products");
+    setupSearch("products");
+  }
+
+  // Logout
   const logoutBtn = document.getElementById("logout-btn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", (e) => {
       e.preventDefault();
       fetch("../../Backend/logout.php")
-        .then((response) => response.json())
+        .then((res) => res.json())
         .then((data) => {
-          if (data.success) {
-            window.location.href = "../Login/login.html";
-          }
-        })
-        .catch((error) => console.error("Error logging out:", error));
+          if (data.success) window.location.href = "../Login/login.html";
+        });
     });
   }
 });

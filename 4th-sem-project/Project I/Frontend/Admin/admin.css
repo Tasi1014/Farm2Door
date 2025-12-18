@@ -1,1 +1,45 @@
 @import url("../css/common-dashboard.css");
+
+.search-bar-admin {
+  display: flex;
+  align-items: center;
+  max-width: 420px;
+  margin: 0 auto;
+  background-color: #f1f8f4; /* light green background */
+  border: 2px solid green; /* dark green border */
+  border-radius: 8px;
+  padding: 6px 10px;
+  box-shadow: 0 2px 6px rgba(46, 125, 50, 0.2);
+  transition: all 0.3s ease;
+}
+
+.search-bar-admin:focus-within {
+  border-color: #4caf50; /* brighter green when active */
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+  background-color: #ffffff;
+}
+
+.search-bar-admin i {
+  color: green; /* dark green icon */
+  font-size: 18px;
+  margin-right: 8px;
+  transition: color 0.3s ease;
+}
+
+.search-bar-admin:focus-within i {
+  color: #4caf50; /* brighter green when input is focused */
+}
+
+.search-bar-admin input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+  color: green; /* deep green text */
+}
+
+.search-bar-admin input::placeholder {
+  color: green; /* medium green placeholder */
+  opacity: 0.8;
+}

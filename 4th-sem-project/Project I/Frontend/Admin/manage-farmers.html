@@ -76,6 +76,14 @@
       </div>
 
       <div class="table-container">
+        <div class="search-bar-admin">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            id="adminSearch"
+            placeholder="Search farmers by name or email..."
+          />
+        </div>
         <table>
           <thead>
             <tr>
@@ -88,31 +96,7 @@
             </tr>
           </thead>
           <tbody id="farmersTableBody">
-            <!-- Mock Data -->
-            <tr>
-              <td>1</td>
-              <td>Ram Bahadur</td>
-              <td>ram@example.com</td>
-              <td>9800000000</td>
-              <td>Kathmandu</td>
-              <td>
-                <button class="action-btn delete" onclick="deleteItem(this)">
-                  Delete
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Sita Devi</td>
-              <td>sita@example.com</td>
-              <td>9811111111</td>
-              <td>Pokhara</td>
-              <td>
-                <button class="action-btn delete" onclick="deleteItem(this)">
-                  Delete
-                </button>
-              </td>
-            </tr>
+            <!-- Data loaded dynamically -->
           </tbody>
         </table>
       </div>
