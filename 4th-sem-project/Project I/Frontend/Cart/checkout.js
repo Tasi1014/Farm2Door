@@ -128,3 +128,4 @@ function placeOrder() {
       btn.innerText = "Confirm Order";
     });
 }
+

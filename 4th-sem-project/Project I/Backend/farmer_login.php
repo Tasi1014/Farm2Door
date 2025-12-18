@@ -1,20 +1,16 @@
 <?php
 session_start();
 include 'connection.php';
-
 header('Content-Type: application/json');
-
 $response = [
     'success' => false,
     'message' => '',
     'errors' => []
 ];
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = isset($_POST['farmer-email']) ? trim($_POST['farmer-email']) : '';
     $password = isset($_POST['farmer-password']) ? trim($_POST['farmer-password']) : '';
     $remember = isset($_POST['f-chk']);
-
     // Validation
     if (empty($email)) {
         $response['errors']['email'] = "Email cannot be empty!";
@@ -84,7 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
-
 echo json_encode($response);
 mysqli_close($conn);
 ?>

@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const productsContainer = document.querySelector(".product-cards");
-  // Filter Elements
   const searchInput = document.getElementById("searchInput");
   const priceFilter = document.getElementById("priceFilter");
   const categoryFilter = document.getElementById("categoryFilter");
@@ -9,76 +8,107 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!productsContainer) return;
 
-  // Determine Limit
+  // 1. Initial Load from URL Parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialSearch = urlParams.get("search") || "";
+  const initialCategory = urlParams.get("category") || "";
+
+  if (searchInput) {
+    searchInput.value = initialSearch;
+  }
+  if (categoryFilter) categoryFilter.value = initialCategory;
+
+  // 2. Scroll to products if searching
+  if (initialSearch) {
+    const prodSection = document.getElementById("scroll-section");
+    if (prodSection) {
+      setTimeout(() => {
+        prodSection.scrollIntoView({ behavior: "smooth" });
+      }, 5); // Small delay to ensure rendering starts
+    }
+  }
+
+  // Determine Limit (for Home Page)
   let limit = 0;
   const path = window.location.pathname;
-  // If we are on Home page (index.html), maybe limit. If on Product page, show all.
   if (path.includes("Home") || path.endsWith("index.html") || path === "/") {
     limit = 8;
   }
 
-  // Fetch Products
-  let url = "../../Backend/get_all_products.php";
-  if (limit > 0) url += `?limit=${limit}`;
+  // Fetch products initially
+  fetchProducts();
 
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.success) {
-        populateCategoryFilter(data.products); // Populate filter dropdown dynamically
-        renderProducts(data.products);
-      } else {
-        productsContainer.innerHTML = "<p>No products found.</p>";
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      productsContainer.innerHTML = "<p>Unable to load products.</p>";
-    });
+  function fetchProducts() {
+    const searchTerm = searchInput ? searchInput.value.trim() : "";
+    const category = categoryFilter ? categoryFilter.value : "";
+
+    productsContainer.innerHTML =
+      "<p style='text-align: center; width: 100%'>Loading products...</p>";
+
+    let url = `../../Backend/get_all_products.php?search=${encodeURIComponent(
+      searchTerm
+    )}&category=${encodeURIComponent(category)}`;
+    if (limit > 0) url += `&limit=${limit}`;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          if (
+            !categoryFilter.options.length ||
+            categoryFilter.options.length <= 1
+          ) {
+            populateCategoryFilter(data.products);
+          }
+          renderProducts(data.products);
+        } else {
+          productsContainer.innerHTML =
+            "<p>No products found matching your search.</p>";
+          if (resultsCount) resultsCount.textContent = "Showing 0 products";
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        productsContainer.innerHTML = "<p>Unable to load products.</p>";
+      });
+  }
 
   function renderProducts(products) {
+    // Client-side Price Filtering (since it's a range slider/input often done locally for speed)
+    // But for consistency let's filter the list we got from server by price
+    const maxPrice =
+      priceFilter && priceFilter.value
+        ? parseFloat(priceFilter.value)
+        : Infinity;
+
+    const filteredProducts = products.filter(
+      (p) => parseFloat(p.price) <= maxPrice
+    );
+
     productsContainer.innerHTML = "";
 
-    if (!products || products.length === 0) {
-      productsContainer.innerHTML = "<p>No products available right now.</p>";
+    if (filteredProducts.length === 0) {
+      productsContainer.innerHTML =
+        "<p style='text-align: center; width: 100%'>No products found matching your criteria.</p>";
       if (resultsCount) resultsCount.textContent = "Showing 0 products";
       return;
     }
 
-    products.forEach((product) => {
-      // Create Card
+    filteredProducts.forEach((product) => {
       const card = document.createElement("div");
       card.className = "card";
-      // Store data for filtering (Attributes instead of dataset)
-      card.setAttribute(
-        "data-category",
-        (product.category || "vegetables").toLowerCase()
-      );
-      card.setAttribute("data-name", (product.name || "").toLowerCase());
-      card.setAttribute("data-price", product.price);
-
       const imgSrc = `../../Images/products/${product.image}`;
-
-      const stars = `
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-      `;
 
       card.innerHTML = `
             <div class="card-badge in-stock">In Stock</div>
             <img src="${imgSrc}" alt="${product.name}" onerror="this.src='../../Images/logo.png'">
             <h3>${product.name}</h3>
-            <div class="rating">${stars}</div>
             <p class="para">Rs ${product.price}<span class="unit">/kg</span></p>
             <div class="card-actions">
                  <button class="card-btn add-cart-btn" data-id="${product.product_id}">Add to Cart</button>
             </div>
       `;
 
-      // Click event for details
       card.addEventListener("click", (e) => {
         if (!e.target.classList.contains("add-cart-btn")) {
           window.location.href = `../Product/product_details.html?id=${product.product_id}`;
@@ -88,11 +118,10 @@ document.addEventListener("DOMContentLoaded", () => {
       productsContainer.appendChild(card);
     });
 
-    // Attach Add to Cart Listeners
     attachCartListeners();
-
-    // Initial Filter Run (to update counts)
-    filterProducts();
+    if (resultsCount) {
+      resultsCount.textContent = `Showing ${filteredProducts.length} products`;
+    }
   }
 
   function attachCartListeners() {
@@ -108,102 +137,42 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- DYNAMIC CATEGORY POPULATION ---
-  function populateCategoryFilter(products) {
-    if (!categoryFilter) return;
-
-    // 1. Extract Unique Categories
+  function populateCategoryFilter(allProductsForRef) {
+    if (!categoryFilter || categoryFilter.options.length > 1) return;
     const categories = new Set();
-    products.forEach((p) => {
-      if (p.category && p.category.trim() !== "") {
-        categories.add(p.category.trim());
-      }
+    allProductsForRef.forEach((p) => {
+      if (p.category) categories.add(p.category.trim());
     });
-
-    // 2. Preserve existing selection if possible
-    const currentSelection = categoryFilter.value;
-
-    // 3. Rebuild Options
-    // Keep the first "All Categories" option
-    categoryFilter.innerHTML = '<option value="">All Categories</option>';
-
     categories.forEach((cat) => {
       const option = document.createElement("option");
-      option.value = cat.toLowerCase(); // Value is lowercase for matching
-
-      // Display Mapping (Visualize Herbs as Spices)
-      if (cat.toLowerCase() === "herbs") {
-        option.textContent = "Spices";
-      } else {
-        option.textContent = cat;
-      }
-
+      option.value = cat.toLowerCase();
+      option.textContent = cat;
       categoryFilter.appendChild(option);
     });
-
-    // Restore selection if it still exists
-    if (
-      [...categoryFilter.options].some((opt) => opt.value === currentSelection)
-    ) {
-      categoryFilter.value = currentSelection;
-    }
   }
 
-  // --- FILTER LOGIC ---
-  function filterProducts() {
-    // Safety check for elements
-    if (!productsContainer) return;
-
-    // Get filter values (safe defaults)
-    const searchTerm = searchInput
-      ? searchInput.value.toLowerCase().trim()
-      : "";
-    const maxPrice =
-      priceFilter && priceFilter.value
-        ? parseFloat(priceFilter.value)
-        : Infinity;
-    const selectedCategory = categoryFilter
-      ? categoryFilter.value.toLowerCase()
-      : "";
-
-    const cards = productsContainer.querySelectorAll(".card");
-    let visibleCount = 0;
-
-    cards.forEach((card) => {
-      const name = card.getAttribute("data-name") || "";
-      const price = parseFloat(card.getAttribute("data-price")) || 0;
-      const category = card.getAttribute("data-category") || "";
-
-      // Logic
-      const matchesSearch = name.includes(searchTerm);
-      const matchesPrice = price <= maxPrice;
-      const matchesCategory =
-        selectedCategory === "" || category === selectedCategory;
-
-      if (matchesSearch && matchesPrice && matchesCategory) {
-        card.style.display = "block";
-        visibleCount++;
-      } else {
-        card.style.display = "none";
-      }
+  // Event Listeners
+  if (searchInput) {
+    searchInput.addEventListener("keypress", (e) => {
+      fetchProducts();
     });
-
-    if (resultsCount) {
-      resultsCount.textContent = `Showing ${visibleCount} of ${cards.length} products`;
-    }
   }
 
-  // Attach Filter Event Listeners
-  if (searchInput) searchInput.addEventListener("input", filterProducts);
-  if (priceFilter) priceFilter.addEventListener("input", filterProducts);
-  if (categoryFilter) categoryFilter.addEventListener("change", filterProducts);
+  if (categoryFilter) categoryFilter.addEventListener("change", fetchProducts);
+  if (priceFilter)
+    priceFilter.addEventListener("input", () => {
+      // Re-render current products with price filter
+      // We fetch again to be safe with server state, or just re-render local.
+      // Let's fetch for server-side search/cat consistency.
+      fetchProducts();
+    });
 
   if (clearButton) {
     clearButton.addEventListener("click", () => {
       if (searchInput) searchInput.value = "";
       if (priceFilter) priceFilter.value = "";
       if (categoryFilter) categoryFilter.value = "";
-      filterProducts();
+      fetchProducts();
     });
   }
 });

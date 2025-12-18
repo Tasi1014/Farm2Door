@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 session_start();
 include 'connection.php';
 
@@ -126,3 +126,70 @@ try {
 echo json_encode($response);
 mysqli_close($conn);
 ?>
+
+ -->
+
+
+ <?php
+session_start();
+require "connection.php";
+
+if (!isset($_SESSION['customer_id'])) {
+    echo json_encode(["success" => false, "message" => "Unauthorized"]);
+    exit;
+}
+
+$data = json_decode(file_get_contents("php://input"), true);
+
+$customer_id = $_SESSION['customer_id'];
+$phone = $data['phone'];
+$address = $data['address'];
+$payment_method = $data['payment_method'];
+
+$conn->begin_transaction();
+
+try {
+    // 1. Create order
+    $stmt = $conn->prepare("
+        INSERT INTO orders (customer_id, phone, address, payment_method, order_status)
+        VALUES (?, ?, ?, ?, 'PENDING')
+    ");
+    $stmt->bind_param("isss", $customer_id, $phone, $address, $payment_method);
+    $stmt->execute();
+    $order_id = $stmt->insert_id;
+
+    // 2. Fetch cart
+    $cart = $conn->query("
+        SELECT c.product_id, c.quantity, p.price, p.farmer_id
+        FROM cart c
+        JOIN products p ON c.product_id = p.product_id
+        WHERE c.customer_id = $customer_id
+    ");
+
+    while ($row = $cart->fetch_assoc()) {
+        $stmt = $conn->prepare("
+            INSERT INTO order_items
+            (order_id, product_id, farmer_id, quantity, price, item_status)
+            VALUES (?, ?, ?, ?, ?, 'PENDING')
+        ");
+        $stmt->bind_param(
+            "iiiid",
+            $order_id,
+            $row['product_id'],
+            $row['farmer_id'],
+            $row['quantity'],
+            $row['price']
+        );
+        $stmt->execute();
+    }
+
+    // 3. Clear cart
+    $conn->query("DELETE FROM cart WHERE customer_id = $customer_id");
+
+    $conn->commit();
+    echo json_encode(["success" => true]);
+
+} catch (Exception $e) {
+    $conn->rollback();
+    echo json_encode(["success" => false, "message" => "Order failed"]);
+}

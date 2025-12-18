@@ -9,16 +9,36 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 0;
 
 // Join with farmer_registration to get the farmer's name (LEFT JOIN to show products even if farmer missing)
+// Filters
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$category = isset($_GET['category']) ? trim($_GET['category']) : '';
+
+// Base query
 $sql = "SELECT p.*, f.firstName, f.lastName 
         FROM products p 
         LEFT JOIN farmer_registration f ON p.farmer_id = f.farmer_id";
 
-// Filter
+// Build WHERE clause
+$where_clauses = [];
 if ($id > 0) {
-    $sql .= " WHERE p.product_id = $id";
-} else {
-    $sql .= " ORDER BY p.created_at DESC";
+    $where_clauses[] = "p.product_id = " . intval($id);
 }
+if (!empty($search)) {
+    // Escape search term for security
+    $escaped_search = mysqli_real_escape_string($conn, $search);
+    $where_clauses[] = "p.name LIKE '%$escaped_search%'";
+}
+if (!empty($category)) {
+    $escaped_cat = mysqli_real_escape_string($conn, $category);
+    $where_clauses[] = "p.category = '$escaped_cat'";
+}
+
+if (!empty($where_clauses)) {
+    $sql .= " WHERE " . implode(" AND ", $where_clauses);
+}
+
+// Order and Limit
+$sql .= " ORDER BY p.created_at DESC";
 
 if ($limit > 0 && $id == 0) {
     $sql .= " LIMIT $limit";

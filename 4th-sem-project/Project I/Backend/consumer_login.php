@@ -1,38 +1,22 @@
 <?php
-// Prevent caching
-header("Cache-Control: no-cache, no-store, must-revalidate");
-header("Pragma: no-cache");
-header("Expires: 0");
 
-// Standardize Session
 session_set_cookie_params(0, '/');
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-// Buffer Output to catch any spurious text/errors
-error_reporting(E_ALL);
-ini_set('display_errors', 0);
-ob_start();
-
 include 'connection.php';
-
-// Clear buffer before sending JSON
-ob_clean();
 header('Content-Type: application/json');
-
 $response = [
     'success' => false,
     'message' => '',
     'errors' => []
 ];
-
 try {
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $email = isset($_POST['consumer-email']) ? trim($_POST['consumer-email']) : '';
         $password = isset($_POST['consumer-password']) ? trim($_POST['consumer-password']) : '';
         $remember = isset($_POST['c-chk']);
-
+        
         // Validation
         if (empty($email)) {
             $response['errors']['email'] = "Email cannot be empty!";

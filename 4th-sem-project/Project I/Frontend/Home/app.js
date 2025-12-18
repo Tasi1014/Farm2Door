@@ -1,10 +1,10 @@
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
+const hamburger = document.querySelector(".hamburger");
+const navLinks = document.querySelector(".nav-links");
 const shopNow = document.getElementById("shop");
 
 // Function to scroll to products section
 function goToProducts() {
-  document.getElementById("product").scrollIntoView({behavior: "smooth"});
+  document.getElementById("product").scrollIntoView({ behavior: "smooth" });
 }
 
 shopNow.addEventListener("click", (e) => {
@@ -12,18 +12,16 @@ shopNow.addEventListener("click", (e) => {
   goToProducts();
 });
 
-
-hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('mobile-active');
+hamburger.addEventListener("click", () => {
+  navLinks.classList.toggle("mobile-active");
 });
 
-
 // Hero Background Slider
-const hero = document.querySelector('.hero');
+const hero = document.querySelector(".hero");
 const heroImages = [
-  '../../Images/hero.jpg',
-  '../../Images/hero3.jpg',
-  '../../Images/hero4.jpg'
+  "../../Images/hero.jpg",
+  "../../Images/hero3.jpg",
+  "../../Images/hero4.jpg",
 ];
 
 let heroIndex = 0;
@@ -43,12 +41,35 @@ setInterval(() => {
 }, 4000);
 
 // Manual navigation
-document.getElementById('hero-prev').addEventListener('click', () => {
+document.getElementById("hero-prev").addEventListener("click", () => {
   heroIndex = (heroIndex - 1 + heroImages.length) % heroImages.length;
   updateHeroBackground();
 });
 
-document.getElementById('hero-next').addEventListener('click', () => {
+document.getElementById("hero-next").addEventListener("click", () => {
   heroIndex = (heroIndex + 1) % heroImages.length;
   updateHeroBackground();
 });
+// Search Logic
+const searchInput = document.getElementById("search");
+const searchIcon = document.getElementById("icon");
+
+function handleSearch() {
+  const query = searchInput.value.trim();
+  if (query) {
+    // Redirect to Products page
+    window.location.href = `../Product/product.html?search=${encodeURIComponent(
+      query
+    )}`;
+  }
+}
+
+if (searchInput) {
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") handleSearch();
+  });
+}
+
+if (searchIcon) {
+  searchIcon.addEventListener("click", handleSearch);
+}
