@@ -93,7 +93,7 @@ function setupCartIcon() {
       openCartModal();
     };
   } else {
-    console.error("Cart Icon (id='cart') NOT FOUND in DOM");
+    // console.log("Cart Icon (id='cart') NOT FOUND - skipping setup.");
   }
 }
 

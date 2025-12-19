@@ -5,11 +5,28 @@ document.addEventListener("DOMContentLoaded", () => {
   // 2. Load Cart Items
   loadCartSummary();
 
-  // 3. Handle Place Order
+  // 3. Handle Payment Option UI
+  setupPaymentOptions();
+
+  // 4. Handle Place Order
   document
     .getElementById("placeOrderBtn")
     .addEventListener("click", placeOrder);
 });
+
+function setupPaymentOptions() {
+  const options = document.querySelectorAll(".payment-option");
+  options.forEach((option) => {
+    option.addEventListener("click", function () {
+      // Remove selected class from all
+      options.forEach((opt) => opt.classList.remove("selected"));
+      // Add to clicked
+      this.classList.add("selected");
+      // Check the radio inside
+      this.querySelector('input[type="radio"]').checked = true;
+    });
+  });
+}
 
 async function checkAuthAndLoadData() {
   try {
@@ -29,9 +46,7 @@ async function checkAuthAndLoadData() {
       document.getElementById("fullName").value = data.name || "";
     }
 
-    // Backend 'get_user_info.php' might not return Phone/Address currently.
-    // We should check that file. If it doesn't, we might need to update it
-    // OR just let user fill it. For now, we try.
+    
     if (data.phone) document.getElementById("phone").value = data.phone;
     if (data.address) document.getElementById("address").value = data.address;
   } catch (err) {
@@ -83,6 +98,13 @@ function placeOrder() {
   const notes = document.getElementById("notes").value.trim();
   const payment = document.querySelector('input[name="payment"]:checked').value;
 
+  if (payment === "ONLINE") {
+    alert(
+      "Online Payment feature is coming soon! Please use Cash on Delivery for now."
+    );
+    return;
+  }
+
   if (!name || !phone || !address) {
     alert("Please fill in all delivery details.");
     return;
@@ -128,4 +150,3 @@ function placeOrder() {
       btn.innerText = "Confirm Order";
     });
 }
-

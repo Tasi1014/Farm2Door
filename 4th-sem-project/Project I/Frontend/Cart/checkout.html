@@ -6,7 +6,7 @@
     <title>Checkout - Farm2Door</title>
     <link rel="stylesheet" href="../css/navbar.css" />
     <link rel="stylesheet" href="../css/components.css" />
-    <link rel="stylesheet" href="../Home/style.css">
+    <link rel="stylesheet" href="../Home/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -14,7 +14,7 @@
     <style>
       body {
         background-color: #f9f9f9;
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
       }
       .checkout-container {
         max-width: 1200px;
@@ -196,15 +196,12 @@
               </p>
             </div>
           </label>
-          <label
-            class="payment-option"
-            style="opacity: 0.6; cursor: not-allowed"
-          >
-            <input type="radio" name="payment" value="ONLINE" disabled />
+          <label class="payment-option" id="onlinePaymentLabel">
+            <input type="radio" name="payment" value="ONLINE" />
             <div>
               <strong>Online Payment (Esewa/Khalti)</strong>
               <p style="font-size: 0.9rem; color: #666; margin: 0">
-                Coming Soon...
+                Pay securely via your digital wallet.
               </p>
             </div>
           </label>
@@ -245,7 +242,7 @@
         </button>
       </div>
     </div>
-     <footer>
+    <footer>
       <p>&copy; 2025 Farm2Door. All rights reserved.</p>
       <div class="socials">
         <a href="javascript:void(0)"><i class="fa-brands fa-facebook-f"></i></a>
@@ -257,7 +254,7 @@
     <!-- Scripts -->
     <script src="checkout.js"></script>
     <script src="../js/auth.js"></script>
-        <script src="../js/load_products.js"></script>
+    <script src="../js/load_products.js"></script>
     <script src="../js/cart.js"></script>
   </body>
 </html>

@@ -71,6 +71,19 @@ function renderProductDetails(product) {
             <div class="product-price">
                  Rs ${product.price} <span>/kg</span>
             </div>
+
+            <!-- Farmer Information -->
+            <div class="detail-farmer-box">
+                <i class="fas fa-user-tie"></i>
+                <div class="detail-farmer-info">
+                    <h4>Sold by</h4>
+                    <p class="detail-farmer-name">${
+                      product.firstName && product.lastName
+                        ? `${product.firstName} ${product.lastName}`
+                        : "Local Farmer"
+                    }</p>
+                </div>
+            </div>
             
             <div class="stock-status">
                 ${stockStatusHTML} 

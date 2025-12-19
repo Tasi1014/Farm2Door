@@ -55,8 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((data) => {
         if (data.success) {
           if (
-            !categoryFilter.options.length ||
-            categoryFilter.options.length <= 1
+            categoryFilter &&
+            (!categoryFilter.options.length ||
+              categoryFilter.options.length <= 1)
           ) {
             populateCategoryFilter(data.products);
           }
@@ -99,10 +100,19 @@ document.addEventListener("DOMContentLoaded", () => {
       card.className = "card";
       const imgSrc = `../../Images/products/${product.image}`;
 
+      const farmerName =
+        product.firstName && product.lastName
+          ? `${product.firstName} ${product.lastName}`
+          : "Local Farmer";
+
       card.innerHTML = `
             <div class="card-badge in-stock">In Stock</div>
             <img src="${imgSrc}" alt="${product.name}" onerror="this.src='../../Images/logo.png'">
             <h3>${product.name}</h3>
+            <div class="farmer-label">
+                <i class="fas fa-tractor"></i>
+                <span>Sold by: <span class="farmer-name">${farmerName}</span></span>
+            </div>
             <p class="para">Rs ${product.price}<span class="unit">/kg</span></p>
             <div class="card-actions">
                  <button class="card-btn add-cart-btn" data-id="${product.product_id}">Add to Cart</button>
