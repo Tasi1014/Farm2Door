@@ -46,7 +46,6 @@ async function checkAuthAndLoadData() {
       document.getElementById("fullName").value = data.name || "";
     }
 
-    
     if (data.phone) document.getElementById("phone").value = data.phone;
     if (data.address) document.getElementById("address").value = data.address;
   } catch (err) {
@@ -98,13 +97,7 @@ function placeOrder() {
   const notes = document.getElementById("notes").value.trim();
   const payment = document.querySelector('input[name="payment"]:checked').value;
 
-  if (payment === "ONLINE") {
-    alert(
-      "Online Payment feature is coming soon! Please use Cash on Delivery for now."
-    );
-    return;
-  }
-
+  // Validation
   if (!name || !phone || !address) {
     alert("Please fill in all delivery details.");
     return;
@@ -115,9 +108,9 @@ function placeOrder() {
     return;
   }
 
-  // Disable button
+  // UI Feedback
   btn.disabled = true;
-  btn.innerText = "Processing...";
+  btn.innerText = "Processing Order...";
 
   const payload = {
     full_name: name,
@@ -127,6 +120,7 @@ function placeOrder() {
     payment_method: payment,
   };
 
+  // Step 1: Create the Order in the Backend
   fetch("../../Backend/place_order.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -135,10 +129,61 @@ function placeOrder() {
     .then((res) => res.json())
     .then((data) => {
       if (data.success) {
-        // Redirect to success page
-        window.location.href = "order_success.html";
+        if (payment === "ONLINE") {
+          btn.innerText = "Redirecting to eSewa...";
+
+          // Step 2: Initialize eSewa Payment Context
+          fetch("../../Backend/payments/esewa_init.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ transaction_uuid: data.transaction_uuid }), // Optional: pass UUID for logging
+          })
+            .then((res) => res.json())
+            .then((initData) => {
+              if (initData.success) {
+                // Step 3: Populate Hidden eSewa Form & Submit
+                const form = document.getElementById("esewaForm");
+                const d = initData.esewa_data;
+
+                document.getElementById("esewa_amount").value = d.amount;
+                document.getElementById("esewa_tax_amount").value =
+                  d.tax_amount;
+                document.getElementById("esewa_total_amount").value =
+                  d.total_amount;
+                document.getElementById("esewa_transaction_uuid").value =
+                  d.transaction_uuid;
+                document.getElementById("esewa_product_code").value =
+                  d.product_code;
+                document.getElementById("esewa_product_service_charge").value =
+                  d.product_service_charge;
+                document.getElementById("esewa_product_delivery_charge").value =
+                  d.product_delivery_charge;
+                document.getElementById("esewa_signed_field_names").value =
+                  d.signed_field_names;
+                document.getElementById("esewa_signature").value = d.signature;
+                document.getElementById("esewa_success_url").value =
+                  d.success_url;
+                document.getElementById("esewa_failure_url").value =
+                  d.failure_url;
+
+                console.log("Submitting to eSewa Testing (RC/UAT)...");
+                form.submit();
+              } else {
+                throw new Exception(initData.message || "Payment init failed");
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+              alert("Payment Error: " + err.message);
+              btn.disabled = false;
+              btn.innerText = "Confirm Order";
+            });
+        } else {
+          // Success for COD
+          window.location.href = "order_success.html";
+        }
       } else {
-        alert("Order Failed: " + data.message);
+        alert("Order Error: " + data.message);
         btn.disabled = false;
         btn.innerText = "Confirm Order";
       }

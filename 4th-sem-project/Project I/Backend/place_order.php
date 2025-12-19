@@ -112,30 +112,49 @@ try {
 
     list($cartItems, $total_amount) = fetchCartItems($conn, $customer_id);
 
-    mysqli_begin_transaction($conn);
-
-    $order_id = insertOrder($conn, $customer_id, $total_amount, $full_name, $phone, $address, $notes);
-    insertPayment($conn, $order_id, $payment_method);
-
     if ($payment_method === 'COD') {
-        insertOrderItemsAndUpdateStock($conn, $order_id, $cartItems);
-        clearCart($conn, $customer_id);
+        mysqli_begin_transaction($conn);
+        try {
+            $order_id = insertOrder($conn, $customer_id, $total_amount, $full_name, $phone, $address, $notes);
+            insertPayment($conn, $order_id, $payment_method);
+            insertOrderItemsAndUpdateStock($conn, $order_id, $cartItems);
+            clearCart($conn, $customer_id);
+            mysqli_commit($conn);
+
+            $response['success'] = true;
+            $response['message'] = "Order placed with Cash on Delivery.";
+            $response['order_id'] = $order_id;
+        } catch (Exception $e) {
+            if (isset($conn)) mysqli_rollback($conn);
+            throw $e;
+        }
+    } else {
+        // For ONLINE payment: Store in session for later insertion
+        // Generate a temporary transaction_uuid to link the payment
+        $temp_uuid = date('YmdHis') . "-" . $customer_id . "-" . bin2hex(random_bytes(4));
+
+        $_SESSION['pending_order'] = [
+            'customer_id' => $customer_id,
+            'total_amount' => $total_amount,
+            'full_name' => $full_name,
+            'phone' => $phone,
+            'address' => $address,
+            'notes' => $notes,
+            'cart_items' => $cartItems,
+            'payment_method' => $payment_method,
+            'transaction_uuid' => $temp_uuid,
+            'created_at' => time()
+        ];
 
         $response['success'] = true;
-        $response['message'] = "Order placed with Cash on Delivery.";
-        $response['order_id'] = $order_id;
-    } else {
-        // For ONLINE payment
-        $response['success'] = true;
-        $response['message'] = "Redirect to online payment gateway.";
-        $response['order_id'] = $order_id;
+        $response['message'] = "Order data prepared. Proceed to payment.";
         $response['payment_required'] = true;
+        $response['payment_method'] = 'ONLINE';
+        $response['transaction_uuid'] = $temp_uuid;
     }
 
-    mysqli_commit($conn);
-
 } catch (Exception $e) {
-    mysqli_rollback($conn);
+    if (isset($conn) && $payment_method === 'COD') mysqli_rollback($conn);
     $response['message'] = $e->getMessage();
 }
 

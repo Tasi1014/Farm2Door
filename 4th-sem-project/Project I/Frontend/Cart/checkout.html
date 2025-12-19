@@ -256,5 +256,60 @@
     <script src="../js/auth.js"></script>
     <script src="../js/load_products.js"></script>
     <script src="../js/cart.js"></script>
+    <!-- Hidden eSewa Payment Form (v2 API) -->
+    <form
+      id="esewaForm"
+      action="https://rc-epay.esewa.com.np/api/epay/main/v2/form"
+      method="POST"
+      style="display: none"
+    >
+      <input type="text" id="esewa_amount" name="amount" required />
+      <input
+        type="text"
+        id="esewa_tax_amount"
+        name="tax_amount"
+        value="0"
+        required
+      />
+      <input type="text" id="esewa_total_amount" name="total_amount" required />
+      <input
+        type="text"
+        id="esewa_transaction_uuid"
+        name="transaction_uuid"
+        required
+      />
+      <input
+        type="text"
+        id="esewa_product_code"
+        name="product_code"
+        value="EPAYTEST"
+        required
+      />
+      <input
+        type="text"
+        id="esewa_product_service_charge"
+        name="product_service_charge"
+        value="0"
+        required
+      />
+      <input
+        type="text"
+        id="esewa_product_delivery_charge"
+        name="product_delivery_charge"
+        value="0"
+        required
+      />
+      <input type="text" id="esewa_success_url" name="success_url" required />
+      <input type="text" id="esewa_failure_url" name="failure_url" required />
+      <input
+        type="text"
+        id="esewa_signed_field_names"
+        name="signed_field_names"
+        value="total_amount,transaction_uuid,product_code"
+        required
+      />
+      <input type="text" id="esewa_signature" name="signature" required />
+      <input type="submit" value="Submit" />
+    </form>
   </body>
 </html>
