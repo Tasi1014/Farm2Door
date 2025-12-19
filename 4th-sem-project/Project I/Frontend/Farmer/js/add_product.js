@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Add Product Script Loaded");
-  // alert("Debug: Script Loaded"); // Uncomment if needed for visible test
   const addProductForm = document.querySelector("form");
   const addBtn = document.querySelector(".add-btn");
 
@@ -55,10 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {
-            alert(data.message); // Simple alert as requested for simplicity
+            alert(data.message); //shows added product successfully
             addProductForm.reset();
-            // Optional: Redirect to view products
-            // window.location.href = "view-products.html";
           } else {
             // Check if errors object has any keys
             if (data.errors && Object.keys(data.errors).length > 0) {

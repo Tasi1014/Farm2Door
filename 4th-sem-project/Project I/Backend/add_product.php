@@ -19,7 +19,7 @@ if (!isset($_SESSION['farmer_id'])) {
 
 $farmer_id = $_SESSION['farmer_id'];
 
-// 1.5 Ensure Table Exists
+// Ensure Table Exists
 $createTableSql = "CREATE TABLE IF NOT EXISTS `products` (
     `product_id` INT(11) NOT NULL AUTO_INCREMENT,
     `farmer_id` INT(11) NOT NULL,
@@ -41,19 +41,19 @@ if (!mysqli_query($conn, $createTableSql)) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // 2. Get Input
+    // Get Input
     $name = isset($_POST['productName']) ? trim($_POST['productName']) : '';
     $category = isset($_POST['category']) ? trim($_POST['category']) : '';
     $price = isset($_POST['price']) ? trim($_POST['price']) : '';
     $quantity = isset($_POST['quantity']) ? trim($_POST['quantity']) : '';
     $description = isset($_POST['description']) ? trim($_POST['description']) : '';
     
-    // 3. Validation
+    //Validation
     if (empty($name)) $response['errors']['name'] = "Product name is required.";
     if (empty($price) || !is_numeric($price)) $response['errors']['price'] = "Valid price is required.";
     if (empty($quantity) || !is_numeric($quantity)) $response['errors']['quantity'] = "Valid quantity is required.";
     
-    // 4. Handle Image Upload
+    //Handle Image Upload
     $imagePath = '';
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['image']['tmp_name'];
@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if (empty($response['errors'])) {
-        // 5. Insert into Database
+        // Insert into Database
         $sql = "INSERT INTO `products` (farmer_id, name, category, price, stock_quantity, description, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($conn, $sql);
         

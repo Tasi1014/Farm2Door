@@ -9,6 +9,15 @@ if (!$data) {
     header("Location: ../../Frontend/Cart/checkout.html?error=No response from eSewa");
     exit;
 }
+/* Data Payload
+{
+  "status": "COMPLETE",
+  "transaction_uuid": "20251219-12345",
+  "total_amount": "1000",
+  "transaction_code": "ABC123XYZ"
+}
+*/
+
 
 // Decode eSewa response
 $decoded_data = json_decode(base64_decode($data), true);
@@ -21,6 +30,35 @@ if (!$decoded_data || $decoded_data['status'] !== 'COMPLETE') {
 $transaction_uuid = $decoded_data['transaction_uuid'];
 $total_amount = $decoded_data['total_amount'];
 $transaction_code = $decoded_data['transaction_code'];
+$product_code = $decoded_data['product_code'] ?? 'EPAYTEST';
+
+$queryParams = http_build_query([
+    'product_code' => $product_code,
+    'total_amount' => $total_amount,
+    'transaction_uuid' => $transaction_uuid
+]);
+$verifyUrl = "https://rc-epay.esewa.com.np/api/epay/transaction/status/?" . $queryParams;
+
+$ch = curl_init($verifyUrl);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+if ($response === false) {
+    error_log("eSewa Verification Curl Error");
+    header("Location: ../../Frontend/Cart/checkout.html?error=Verification request network error");
+    exit;
+}
+
+$result = json_decode($response, true);
+if (!$result || $result['status'] !== 'COMPLETE') {
+    error_log("eSewa Verification Failed: Status=" . ($result['status'] ?? 'Unknown'));
+    header("Location: ../../Frontend/Cart/checkout.html?error=Payment verification failed");
+    exit;
+}
+
+
 
 // New Flow: Retrieve pending order from session
 if (!isset($_SESSION['pending_order'])) {
