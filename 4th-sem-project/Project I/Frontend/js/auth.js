@@ -2,13 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Auth script loaded");
   checkAuth();
 
-  const logoutBtn = document.getElementById("logout-btn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", (e) => {
+  // Use event delegation for logout button as it might be replaced dynamically
+  document.addEventListener("click", (e) => {
+    if (e.target.id === "logout-btn" || e.target.closest("#logout-btn")) {
       e.preventDefault();
       logout();
-    });
-  }
+    }
+  });
 });
 
 // Prepare page revalidation for back button
@@ -48,7 +48,24 @@ function checkAuth() {
 
         if (profileLink) {
           profileLink.style.display = "block";
-          userNameSpan.textContent = data.name;
+          const profileBtn = profileLink.querySelector("#profile-btn");
+          const profileDropdown =
+            profileLink.querySelector("#profile-dropdown");
+
+          if (profileBtn) {
+            profileBtn.innerHTML = `<i class="fa-solid fa-user"></i> <span>${data.name}</span>`;
+          }
+          if (profileDropdown) {
+            profileDropdown.innerHTML = `
+                    <a href="../Orders/orders.html">My Orders</a>
+                    <a href="#" id="logout-btn">Logout</a>
+                `;
+          } else {
+            // Fallback if the dropdown structure isn't present, use original userNameSpan
+            if (userNameSpan) {
+              userNameSpan.textContent = data.name;
+            }
+          }
         }
       } else {
         // User is not logged in
