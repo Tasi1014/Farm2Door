@@ -28,6 +28,8 @@ try {
     $result = mysqli_stmt_get_result($stmt);
     $order = mysqli_fetch_assoc($result);
 
+    $reason = $input['reason'] ?? 'Cancelled by customer';
+
     if (!$order || $order['customer_id'] != $_SESSION['customer_id']) {
         throw new Exception("Unauthorized or order not found");
     }
@@ -35,6 +37,8 @@ try {
     if ($order['order_status'] !== 'Processing' && $order['order_status'] !== 'Pending') {
         throw new Exception("Only processing orders can be cancelled.");
     }
+
+    $old_status = $order['order_status'];
 
     // 2. Fetch items to restore stock
     $itemsSql = "SELECT product_id, quantity FROM order_items WHERE order_id = ?";
@@ -50,10 +54,10 @@ try {
         mysqli_stmt_execute($restoreStmt);
     }
 
-    // 3. Update order status
-    $updateOrderSql = "UPDATE orders SET order_status = 'Cancelled' WHERE order_id = ?";
+    // 3. Update order status and reason
+    $updateOrderSql = "UPDATE orders SET order_status = 'Cancelled', cancellation_reason = ? WHERE order_id = ?";
     $updateOrderStmt = mysqli_prepare($conn, $updateOrderSql);
-    mysqli_stmt_bind_param($updateOrderStmt, "i", $order_id);
+    mysqli_stmt_bind_param($updateOrderStmt, "si", $reason, $order_id);
     mysqli_stmt_execute($updateOrderStmt);
 
     // 4. Update payment status
@@ -68,6 +72,13 @@ try {
     $updatePayStmt = mysqli_prepare($conn, $updatePaySql);
     mysqli_stmt_bind_param($updatePayStmt, "i", $order_id);
     mysqli_stmt_execute($updatePayStmt);
+
+    // 5. Log the status change
+    $logSql = "INSERT INTO order_status_logs (order_id, old_status, new_status, actor_type, actor_id, rejection_reason) 
+               VALUES (?, ?, 'Cancelled', 'Customer', ?, ?)";
+    $logStmt = mysqli_prepare($conn, $logSql);
+    mysqli_stmt_bind_param($logStmt, "iiss", $order_id, $old_status, $_SESSION['customer_id'], $reason);
+    mysqli_stmt_execute($logStmt);
 
     mysqli_commit($conn);
     echo json_encode(['success' => true, 'message' => 'Order cancelled successfully']);

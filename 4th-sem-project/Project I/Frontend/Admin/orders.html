@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orders - Admin Dashboard</title>
-    <link rel="stylesheet" href="admin.css" />
+    <link rel="stylesheet" href="admin-orders.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -75,38 +75,68 @@
         </div>
       </div>
 
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Consumer</th>
-              <th>Product</th>
-              <th>Amount</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody id="ordersTableBody">
-            <!-- Mock Data -->
-            <tr>
-              <td>#ORD-001</td>
-              <td>Hari Krishna</td>
-              <td>Fresh Tomato (5kg)</td>
-              <td>Rs. 250</td>
-              <td>2023-10-25</td>
-            </tr>
-            <tr>
-              <td>#ORD-002</td>
-              <td>Gita Sharma</td>
-              <td>Organic Potato (10kg)</td>
-              <td>Rs. 400</td>
-              <td>2023-10-26</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="orders-tabs">
+        <button class="tab-btn active" onclick="setFilter('dispatched')">
+          From Farmers
+        </button>
+        <button class="tab-btn" onclick="setFilter('pickup')">
+          Ready for Pickup
+        </button>
+        <button class="tab-btn" onclick="setFilter('collected')">
+          Collected
+        </button>
+        <button class="tab-btn" onclick="setFilter('cancelled')">
+          Cancelled/Refunds
+        </button>
+      </div>
+
+      <div id="orders-container" class="orders-list">
+        <!-- Orders will be loaded here dynamically -->
+        <p>Loading orders...</p>
       </div>
     </div>
 
-    <script src="admin.js"></script>
+    <!-- Order Detail Modal -->
+    <div id="orderModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div id="modal-details"></div>
+      </div>
+    </div>
+
+    <!-- Refund Processing Modal -->
+    <div id="refundModal" class="modal">
+      <div class="modal-content" style="max-width: 450px">
+        <h3>Process Refund</h3>
+        <div id="refund-info" style="margin: 15px 0; line-height: 1.8">
+          <!-- Breakdown will be injected here via JS -->
+        </div>
+        <div
+          style="
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 15px;
+          "
+        >
+          <button
+            class="btn-detail"
+            onclick="closeRefundModal()"
+            style="background: #eee; color: #333"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn-cancel"
+            id="confirmRefundBtn"
+            onclick="submitRefund()"
+          >
+            Confirm Refund
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/admin-orders.js"></script>
   </body>
 </html>

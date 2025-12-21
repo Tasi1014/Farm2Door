@@ -51,7 +51,7 @@ function insertOrder($conn, $customer_id, $total_amount, $full_name, $phone, $ad
 }
 
 function insertPayment($conn, $order_id, $payment_method) {
-    $status = ($payment_method === 'COD') ? 'Pending' : 'Initiated';
+    $status = 'Pending'; 
     $paySql = "INSERT INTO payments (order_id, payment_method, payment_status, amount_paid)
                VALUES (?, ?, ?, 0.00)";
     $stmt = mysqli_prepare($conn, $paySql);

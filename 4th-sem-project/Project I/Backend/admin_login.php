@@ -1,4 +1,5 @@
 <?php
+session_set_cookie_params(0, '/');
 session_start();
 
 header('Content-Type: application/json');
@@ -32,6 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Check Credentials
         if ($email === $admin_email && $password === $admin_pass) {
             // Login Success
+            $_SESSION['admin_id'] = 1; // Static ID for the single admin
+            $_SESSION['admin_email'] = $email;
+            
             $response['success'] = true;
             $response['message'] = "Logged In successfully";
         } else {

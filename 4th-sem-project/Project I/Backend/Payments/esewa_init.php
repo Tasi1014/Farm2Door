@@ -13,7 +13,6 @@ try {
     if (!isset($_SESSION['customer_id'])) {
         throw new Exception("Please login to proceed.");
     }
-
     // New Flow: Check session for pending order
     if (!isset($_SESSION['pending_order'])) {
         throw new Exception("No pending order found. Please try checkout again.");

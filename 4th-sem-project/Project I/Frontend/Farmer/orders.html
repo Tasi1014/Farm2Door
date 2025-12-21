@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orders - Farm2Door</title>
-    <link rel="stylesheet" href="farmer.css" />
+    <link rel="stylesheet" href="farmer-orders.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -62,26 +62,39 @@
         </div>
       </div>
 
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Customer</th>
-              <th>Product</th>
-              <th>Quantity</th>
-              <th>Total</th>
+      <div class="orders-tabs">
+        <button class="tab-btn active" onclick="setFilter('pending')">Received</button>
+        <button class="tab-btn" onclick="setFilter('processing')">Processing</button>
+        <button class="tab-btn" onclick="setFilter('fulfilled')">Fulfilled</button>
+        <button class="tab-btn" onclick="setFilter('cancelled')">Cancelled/Rejected</button>
+      </div>
 
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-          </tbody>
-        </table>
+      <div id="orders-container" class="orders-list">
+        <!-- Orders will be loaded here dynamically -->
+        <p>Loading orders...</p>
+      </div>
+    </div>
+
+    <!-- Order Detail Modal -->
+    <div id="orderModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div id="modal-details"></div>
+      </div>
+    </div>
+
+    <!-- Rejection Modal -->
+    <div id="rejectionModal" class="modal">
+      <div class="modal-content" style="max-width: 400px;">
+        <h3>Reason for Rejection</h3>
+        <textarea id="rejection-reason" placeholder="Enter reason..." style="width: 100%; margin: 15px 0; padding: 10px; border-radius: 8px; border: 1px solid #ddd;"></textarea>
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button class="btn-detail" onclick="closeRejectionModal()">Cancel</button>
+          <button class="btn-cancel" onclick="submitRejection()">Reject Order</button>
+        </div>
       </div>
     </div>
     </div>
-    <script src="farmer.js?v=3"></script>
+    <script src="js/farmer-orders.js"></script>
   </body>
 </html>

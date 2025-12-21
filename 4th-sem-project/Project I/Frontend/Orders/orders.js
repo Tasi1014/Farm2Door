@@ -49,20 +49,31 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderOrders(filter) {
     let filtered = allOrders;
 
-    if (filter === "pending") {
+    if (filter === "to-pay") {
       filtered = allOrders.filter(
-        (o) => o.order_status === "Pending" || o.payment_status === "Pending"
+        (o) => o.payment_method === "ONLINE" && o.payment_status === "Pending"
       );
-    } else if (filter === "delivered") {
-      // "To Receive" should show orders that are currently in progress (Processing or Shipped)
+    } else if (filter === "to-receive") {
+      const activeStatuses = [
+        "Pending",
+        "Processing",
+        "Dispatched",
+        "Received",
+        "Ready for Pickup",
+      ];
+      filtered = allOrders.filter((o) =>
+        activeStatuses.includes(o.order_status)
+      );
+    } else if (filter === "completed") {
+      filtered = allOrders.filter((o) => o.order_status === "Fulfilled");
+    } else if (filter === "cancelled") {
       filtered = allOrders.filter(
-        (o) => o.order_status === "Processing" || o.order_status === "Shipped"
+        (o) => o.order_status === "Cancelled" || o.order_status === "Rejected"
       );
     }
 
     if (filtered.length === 0) {
       if (allOrders.length === 0) {
-        // Truly no orders at all
         ordersContainer.innerHTML = `<div class="empty-state">
                   <i class="fa-solid fa-box-open"></i>
                   <h3>You haven't placed any orders yet.</h3>
@@ -70,12 +81,13 @@ document.addEventListener("DOMContentLoaded", () => {
                   <a href="../Product/product.html" class="btn">Start Shopping</a>
               </div>`;
       } else {
-        // Has orders, but none in this category
         let message = "No orders found in this category.";
-        if (filter === "pending")
+        if (filter === "to-pay")
           message = "You have no pending payments. Great!";
-        if (filter === "delivered")
+        if (filter === "to-receive")
           message = "No orders are currently on their way.";
+        if (filter === "completed") message = "No completed orders yet.";
+        if (filter === "cancelled") message = "No cancelled orders.";
 
         ordersContainer.innerHTML = `<div class="empty-state">
                   <i class="fa-solid fa-clipboard-check"></i>
@@ -97,10 +109,17 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         );
 
-        const statusClass = order.order_status.toLowerCase();
+        // Smart Status Labeling
+        let displayStatus = order.order_status;
+        let statusClass = order.order_status.toLowerCase().replace(/ /g, "-");
+
+        if (order.payment_status === "Refunded") {
+          displayStatus = "Refunded";
+          statusClass = "refunded";
+        }
 
         return `
-            <div class="order-card ${statusClass}">
+            <div class="order-card status-border-${statusClass}">
                 <div class="order-top">
                     <div>
                         <p class="order-id">#${
@@ -108,9 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         }</p>
                         <p class="order-date">${orderDate}</p>
                     </div>
-                    <span class="status-badge status-${statusClass}">${
-          order.order_status
-        }</span>
+                    <span class="status-badge status-${statusClass}">${displayStatus}</span>
                 </div>
                 <div class="order-info">
                     <p class="order-total">Rs ${order.total_amount}</p>

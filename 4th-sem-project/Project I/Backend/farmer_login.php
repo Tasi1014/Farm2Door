@@ -1,4 +1,5 @@
 <?php
+session_set_cookie_params(0, '/');
 session_start();
 include 'connection.php';
 header('Content-Type: application/json');

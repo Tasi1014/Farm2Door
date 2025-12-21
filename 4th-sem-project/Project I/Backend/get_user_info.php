@@ -53,6 +53,12 @@ elseif (isset($_SESSION['consumer_email'])) {
         }
         mysqli_stmt_close($stmt);
     }
+} 
+// Check for Admin Login
+elseif (isset($_SESSION['admin_email'])) {
+    $response['loggedIn'] = true;
+    $response['userType'] = 'admin';
+    $response['name'] = 'System Administrator';
 }
 
 echo json_encode($response);
