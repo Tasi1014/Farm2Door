@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $dest_path = $uploadFileDir . $newFileName;
             
             if(move_uploaded_file($fileTmpPath, $dest_path)) {
-                // Store relative path for frontend use (e.g. "../../Images/products/filename.jpg")
+                // Store relative path for frontend use (e.g. "../Images/products/filename.jpg")
                 // Or just store filename and prepend path in frontend. 
                 // Let's store the filename for flexibility, or the relative path from root.
                 // Storing filename 'products/filename.jpg' seems clean if we assume Images/ base.

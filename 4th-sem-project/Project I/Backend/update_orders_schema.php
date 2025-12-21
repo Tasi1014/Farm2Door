@@ -1,5 +1,5 @@
 <?php
-require "connection.php";
+include 'connection.php';
 
 $queries = [
     // 1. Update orders table status ENUM

@@ -80,7 +80,7 @@ try {
     // 1. Insert into orders
     $orderSql = "INSERT INTO orders 
         (customer_id, total_amount, order_status, shipping_name, shipping_phone, shipping_address, shipping_notes)
-        VALUES (?, ?, 'Processing', ?, ?, ?, ?)";
+        VALUES (?, ?, 'Pending', ?, ?, ?, ?)";
     $orderStmt = mysqli_prepare($conn, $orderSql);
     mysqli_stmt_bind_param($orderStmt, "idssss", $pending['customer_id'], $pending['total_amount'], $pending['full_name'], $pending['phone'], $pending['address'], $pending['notes']);
     if (!mysqli_stmt_execute($orderStmt)) throw new Exception("Order creation failed.");

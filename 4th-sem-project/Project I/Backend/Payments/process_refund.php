@@ -1,14 +1,14 @@
 <?php
 session_set_cookie_params(0, '/', 'localhost', false, true);
 session_start();
-require "connection.php";
+include '../connection.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
+require '../PHPMailer/src/Exception.php';
+require '../PHPMailer/src/PHPMailer.php';
+require '../PHPMailer/src/SMTP.php';
 
 header('Content-Type: application/json');
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "connection.php";
+include 'connection.php';
 
 header('Content-Type: application/json');
 
@@ -61,10 +61,10 @@ try {
     mysqli_stmt_execute($updateOrderStmt);
 
     // 4. Update payment status
-    // If Paid -> Refunded, If Pending -> Cancelled
+    // If Paid -> Keep as Paid (for Admin to refund), If Pending -> Cancelled
     $updatePaySql = "UPDATE payments 
                     SET payment_status = CASE 
-                        WHEN payment_status = 'Paid' THEN 'Refunded'
+                        WHEN payment_status = 'Paid' THEN 'Paid'
                         WHEN payment_status = 'Pending' THEN 'Cancelled'
                         ELSE payment_status 
                     END

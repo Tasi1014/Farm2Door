@@ -1,5 +1,5 @@
 <?php
-require "connection.php";
+include 'connection.php';
 $tables = ['orders', 'order_items', 'payments', 'products'];
 foreach ($tables as $table) {
     echo "TABLE: $table\n";

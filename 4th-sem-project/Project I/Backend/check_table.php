@@ -1,5 +1,5 @@
 <?php
-require "connection.php";
+include 'connection.php';
 $res = mysqli_query($conn, "SHOW TABLES LIKE 'order_status_logs'");
 if (mysqli_num_rows($res) > 0) {
     echo "Table 'order_status_logs' exists.\n";
