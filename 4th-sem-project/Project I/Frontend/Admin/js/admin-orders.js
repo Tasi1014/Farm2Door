@@ -142,7 +142,9 @@ function updateStatus(e, orderId, status) {
         if (status === "Ready for Pickup") {
           // Change text specifically for the email notification phase
           btn.innerText = "Sending notification...";
-          sendNotification(orderId, btn);
+          sendNotification(orderId, btn).then(() => {
+            fetchOrders();
+          });
         } else {
           fetchOrders();
         }
@@ -181,34 +183,58 @@ function sendNotification(orderId, manualBtn = null) {
     }
   }
 
-  const originalText = btn ? btn.innerText : "Resend Email";
+  const originalText = btn
+    ? btn.innerText === "Sending notification..."
+      ? "Ready for Pickup"
+      : btn.innerText
+    : "Resend Email";
   if (btn) {
     btn.innerText = "Sending notification...";
     btn.disabled = true;
   }
 
-  fetch("../../Backend/send_pickup_notification.php", {
+  return fetch("../../Backend/send_pickup_notification.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ order_id: orderId }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+      // Check if response is OK
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      // Clone the response so we can read it twice if needed
+      return res
+        .clone()
+        .json()
+        .catch((err) => {
+          // If JSON parsing fails, get the text to see what was actually returned
+          return res.text().then((text) => {
+            console.error("Response was not JSON. Actual response:", text);
+            throw new Error(
+              "Server returned invalid JSON: " + text.substring(0, 100)
+            );
+          });
+        });
+    })
     .then((data) => {
       if (data.success) {
         alert("Success: " + data.message);
-        btn.disabled = false;
-        btn.innerText = originalText;
+        // We do NOT re-enable here immediately if we are going to refresh,
+        // but for manual clicks we should. use finally.
       } else {
         alert("Error: " + data.message);
       }
     })
     .catch((err) => {
       console.error("Mail error:", err);
-      alert("Failed to send notification.");
+      alert("Failed to send notification: " + err.message);
     })
     .finally(() => {
-      btn.innerText = originalText;
-      btn.disabled = false;
+      if (btn) {
+        btn.innerText = originalText;
+        btn.disabled = false;
+      }
     });
 }
 
@@ -255,7 +281,7 @@ function submitRefund() {
   btn.disabled = true;
   btn.innerText = "Processing...";
 
-  fetch("../../Backend/process_refund.php", {
+  fetch("../../Backend/Payments/process_refund.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

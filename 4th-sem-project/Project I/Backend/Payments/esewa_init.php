@@ -55,8 +55,8 @@ try {
         'product_delivery_charge' => 0,
         'signed_field_names' => "total_amount,transaction_uuid,product_code",
         'signature' => $signature,
-        'success_url' => "http://localhost/PROJECT_Farm2Door/4th-sem-project/Project I/Backend/Payments/esewa_success.php",
-        'failure_url' => "http://localhost/PROJECT_Farm2Door/4th-sem-project/Project I/Backend/Payments/esewa_failure.php"
+        'success_url' => "http://localhost/PROJECT_Farm2Door/4th-sem-project/Project%20I/Backend/Payments/esewa_success.php",
+        'failure_url' => "http://localhost/PROJECT_Farm2Door/4th-sem-project/Project%20I/Backend/Payments/esewa_failure.php"
     ];
 
 } catch (Exception $e) {

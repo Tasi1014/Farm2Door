@@ -28,32 +28,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Pagination State
+  let currentPage = 1;
+  const itemsPerPage = 8;
+  let totalProducts = 0;
+
   // Determine Limit (for Home Page)
-  let limit = 0;
+  let limitValue = 0;
   const path = window.location.pathname;
-  if (path.includes("Home") || path.endsWith("index.html") || path === "/") {
-    limit = 8;
+  const isHomePage =
+    path.includes("Home") || path.endsWith("index.html") || path === "/";
+  if (isHomePage) {
+    limitValue = 8;
   }
 
   // Fetch products initially
-  fetchProducts();
+  fetchProducts(1);
 
-  function fetchProducts() {
+  function fetchProducts(page = 1) {
+    currentPage = page;
     const searchTerm = searchInput ? searchInput.value.trim() : "";
     const category = categoryFilter ? categoryFilter.value : "";
 
     productsContainer.innerHTML =
       "<p style='text-align: center; width: 100%'>Loading products...</p>";
 
+    // Use itemsPerPage for pagination unless on home page where we might want a fixed low number
+    const currentLimit = isHomePage ? limitValue : itemsPerPage;
+
     let url = `../../Backend/get_all_products.php?search=${encodeURIComponent(
       searchTerm
-    )}&category=${encodeURIComponent(category)}`;
-    if (limit > 0) url += `&limit=${limit}`;
+    )}&category=${encodeURIComponent(
+      category
+    )}&page=${currentPage}&limit=${currentLimit}`;
 
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
+          totalProducts = data.total || 0;
           if (
             categoryFilter &&
             (!categoryFilter.options.length ||
@@ -62,21 +75,23 @@ document.addEventListener("DOMContentLoaded", () => {
             populateCategoryFilter(data.products);
           }
           renderProducts(data.products);
+          if (!isHomePage) updatePaginationControls();
         } else {
           productsContainer.innerHTML =
             "<p>No products found matching your search.</p>";
           if (resultsCount) resultsCount.textContent = "Showing 0 products";
+          hidePagination();
         }
       })
       .catch((err) => {
         console.error(err);
         productsContainer.innerHTML = "<p>Unable to load products.</p>";
+        hidePagination();
       });
   }
 
   function renderProducts(products) {
-    // Client-side Price Filtering (since it's a range slider/input often done locally for speed)
-    // But for consistency let's filter the list we got from server by price
+    // Client-side Price Filtering
     const maxPrice =
       priceFilter && priceFilter.value
         ? parseFloat(priceFilter.value)
@@ -134,6 +149,56 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function updatePaginationControls() {
+    const totalPages = Math.ceil(totalProducts / itemsPerPage);
+    const paginationDiv = document.querySelector(".pagination");
+    const prevBtn = document.getElementById("prevPageBtn");
+    const nextBtn = document.getElementById("nextPageBtn");
+    const pageInfo = document.getElementById("pageInfo");
+
+    if (!paginationDiv) return;
+
+    if (totalPages <= 1) {
+      paginationDiv.style.display = "none";
+      return;
+    }
+
+    paginationDiv.style.display = "flex";
+
+    if (pageInfo) {
+      pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+    }
+
+    if (prevBtn) prevBtn.disabled = currentPage <= 1;
+    if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+  }
+
+  function hidePagination() {
+    const paginationDiv = document.querySelector(".pagination");
+    if (paginationDiv) paginationDiv.style.display = "none";
+  }
+
+  // Pagination Button Listeners
+  document.getElementById("prevPageBtn")?.addEventListener("click", () => {
+    if (currentPage > 1) {
+      fetchProducts(currentPage - 1);
+      scrollToProductsTop();
+    }
+  });
+
+  document.getElementById("nextPageBtn")?.addEventListener("click", () => {
+    const totalPages = Math.ceil(totalProducts / itemsPerPage);
+    if (currentPage < totalPages) {
+      fetchProducts(currentPage + 1);
+      scrollToProductsTop();
+    }
+  });
+
+  function scrollToProductsTop() {
+    const prodSection = document.getElementById("product");
+    if (prodSection) prodSection.scrollIntoView({ behavior: "smooth" });
+  }
+
   function attachCartListeners() {
     const newBtns = document.querySelectorAll(".add-cart-btn");
     newBtns.forEach((btn) => {
@@ -164,17 +229,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // Event Listeners
   if (searchInput) {
     searchInput.addEventListener("keypress", (e) => {
-      fetchProducts();
+      fetchProducts(1); // Reset to page 1 on new search
     });
   }
 
-  if (categoryFilter) categoryFilter.addEventListener("change", fetchProducts);
+  if (categoryFilter)
+    categoryFilter.addEventListener("change", () => fetchProducts(1)); // Reset to page 1
   if (priceFilter)
     priceFilter.addEventListener("input", () => {
-      // Re-render current products with price filter
-      // We fetch again to be safe with server state, or just re-render local.
-      // Let's fetch for server-side search/cat consistency.
-      fetchProducts();
+      fetchProducts(1); // Reset to page 1
     });
 
   if (clearButton) {
@@ -182,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (searchInput) searchInput.value = "";
       if (priceFilter) priceFilter.value = "";
       if (categoryFilter) categoryFilter.value = "";
-      fetchProducts();
+      fetchProducts(1);
     });
   }
 });

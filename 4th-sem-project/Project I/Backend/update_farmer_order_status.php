@@ -46,7 +46,32 @@ try {
     mysqli_stmt_execute($logStmt);
 
     mysqli_commit($conn);
-    echo json_encode(['success' => true, 'message' => "Order status updated to $new_status"]);
+
+    $response = ['success' => true, 'message' => "Order status updated to $new_status"];
+
+    if ($new_status === 'Processing') {
+        include 'send_order_confirmation.php';
+
+        // Background processing to return response quickly to farmer
+        ignore_user_abort(true);
+        ob_start();
+        echo json_encode($response);
+        $size = ob_get_length();
+
+        header("Content-Encoding: none");
+        header("Content-Length: {$size}");
+        header("Connection: close");
+
+        ob_end_flush();
+        @ob_flush();
+        flush();
+
+        // Send the email in background
+        sendOrderConfirmationEmail($conn, $order_id);
+        exit;
+    } else {
+        echo json_encode($response);
+    }
 
 } catch (Exception $e) {
     mysqli_rollback($conn);

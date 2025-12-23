@@ -12,7 +12,7 @@ $response = [
 
 //Credentials
 $admin_email = "mahtoneha255@gmail.com";
-$admin_pass = "RockingSiblings@";
+$admin_pass = "Neha@001";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = isset($_POST['admin-email']) ? trim($_POST['admin-email']) : '';

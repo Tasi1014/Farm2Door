@@ -124,6 +124,11 @@ try {
             $response['success'] = true;
             $response['message'] = "Order placed with Cash on Delivery.";
             $response['order_id'] = $order_id;
+
+            $response['success'] = true;
+            $response['message'] = "Order placed with Cash on Delivery.";
+            $response['order_id'] = $order_id;
+
         } catch (Exception $e) {
             if (isset($conn)) mysqli_rollback($conn);
             throw $e;

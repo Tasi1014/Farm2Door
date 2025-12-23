@@ -6,14 +6,29 @@ header('Content-Type: application/json');
 // Check for specific Product ID (for Details Page)
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 // By default, fetch all. We can add limits if needed (e.g. ?limit=6 for home page)
-$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 0;
+// Pagination parameters
+$limitParam = isset($_GET['limit']) ? (int)$_GET['limit'] : 8;
+$pageParam = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offsetParam = ($pageParam - 1) * $limitParam;
 
 // Join with farmer_registration to get the farmer's name (LEFT JOIN to show products even if farmer missing)
 // Filters
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $category = isset($_GET['category']) ? trim($_GET['category']) : '';
 
-// Base query
+// Base query for counting
+$countSql = "SELECT COUNT(*) as total FROM products p";
+if (!empty($search) || !empty($category)) {
+    $countSql .= " WHERE ";
+    $countClauses = [];
+    if (!empty($search)) $countClauses[] = "p.name LIKE '%" . mysqli_real_escape_string($conn, $search) . "%'";
+    if (!empty($category)) $countClauses[] = "p.category = '" . mysqli_real_escape_string($conn, $category) . "'";
+    $countSql .= implode(" AND ", $countClauses);
+}
+$countRes = mysqli_query($conn, $countSql);
+$total = mysqli_fetch_assoc($countRes)['total'];
+
+// Base query for fetching
 $sql = "SELECT p.*, f.firstName, f.lastName 
         FROM products p 
         LEFT JOIN farmer_registration f ON p.farmer_id = f.farmer_id";
@@ -40,8 +55,8 @@ if (!empty($where_clauses)) {
 // Order and Limit
 $sql .= " ORDER BY p.created_at DESC";
 
-if ($limit > 0 && $id == 0) {
-    $sql .= " LIMIT $limit";
+if ($id == 0) {
+    $sql .= " LIMIT $limitParam OFFSET $offsetParam";
 }
 
 $result = mysqli_query($conn, $sql);
@@ -60,7 +75,7 @@ if ($result) {
             echo json_encode(['success' => false, 'message' => 'Product not found']);
         }
     } else {
-        echo json_encode(['success' => true, 'products' => $products]);
+        echo json_encode(['success' => true, 'products' => $products, 'total' => (int)$total]);
     }
 
 } else {    

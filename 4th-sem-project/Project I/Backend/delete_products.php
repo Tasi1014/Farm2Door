@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../connection.php';
+include 'connection.php';
 
 header('Content-Type: application/json');
 
@@ -9,25 +9,37 @@ $response = [
     'message' => ''
 ];
 
-// Check Auth
-if (!isset($_SESSION['farmer_id'])) {
-    $response['message'] = 'Unauthorized';
+// Allow both Farmers and Admins
+$is_farmer = isset($_SESSION['farmer_id']);
+$is_admin = isset($_SESSION['admin_id']);
+
+if (!$is_farmer && !$is_admin) {
+    $response['message'] = 'Unauthorized access';
     echo json_encode($response);
     exit;
 }
 
-$farmer_id = $_SESSION['farmer_id'];
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
-    $product_id = isset($data['product_id']) ? $data['product_id'] : '';
+    
+    // Handle both 'product_id' (from farmer JS) and 'id' (from admin JS)
+    $product_id = $data['product_id'] ?? $data['id'] ?? '';
 
     if (!empty($product_id)) {
-        $sql = "DELETE FROM `products` WHERE product_id = ? AND farmer_id = ?";
-        $stmt = mysqli_prepare($conn, $sql);
+        if ($is_admin) {
+            // Admin can delete any product
+            $sql = "DELETE FROM `products` WHERE product_id = ?";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "i", $product_id);
+        } else {
+            // Farmer can only delete their own product
+            $farmer_id = $_SESSION['farmer_id'];
+            $sql = "DELETE FROM `products` WHERE product_id = ? AND farmer_id = ?";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "ii", $product_id, $farmer_id);
+        }
         
         if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "ii", $product_id, $farmer_id);
             if (mysqli_stmt_execute($stmt)) {
                  if (mysqli_stmt_affected_rows($stmt) > 0) {
                     $response['success'] = true;

@@ -114,6 +114,9 @@ try {
 
     mysqli_commit($conn);
 
+    // Success! Clear session, send email in background, and redirect
+    unset($_SESSION['pending_order']);
+    
     // Success! Clear session and redirect
     unset($_SESSION['pending_order']);
     header("Location: ../../Frontend/Cart/order_success.html");

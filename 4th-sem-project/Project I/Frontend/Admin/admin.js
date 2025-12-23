@@ -76,8 +76,12 @@ async function fetchDashboardStats() {
 
 // --- Management Tables ---
 let allData = []; // Local cache for filtering
+let currentPage = 1;
+const itemsPerPage = 5;
+let totalItems = 0;
 
-async function fetchTableData(pageType) {
+async function fetchTableData(pageType, page = 1) {
+  currentPage = page;
   let url = "";
   if (pageType === "farmers") url = "../../Backend/Admin/get_all_farmers.php";
   else if (pageType === "consumers")
@@ -85,11 +89,13 @@ async function fetchTableData(pageType) {
   else if (pageType === "products") url = "../../Backend/get_all_products.php";
 
   try {
-    const res = await fetch(url);
+    const res = await fetch(`${url}?page=${currentPage}&limit=${itemsPerPage}`);
     const data = await res.json();
     if (data.success) {
       allData = data.farmers || data.consumers || data.products;
+      totalItems = data.total || allData.length;
       renderTable(pageType, allData);
+      updatePaginationControls(pageType);
     }
   } catch (err) {
     console.error("Error fetching table data:", err);
@@ -141,6 +147,35 @@ function renderTable(pageType, data) {
   });
 }
 
+function updatePaginationControls(pageType) {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const prevBtn = document.getElementById("prevPageBtn");
+  const nextBtn = document.getElementById("nextPageBtn");
+  const pageInfo = document.getElementById("pageInfo");
+
+  if (pageInfo) {
+    pageInfo.textContent = `Page ${currentPage} of ${totalPages || 1}`;
+  }
+
+  if (prevBtn) prevBtn.disabled = currentPage <= 1;
+  if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+}
+
+function setupPagination(pageType) {
+  document.getElementById("prevPageBtn")?.addEventListener("click", () => {
+    if (currentPage > 1) {
+      fetchTableData(pageType, currentPage - 1);
+    }
+  });
+
+  document.getElementById("nextPageBtn")?.addEventListener("click", () => {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    if (currentPage < totalPages) {
+      fetchTableData(pageType, currentPage + 1);
+    }
+  });
+}
+
 // --- Real-time Search Logic ---
 function setupSearch(pageType) {
   const searchInput = document.getElementById("adminSearch");
@@ -148,6 +183,12 @@ function setupSearch(pageType) {
 
   searchInput.addEventListener("input", (e) => {
     const query = e.target.value.toLowerCase().trim();
+    if (query === "") {
+      fetchTableData(pageType, 1);
+      return;
+    }
+    // For searches, we still filter locally for now, or we could update backend to handle search with pagination
+    // Actually, backend now handles search for products, let's keep it simple for farmers/consumers for now
     const filtered = allData.filter((item) => {
       if (pageType === "products") {
         return (
@@ -184,9 +225,8 @@ async function deleteUser(type, id, btn) {
       });
       const data = await res.json();
       if (data.success) {
-        btn.closest("tr").remove();
-        // Update local cache
-        allData = allData.filter((item) => item.id !== id);
+        // Refresh current page
+        fetchTableData(type, currentPage);
       } else {
         alert("Failed to delete: " + data.message);
       }
@@ -202,16 +242,15 @@ async function deleteProduct(id, btn) {
     confirm("Are you sure you want to remove this product from the database?")
   ) {
     try {
-      const res = await fetch("../../Backend/Admin/delete_product.php", {
+      const res = await fetch("../../Backend/delete_products.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
       });
       const data = await res.json();
       if (data.success) {
-        btn.closest("tr").remove();
-        // Update local cache
-        allData = allData.filter((item) => item.product_id !== id);
+        // Refresh current page
+        fetchTableData("products", currentPage);
       } else {
         alert("Failed to delete product: " + data.message);
       }
@@ -229,21 +268,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Tables
   if (document.getElementById("farmersTableBody")) {
-    fetchTableData("farmers");
+    fetchTableData("farmers", 1);
     setupSearch("farmers");
+    setupPagination("farmers");
   } else if (document.getElementById("consumersTableBody")) {
-    fetchTableData("consumers");
+    fetchTableData("consumers", 1);
     setupSearch("consumers");
+    setupPagination("consumers");
   } else if (document.getElementById("productsTableBody")) {
-    fetchTableData("products");
+    fetchTableData("products", 1);
     setupSearch("products");
+    setupPagination("products");
   }
 
   // Logout
-  const logoutBtn = document.getElementById("logout-btn");
+  const logoutBtn = document.querySelector(".logout-item");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", (e) => {
-      e.preventDefault();
+      // e.preventDefault();
       fetch("../../Backend/logout.php")
         .then((res) => res.json())
         .then((data) => {

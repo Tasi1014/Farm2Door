@@ -1,21 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("✓ JS file loaded successfully");
   const tableBody = document.querySelector("table tbody");
   const editModal = document.getElementById("editModal");
   const closeBtn = document.querySelector(".close-btn");
   const editForm = document.getElementById("editForm");
 
+  // Pagination State
+  let currentPage = 1;
+  const itemsPerPage = 5;
+  let totalProducts = 0;
+
   // Simple array to store our products
   let productList = [];
 
   // Fetch and Display Products
-  function loadProducts() {
-    fetch("../../Backend/get_products.php")
+  function loadProducts(page = 1) {
+    currentPage = page;
+    fetch(
+      `../../Backend/get_products.php?page=${currentPage}&limit=${itemsPerPage}`
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          // Store the data in our simple array
           productList = data.products;
+          totalProducts = data.total;
           renderTable(productList);
+          updatePaginationControls();
         } else {
           if (data.message === "Unauthorized") {
             window.location.href = "../Login/login.html";
@@ -48,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>Rs. ${product.price}/kg</td>
         <td>${product.stock_quantity} kg</td>
         <td>
-            <!-- We add a class and the ID directly -->
             <button class="action-btn edit-btn" id="edit-${product.product_id}" style="background-color: #2196F3; margin-right: 5px;">Edit</button>
             <button class="action-btn delete-btn" id="delete-${product.product_id}" style="background-color: #ff4444;">Delete</button>
         </td>
@@ -57,18 +66,41 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function updatePaginationControls() {
+    const totalPages = Math.ceil(totalProducts / itemsPerPage);
+    const prevBtn = document.getElementById("prevPageBtn");
+    const nextBtn = document.getElementById("nextPageBtn");
+    const pageInfo = document.getElementById("pageInfo");
+
+    if (pageInfo) {
+      pageInfo.textContent = `Page ${currentPage} of ${totalPages || 1}`;
+    }
+
+    if (prevBtn) prevBtn.disabled = currentPage <= 1;
+    if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+  }
+
+  // --- Pagination Button Listeners ---
+  document.getElementById("prevPageBtn")?.addEventListener("click", () => {
+    if (currentPage > 1) {
+      loadProducts(currentPage - 1);
+    }
+  });
+
+  document.getElementById("nextPageBtn")?.addEventListener("click", () => {
+    const totalPages = Math.ceil(totalProducts / itemsPerPage);
+    if (currentPage < totalPages) {
+      loadProducts(currentPage + 1);
+    }
+  });
+
   // Handle Clicks (New Simple Way)
   tableBody.addEventListener("click", (e) => {
     // Check if we clicked an Edit button
     if (e.target.classList.contains("edit-btn")) {
-      // Get the ID string (e.g., "edit-5")
       const fullId = e.target.id;
-      // Split it to get just the number "5"
       const id = fullId.split("-")[1];
-
-      // Find the product in our list
       const product = productList.find((p) => p.product_id == id);
-
       if (product) {
         openEditModal(product);
       }
@@ -135,10 +167,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (data.success) {
           alert(data.message);
           editModal.style.display = "none";
-          loadProducts(); // Reload table
+          loadProducts(currentPage); // Reload current page
         } else {
           if (data.errors) {
-            // Convert error object to readable string
             const errorMsg = Object.values(data.errors).join("\n");
             alert(errorMsg);
           } else {
@@ -151,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Handle Delete
   function deleteProduct(id) {
-    fetch("../../Backend/delete_product.php", {
+    fetch("../../Backend/delete_products.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ product_id: id }),
@@ -160,7 +191,12 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((data) => {
         if (data.success) {
           alert(data.message);
-          loadProducts();
+          // If this was the last item on the page, go to prev page
+          if (productList.length === 1 && currentPage > 1) {
+            loadProducts(currentPage - 1);
+          } else {
+            loadProducts(currentPage);
+          }
         } else {
           alert(data.message || "Delete failed");
         }
@@ -168,6 +204,5 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((err) => console.error("Error deleting:", err));
   }
 
-  // Initial Load
-  loadProducts();
+  loadProducts(1);
 });

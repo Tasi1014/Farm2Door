@@ -133,7 +133,7 @@ function placeOrder() {
           btn.innerText = "Redirecting to eSewa...";
 
           // Step 2: Initialize eSewa Payment Context
-          fetch("../../Backend/payments/esewa_init.php", {
+          fetch("../../Backend/Payments/esewa_init.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ transaction_uuid: data.transaction_uuid }), // Optional: pass UUID for logging
@@ -169,7 +169,7 @@ function placeOrder() {
                 console.log("Submitting to eSewa Testing (RC/UAT)...");
                 form.submit();
               } else {
-                throw new Exception(initData.message || "Payment init failed");
+                throw new Error(initData.message || "Payment init failed");
               }
             })
             .catch((err) => {

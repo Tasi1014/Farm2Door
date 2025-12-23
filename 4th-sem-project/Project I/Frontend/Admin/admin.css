@@ -1,4 +1,6 @@
 @import url("../css/common-dashboard.css");
+@import url("../css/pagination.css");
+/* Other Admin specific styles if any */
 
 .search-bar-admin {
   display: flex;
