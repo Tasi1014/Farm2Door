@@ -35,7 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             if ($result && mysqli_num_rows($result) === 1) {
                 $user = mysqli_fetch_assoc($result);
-                if (password_verify($password, $user['Password'])) {
+                
+                if ($user['status'] === 'blocked') {
+                    $response['errors']['result'] = "Your account has been blocked. Please contact support.";
+                } elseif (password_verify($password, $user['Password'])) {
                     // Login Success
                     $_SESSION['farmer_email'] = $user['Email'];
                     $_SESSION['farmer_id'] = $user['farmer_id'];

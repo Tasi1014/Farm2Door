@@ -115,6 +115,11 @@ function renderTable(pageType, data) {
   data.forEach((item) => {
     let row = "";
     if (pageType === "farmers" || pageType === "consumers") {
+      const isBlocked = item.status === "blocked";
+      const buttonText = isBlocked ? "Unblock" : "Block";
+      const buttonClass = isBlocked ? "unblock" : "block";
+      const statusClass = isBlocked ? "status-blocked" : "status-active";
+
       row = `
         <tr>
           <td>${item.id}</td>
@@ -123,9 +128,16 @@ function renderTable(pageType, data) {
           <td>${item.phone || "N/A"}</td>
           <td>${item.address || "N/A"}</td>
           <td>
-            <button class="action-btn delete" onclick="deleteUser('${pageType}', ${
+            <span class="status-badge ${statusClass}">${(
+        item.status || "active"
+      ).toUpperCase()}</span>
+          </td>
+          <td>
+            <button class="action-btn ${buttonClass}" onclick="toggleUserStatus('${pageType}', ${
         item.id
-      }, this)">Delete</button>
+      }, '${isBlocked ? "active" : "blocked"}')">
+              ${buttonText}
+            </button>
           </td>
         </tr>
       `;
@@ -208,31 +220,32 @@ function setupSearch(pageType) {
 }
 
 // --- Actions ---
-async function deleteUser(type, id, btn) {
-  if (
-    confirm(
-      `Are you sure you want to delete this ${type.slice(
-        0,
-        -1
-      )}? This will remove them from the system.`
-    )
-  ) {
+async function toggleUserStatus(type, id, action) {
+  const confirmMsg =
+    action === "blocked"
+      ? `Are you sure you want to block this ${type.slice(
+          0,
+          -1
+        )}? They will not be able to log in.`
+      : `Are you sure you want to unblock this ${type.slice(0, -1)}?`;
+
+  if (confirm(confirmMsg)) {
     try {
-      const res = await fetch("../../Backend/Admin/delete_user.php", {
+      const res = await fetch("../../Backend/Admin/toggle_user_status.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, type }),
+        body: JSON.stringify({ id, type, action }),
       });
       const data = await res.json();
       if (data.success) {
         // Refresh current page
         fetchTableData(type, currentPage);
       } else {
-        alert("Failed to delete: " + data.message);
+        alert("Action failed: " + data.message);
       }
     } catch (err) {
-      console.error("Delete error:", err);
-      alert("An error occurred while deleting.");
+      console.error("Status toggle error:", err);
+      alert("An error occurred while updating status.");
     }
   }
 }

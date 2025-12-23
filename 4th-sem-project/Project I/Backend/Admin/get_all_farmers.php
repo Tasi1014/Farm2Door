@@ -15,7 +15,7 @@ try {
     $total = mysqli_fetch_assoc($countRes)['total'];
 
     // Fetch paginated farmers
-    $sql = "SELECT farmer_id as id, firstName, lastName, email, phone, address FROM farmer_registration ORDER BY farmer_id LIMIT $limit OFFSET $offset";
+    $sql = "SELECT farmer_id as id, firstName, lastName, email, phone, address, status FROM farmer_registration ORDER BY farmer_id LIMIT $limit OFFSET $offset";
     $result = mysqli_query($conn, $sql);
     
     $farmers = [];

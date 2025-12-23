@@ -16,22 +16,20 @@ $offsetParam = ($pageParam - 1) * $limitParam;
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $category = isset($_GET['category']) ? trim($_GET['category']) : '';
 
-// Base query for counting
-$countSql = "SELECT COUNT(*) as total FROM products p";
+// Base query for counting (only active farmers)
+$countSql = "SELECT COUNT(*) as total FROM products p JOIN farmer_registration f ON p.farmer_id = f.farmer_id WHERE f.status = 'active'";
 if (!empty($search) || !empty($category)) {
-    $countSql .= " WHERE ";
-    $countClauses = [];
-    if (!empty($search)) $countClauses[] = "p.name LIKE '%" . mysqli_real_escape_string($conn, $search) . "%'";
-    if (!empty($category)) $countClauses[] = "p.category = '" . mysqli_real_escape_string($conn, $category) . "'";
-    $countSql .= implode(" AND ", $countClauses);
+    if (!empty($search)) $countSql .= " AND p.name LIKE '%" . mysqli_real_escape_string($conn, $search) . "%'";
+    if (!empty($category)) $countSql .= " AND p.category = '" . mysqli_real_escape_string($conn, $category) . "'";
 }
 $countRes = mysqli_query($conn, $countSql);
 $total = mysqli_fetch_assoc($countRes)['total'];
 
-// Base query for fetching
+// Base query for fetching (only active farmers)
 $sql = "SELECT p.*, f.firstName, f.lastName 
         FROM products p 
-        LEFT JOIN farmer_registration f ON p.farmer_id = f.farmer_id";
+        INNER JOIN farmer_registration f ON p.farmer_id = f.farmer_id 
+        WHERE f.status = 'active'";
 
 // Build WHERE clause
 $where_clauses = [];
@@ -49,7 +47,7 @@ if (!empty($category)) {
 }
 
 if (!empty($where_clauses)) {
-    $sql .= " WHERE " . implode(" AND ", $where_clauses);
+    $sql .= " AND " . implode(" AND ", $where_clauses);
 }
 
 // Order and Limit

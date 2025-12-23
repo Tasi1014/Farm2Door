@@ -45,3 +45,43 @@
   color: green; /* medium green placeholder */
   opacity: 0.8;
 }
+
+/* Status Badges */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.status-blocked {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+/* Action Buttons */
+.action-btn.block {
+  background-color: #ff9800;
+  color: white;
+}
+
+.action-btn.block:hover {
+  background-color: #f57c00;
+}
+
+.action-btn.unblock {
+  background-color: #4caf50;
+  color: white;
+}
+
+.action-btn.unblock:hover {
+  background-color: #388e3c;
+}

@@ -15,7 +15,7 @@ try {
     $total = mysqli_fetch_assoc($countRes)['total'];
 
     // Fetch paginated consumers
-    $sql = "SELECT id, firstName, lastName, email, phone, address FROM customer_registration ORDER BY id DESC LIMIT $limit OFFSET $offset";
+    $sql = "SELECT id, firstName, lastName, email, phone, address, status FROM customer_registration ORDER BY id DESC LIMIT $limit OFFSET $offset";
     $result = mysqli_query($conn, $sql);
     
     $consumers = [];

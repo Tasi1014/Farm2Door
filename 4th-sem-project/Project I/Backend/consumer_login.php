@@ -39,7 +39,10 @@ try {
 
                 if ($result && mysqli_num_rows($result) === 1) {
                     $user = mysqli_fetch_assoc($result);
-                    if (password_verify($password, $user['Password'])) {
+                    
+                    if ($user['status'] === 'blocked') {
+                        $response['errors']['result'] = "Your account has been blocked. Please contact Farm2Door support Team.";
+                    } elseif (password_verify($password, $user['Password'])) {
                         $_SESSION['consumer_email'] = $user['Email'];
                         $_SESSION['customer_id'] = $user['id']; // Fixed column name based on user feedback
                         
