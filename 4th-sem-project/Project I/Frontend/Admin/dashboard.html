@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard - Farm2Door</title>
-    <link rel="stylesheet" href="admin.css" />
+    <link rel="stylesheet" href="admin.css?v=2" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -58,7 +58,7 @@
       <div class="header">
         <div style="display: flex; align-items: center">
           <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
-          <h1>Admin Dashboard</h1>
+          <h1>Admin Daily Sales Dashboard</h1>
         </div>
         <div class="user-profile">
           <div class="profile-icon" onclick="toggleDropdown()">
@@ -76,31 +76,62 @@
         </div>
       </div>
 
-      <!-- Stats Cards -->
-      <div class="stats-container">
-        <div class="stat-card">
-          <h3>Total Revenue</h3>
-          <div class="value" id="revenue">Rs. 0</div>
+      <!-- Dashboard Grid (Chart + Stats) -->
+      <div class="dashboard-grid">
+        <!-- Chart Section -->
+        <div class="chart-card">
+          <h3 class="card-title">Daily Sales Overview (Current Month)</h3>
+          <div
+            id="monthly-sales-chart"
+            style="width: 100%; height: 400px"
+          ></div>
         </div>
-        <div class="stat-card">
-          <h3>Total Orders</h3>
-          <div class="value" id="orders">0</div>
-        </div>
-        <div class="stat-card">
-          <h3>Total Products</h3>
-          <div class="value" id="products">0</div>
-        </div>
-        <div class="stat-card">
-          <h3>Total Farmers</h3>
-          <div class="value" id="farmers">0</div>
-        </div>
-        <div class="stat-card">
-          <h3>Total Consumers</h3>
-          <div class="value" id="consumers">0</div>
+
+        <!-- Stats Section -->
+        <div class="stats-stack">
+          <div class="mini-stat-card">
+            <div class="stat-icon revenue"></div>
+            <div class="stat-info">
+              <span class="label">Total Revenue</span>
+              <span class="value" id="revenue">Rs. 0</span>
+            </div>
+          </div>
+          <div class="mini-stat-card">
+            <div class="stat-icon orders"></div>
+            <div class="stat-info">
+              <span class="label">Total Orders</span>
+              <span class="value" id="orders">0</span>
+            </div>
+          </div>
+          <div class="mini-stat-card">
+            <div class="stat-icon products"></div>
+            <div class="stat-info">
+              <span class="label">Total Products</span>
+              <span class="value" id="products">0</span>
+            </div>
+          </div>
+          <div class="mini-stat-card">
+            <div class="stat-icon farmers"></div>
+            <div class="stat-info">
+              <span class="label">Total Farmers</span>
+              <span class="value" id="farmers">0</span>
+            </div>
+          </div>
+          <div class="mini-stat-card">
+            <div class="stat-icon consumers"></div>
+            <div class="stat-info">
+              <span class="label">Total Consumers</span>
+              <span class="value" id="consumers">0</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <script src="admin.js"></script>
+    <!-- Highcharts Scripts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="admin.js?v=2"></script>
+    <script src="js/dashboard_charts.js?v=2"></script>
   </body>
 </html>

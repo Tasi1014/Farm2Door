@@ -21,11 +21,24 @@ try {
     // If not, we still fetch stats but normally admin pages are protected.
     
     // 1. Total Revenue & Orders
-    $orderSql = "SELECT SUM(total_amount) as revenue, COUNT(*) as orders FROM orders";
+    // Revenue logic: 
+    // - Paid orders (ONLINE or COD fulfilled): 100% of order total
+    // - Refunded orders: 10% service charge from the total_amount (Admin keeps this portion)
+    $orderSql = "
+        SELECT 
+            SUM(CASE 
+                WHEN p.payment_status = 'Paid' THEN o.total_amount 
+                WHEN p.payment_status = 'Refunded' THEN o.total_amount * 0.10
+                ELSE 0 
+            END) as revenue, 
+            COUNT(o.order_id) as orders 
+        FROM orders o
+        JOIN payments p ON o.order_id = p.order_id
+    ";
     $orderRes = mysqli_query($conn, $orderSql);
     $orderData = mysqli_fetch_assoc($orderRes);
-    $response['stats']['total_revenue'] = $orderData['revenue'] ?? 0;
-    $response['stats']['total_orders'] = $orderData['orders'] ?? 0;
+    $response['stats']['total_revenue'] = (float)($orderData['revenue'] ?? 0);
+    $response['stats']['total_orders'] = (int)($orderData['orders'] ?? 0);
 
     // 2. Total Products
     $prodSql = "SELECT COUNT(*) as total FROM products";

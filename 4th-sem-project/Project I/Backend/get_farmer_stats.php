@@ -46,10 +46,14 @@ try {
     // Assuming they DID run setup as per previous steps.
     
     $orderSql = "SELECT 
-                    COUNT(DISTINCT order_id) as total_orders, 
-                    SUM(subtotal) as total_earnings 
-                 FROM order_items 
-                 WHERE farmer_id = ?";
+                    COUNT(DISTINCT oi.order_id) as total_orders, 
+                    SUM(oi.subtotal) as total_earnings 
+                 FROM order_items oi
+                 JOIN orders o ON oi.order_id = o.order_id
+                 JOIN payments p ON o.order_id = p.order_id
+                 WHERE oi.farmer_id = ? 
+                   AND p.payment_status = 'Paid'
+                   AND o.order_status IN ('Fulfilled', 'Delivered')";
                  
     $stmt2 = mysqli_prepare($conn, $orderSql);
     if ($stmt2) {

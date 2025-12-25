@@ -93,7 +93,7 @@
             <label for="reportType">Report Type</label>
             <select id="reportType">
               <option value="daily">Daily Sales</option>
-              <option value="monthly">Monthly Revenue</option>
+              <option value="stock_levels">Stock levels</option>
               <option value="farmers">Top Farmers</option>
             </select>
           </div>
@@ -101,38 +101,62 @@
             class="form-group"
             style="margin-bottom: 0; flex: 1; min-width: 200px"
           >
-            <label for="dateRange">Date Range</label>
-            <input type="date" id="dateRange" />
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" />
+          </div>
+          <div
+            class="form-group"
+            style="margin-bottom: 0; flex: 1; min-width: 200px"
+          >
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" />
           </div>
           <button
             class="add-btn"
+            id="generateReportBtn"
             style="margin-bottom: 0"
-            onclick="generateReport()"
           >
             Generate Report
           </button>
         </div>
       </div>
 
+      <!-- Highcharts Container -->
+      <div
+        id="range-sales-chart"
+        style="
+          width: 100%;
+          height: 400px;
+          margin-top: 30px;
+          background: white;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        "
+      ></div>
+
       <!-- Report Results -->
-      <div class="table-container" id="reportResult" style="display: none">
-        <h3 class="section-title" id="reportTitle">Monthly Revenue Report</h3>
+      <div
+        class="table-container"
+        id="reportResult"
+        style="display: none; margin-top: 30px"
+      >
+        <h3 class="section-title" id="reportTitle">Detailed Report</h3>
         <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Total Orders</th>
-              <th>Total Revenue</th>
-              <th>Commission (5%)</th>
-            </tr>
+          <thead id="reportTableHeader">
+            <!-- Headers will be dynamic -->
           </thead>
           <tbody id="reportTableBody">
-            <!-- Mock Data -->
+            <!-- Data will be dynamic -->
           </tbody>
         </table>
       </div>
     </div>
 
+    <!-- Highcharts Scripts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="admin.js"></script>
+    <script src="js/reports_charts.js"></script>
   </body>
 </html>

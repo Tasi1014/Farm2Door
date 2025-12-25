@@ -81,17 +81,15 @@ function fetchDashboardStats() {
         const stats = data.stats;
         // Update DOM elements with real data
         if (product) product.textContent = stats.total_products;
-        if (earnings) earnings.textContent = "Rs. " + stats.total_earnings;
+        if (earnings)
+          earnings.textContent = "Rs. " + stats.total_earnings.toLocaleString();
         if (orders) orders.textContent = stats.total_orders;
-        if (lowStock) {
-          lowStock.textContent = stats.low_stock;
-          // Apply user requested styling logic
-          if (stats.low_stock > 0) {
-            lowStock.style.color = "red";
-          } else {
-            lowStock.style.color = "green";
-          }
-        }
+
+        // Update sidebar names
+        const sidebarName = document.getElementById("sidebarFarmerName");
+        if (sidebarName)
+          sidebarName.textContent =
+            document.querySelector(".user-info .name").textContent;
       } else {
         console.error("Failed to load stats:", data.message);
       }
@@ -99,8 +97,45 @@ function fetchDashboardStats() {
     .catch((err) => console.error("Error fetching stats:", err));
 }
 
+function fetchRecentOrders() {
+  const tbody = document.getElementById("recentOrdersBody");
+  if (!tbody) return;
+
+  fetch("../../Backend/get_farmer_recent_orders.php")
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        tbody.innerHTML = "";
+        if (data.recent_orders.length === 0) {
+          tbody.innerHTML =
+            '<tr><td colspan="4" style="text-align:center;">No recent orders found.</td></tr>';
+          return;
+        }
+
+        data.recent_orders.forEach((order) => {
+          const statusClass =
+            "status-" + order.order_status.toLowerCase().replace(/ /g, "-");
+          tbody.innerHTML += `
+            <tr>
+              <td>#${order.order_id}</td>
+              <td>${order.customer_name}</td>
+              <td>Rs. ${order.order_total.toLocaleString()}</td>
+              <td><span class="status-badge ${statusClass}">${
+            order.order_status
+          }</span></td>
+            </tr>
+          `;
+        });
+      }
+    })
+    .catch((err) => console.error("Error fetching recent orders:", err));
+}
+
 // Call on load
-document.addEventListener("DOMContentLoaded", fetchDashboardStats);
+document.addEventListener("DOMContentLoaded", () => {
+  fetchDashboardStats();
+  fetchRecentOrders();
+});
 
 // Logout Logic
 document.addEventListener("DOMContentLoaded", () => {
