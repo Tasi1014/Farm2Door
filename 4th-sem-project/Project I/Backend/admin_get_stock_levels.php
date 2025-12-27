@@ -6,21 +6,42 @@ header('Content-Type: application/json');
 $response = ['success' => false, 'names' => [], 'stocks' => [], 'message' => ''];
 
 $input = json_decode(file_get_contents('php://input'), true);
-// Even if we don't use the dates for snapshot stock, we handle the JSON to avoid errors
-$start = $input['start_date'] ?? null;
-$end   = $input['end_date'] ?? null;
+$start     = $input['start_date'] ?? null;
+$end       = $input['end_date'] ?? null;
+$farmer_id = $input['farmer_id'] ?? 'overall';
 
-$sql = "SELECT name, stock_quantity
-        FROM products
-        ORDER BY stock_quantity ASC
-        LIMIT 15";  // Showing top 15 low stock for report
+$params = [];
+$types = "";
+$where = " WHERE 1=1 ";
 
-$result = mysqli_query($conn, $sql);
+if ($farmer_id !== 'overall') {
+    $where .= " AND p.farmer_id = ? ";
+    $params[] = $farmer_id;
+    $types .= "i";
+}
+
+$sql = "SELECT p.name, p.stock_quantity, CONCAT(f.firstName, ' ', f.lastName) as farmer_name, p.threshold
+        FROM products p
+        JOIN farmer_registration f ON p.farmer_id = f.farmer_id
+        $where
+        ORDER BY p.stock_quantity ASC
+        LIMIT 20";
+
+$stmt = mysqli_prepare($conn, $sql);
+if (!empty($params)) {
+    mysqli_stmt_bind_param($stmt, $types, ...$params);
+}
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+$response = ['success' => false, 'names' => [], 'stocks' => [], 'farmer_names' => [], 'thresholds' => [], 'message' => ''];
 
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
-        $response['names'][]  = $row['name'];
-        $response['stocks'][] = (int)$row['stock_quantity'];
+        $response['names'][]        = $row['name'];
+        $response['stocks'][]       = (float)$row['stock_quantity'];
+        $response['farmer_names'][] = $row['farmer_name'];
+        $response['thresholds'][]   = (int)$row['threshold'];
     }
     $response['success'] = true;
 } else {

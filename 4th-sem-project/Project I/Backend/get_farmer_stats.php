@@ -22,13 +22,13 @@ try {
 
     $farmer_id = $_SESSION['farmer_id'];
 
-    // 1. Total Products & Low Stock
-    // We can do this in one query using conditional aggregation
+    // 1. Total Products & Dynamic Low Stock
+    // Dynamic Threshold = (Sales in last 30 days / 30) * 7. Minimum 5.
     $prodSql = "SELECT 
-                    COUNT(*) as total, 
-                    SUM(CASE WHEN stock_quantity < 5 THEN 1 ELSE 0 END) as low_stock 
-                FROM products 
-                WHERE farmer_id = ?";
+                    COUNT(*) as total,
+                    SUM(CASE WHEN stock_quantity < p.threshold THEN 1 ELSE 0 END) as low_stock
+                FROM products p
+                WHERE p.farmer_id = ?";
     
     $stmt = mysqli_prepare($conn, $prodSql);
     mysqli_stmt_bind_param($stmt, "i", $farmer_id);
@@ -37,7 +37,7 @@ try {
     $prodData = mysqli_fetch_assoc($res);
     
     $response['stats']['total_products'] = $prodData['total'] ?? 0;
-    $response['stats']['low_stock'] = $prodData['low_stock'] ?? 0;
+    $response['stats']['low_stock'] = (int)($prodData['low_stock'] ?? 0);
     
     mysqli_stmt_close($stmt);
 

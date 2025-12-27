@@ -179,3 +179,132 @@
 .action-btn.unblock:hover {
   background-color: #388e3c;
 }
+
+/* Insights Card Styles (Synced with Farmer) */
+.insights-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  margin-top: 30px;
+  border-left: 5px solid #2e7d32;
+}
+
+.insights-card .card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1b5e20;
+  margin-bottom: 20px;
+}
+
+.insights-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.insight-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 12px;
+  background: #f1f8e9;
+  border: 1px solid #c8e6c9;
+}
+
+.insight-item.critical {
+  background: #ffebee;
+  border-color: #ffcdd2;
+}
+
+.insight-main {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.insight-icon {
+  font-size: 1.5rem;
+}
+
+.insight-text h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.insight-text p {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.insight-action {
+  text-align: right;
+}
+
+.restock-qty {
+  display: block;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #d32f2f;
+}
+
+/* Instant CSS Tooltips for Report Headers */
+.has-tooltip {
+  position: relative;
+  cursor: help;
+  display: inline-block;
+}
+
+.has-tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1b5e20; /* Dark green theme */
+  color: #ffffff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: normal;
+  line-height: 1.4;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* Tooltip Arrow */
+.has-tooltip::before {
+  content: "";
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 8px 0 8px;
+  border-style: solid;
+  border-color: #1b5e20 transparent transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 9999;
+}
+
+.has-tooltip:hover::after,
+.has-tooltip:hover::before {
+  opacity: 1;
+  visibility: visible;
+  bottom: 125%;
+}
+#reportTableHeader th {
+  padding: 15px;
+  position: relative; /* Ensure tooltips are positioned relative to header cells if needed */
+}

@@ -27,6 +27,7 @@ $createTableSql = "CREATE TABLE IF NOT EXISTS `products` (
     `category` VARCHAR(50) NOT NULL,
     `price` DECIMAL(10, 2) NOT NULL,
     `stock_quantity` INT(11) NOT NULL,
+    `threshold` INT(11) DEFAULT 5,
     `description` TEXT,
     `image` VARCHAR(255) NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -46,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $category = isset($_POST['category']) ? trim($_POST['category']) : '';
     $price = isset($_POST['price']) ? trim($_POST['price']) : '';
     $quantity = isset($_POST['quantity']) ? trim($_POST['quantity']) : '';
+    $threshold = isset($_POST['lowStockThreshold']) ? trim($_POST['lowStockThreshold']) : '5';
     $description = isset($_POST['description']) ? trim($_POST['description']) : '';
     
     //Validation
@@ -111,12 +113,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if (empty($response['errors'])) {
-        // Insert into Database
-        $sql = "INSERT INTO `products` (farmer_id, name, category, price, stock_quantity, description, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = mysqli_prepare($conn, $sql);
+        // 3. Insert Product
+        $insertSql = "INSERT INTO products (farmer_id, name, category, price, stock_quantity, threshold, description, image) 
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $insertSql);
         
         if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "issdiss", $farmer_id, $name, $category, $price, $quantity, $description, $imagePath);
+            mysqli_stmt_bind_param($stmt, "issdiiss", $farmer_id, $name, $category, $price, $quantity, $threshold, $description, $imagePath);
             
             if (mysqli_stmt_execute($stmt)) {
                 $response['success'] = true;

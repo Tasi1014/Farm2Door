@@ -21,7 +21,7 @@ $sql = "SELECT DATE(o.order_date) AS day,
         JOIN order_items oi ON o.order_id = oi.order_id
         JOIN payments p ON p.order_id = o.order_id
         WHERE oi.farmer_id = ?
-          AND o.order_status IN ('Fulfilled','Delivered')
+          AND o.order_status IN ('Fulfilled')
           AND p.payment_status = 'Paid'
         GROUP BY DATE(o.order_date)
         ORDER BY day";

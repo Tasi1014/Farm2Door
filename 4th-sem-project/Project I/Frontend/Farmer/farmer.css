@@ -182,9 +182,126 @@
   box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
 }
 
+/* Hide Google Translate top banner */
+/* Remove Google top banner and offset */
+body {
+  top: 0 !important;
+}
+
+/* Hide the banner iframe that Google injects */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+/* Hide the big white bar that sometimes stays at top */
+#goog-gt-tt,
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+/* Optional: clean up extra Google text around the dropdown */
+.goog-logo-link,
+.goog-te-gadget span {
+  display: none !important;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Insights Card Styles */
+.insights-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  margin-top: 30px;
+  border-left: 5px solid #2e7d32;
+}
+
+.insights-card .card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1b5e20;
+}
+
+.insights-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.insight-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 12px;
+  background: #f1f8e9;
+  border: 1px solid #c8e6c9;
+}
+
+.insight-item.critical {
+  background: #ffebee;
+  border-color: #ffcdd2;
+}
+
+.insight-item.warning {
+  background: #fff3e0;
+  border-color: #ffe0b2;
+}
+
+.insight-main {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.insight-icon {
+  font-size: 1.5rem;
+}
+
+.insight-text h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.insight-text p {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.insight-action {
+  text-align: right;
+}
+
+.restock-qty {
+  display: block;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #d32f2f;
+}
+
+.restock-label {
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+}
+
+/* RAG Status Colors */
+.rag-red {
+  color: #d32f2f;
+}
+.rag-amber {
+  color: #ffa000;
+}
+.rag-green {
+  color: #388e3c;
 }

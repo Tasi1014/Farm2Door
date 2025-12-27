@@ -26,7 +26,7 @@
           </a>
         </li>
         <li>
-          <a href="view-products.html" 
+          <a href="view-products.html"
             ><i class="fa-solid fa-eye"></i> <span>View/Update Product</span></a
           >
         </li>
@@ -54,6 +54,7 @@
           <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
           <h1>Farmer Daily Sales Dashboard</h1>
         </div>
+        <div id="google_translate_element" style="margin-right: 16px"></div>
         <div class="user-profile">
           <div class="profile-icon" onclick="toggleDropdown()">
             <i class="fa-solid fa-circle-user"></i>
@@ -114,6 +115,16 @@
         </div>
       </div>
 
+      <!-- Actionable Insights Section -->
+      <div class="insights-card" id="insightsCard" style="display: none">
+        <h3 class="card-title">
+          <i class="fa-solid fa-lightbulb"></i> Actionable Insights
+        </h3>
+        <div id="insightsList" class="insights-list">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
       <!-- Recent Orders Table -->
       <div class="recent-orders-section">
         <h3 class="section-title">Recent Orders</h3>
@@ -143,5 +154,23 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="farmer.js?v=4"></script>
     <script src="js/farmer_charts.js?v=2"></script>
+
+    <!-- Google Translate -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,ne", // English + Nepali
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          },
+          "google_translate_element"
+        );
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
   </body>
 </html>

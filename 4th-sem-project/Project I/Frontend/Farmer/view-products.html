@@ -171,18 +171,35 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <label for="edit-price">Price (per kg)</label>
-            <input type="number" id="edit-price" name="price" required />
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-price">Price (Rs./kg)</label>
+              <input
+                type="number"
+                id="edit-price"
+                name="price"
+                step="0.01"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="edit-quantity">Quantity (kg)</label>
+              <input
+                type="number"
+                id="edit-quantity"
+                name="quantity"
+                required
+              />
+            </div>
           </div>
 
           <div class="form-group">
-            <label for="edit-quantity">Quantity (kg)</label>
+            <label for="edit-threshold">Low Stock Alert Level (kg)</label>
             <input
               type="number"
-              id="edit-quantity"
-              name="stock_quantity"
-              required
+              id="edit-threshold"
+              name="lowStockThreshold"
+              value="5"
             />
           </div>
 

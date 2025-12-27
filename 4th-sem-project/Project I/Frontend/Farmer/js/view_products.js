@@ -124,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("edit-category").value = product.category;
     document.getElementById("edit-price").value = product.price;
     document.getElementById("edit-quantity").value = product.stock_quantity;
+    document.getElementById("edit-threshold").value = product.threshold || 5;
     document.getElementById("edit-description").value =
       product.description || "";
 
@@ -147,7 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Validation
     const price = parseFloat(formData.get("price"));
-    const quantity = parseInt(formData.get("stock_quantity"));
+    const quantity = parseInt(formData.get("quantity"));
+    const threshold = parseInt(formData.get("lowStockThreshold"));
 
     if (price < 0) {
       alert("Price cannot be negative.");
@@ -155,6 +157,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (quantity < 0) {
       alert("Quantity cannot be negative.");
+      return;
+    }
+    if (threshold < 0) {
+      alert("Threshold cannot be negative.");
       return;
     }
 

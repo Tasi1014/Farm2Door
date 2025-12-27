@@ -43,12 +43,17 @@ function animateValue(id, start, end, duration) {
   const step = (timestamp) => {
     if (!startTimestamp) startTimestamp = timestamp;
     const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-    let value = Math.floor(progress * (end - start) + start);
+    let value = progress * (end - start) + start;
 
     if (id === "revenue") {
-      obj.innerHTML = "Rs. " + value.toLocaleString();
+      obj.innerHTML =
+        "Rs. " +
+        value.toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        });
     } else {
-      obj.innerHTML = value.toLocaleString();
+      obj.innerHTML = Math.floor(value).toLocaleString();
     }
     if (progress < 1) window.requestAnimationFrame(step);
   };
