@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 25, 2025 at 03:37 PM
+-- Generation Time: Dec 27, 2025 at 05:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -34,13 +34,6 @@ CREATE TABLE `cart` (
   `quantity` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`cart_id`, `customer_id`, `product_id`, `quantity`, `created_at`) VALUES
-(62, 5, 9, 2, '2025-12-22 05:12:28');
 
 -- --------------------------------------------------------
 
@@ -108,7 +101,8 @@ INSERT INTO `customer_registration` (`id`, `firstName`, `lastName`, `Email`, `Ph
 (2, 'Tasi', 'Sherpa', 'sherpajack3@gmail.com', 2147483647, 'Kapan, Aakashedhara', '$2y$10$Y87uZKryPSRNLw.SSofOdejl/PL/aoPLsD4rj9GLGck5pQlQLnLEW', 1, 'active'),
 (4, 'Neha', 'Mahto', 'rappid56@gmail.com', 2147483647, 'gatthaghar', '$2y$10$0eKGtHdHTNND4N/pgZPTP.CdJK1H7TnhTMn6uOvPtjZvJrVX4TxXq', 1, 'active'),
 (5, 'Neha', 'Mahto', 'mahtoneha2555@gmail.com', 2147483647, 'Bhaktapur, Gatthaghar', '$2y$10$9lT0Lxeln3PmurUqkzh.E.32UtxJLUES9Yq5gFlv8zZa1eHgbIJga', 1, 'active'),
-(6, 'Pasang', 'Tasi Sherpa', 'pasangbca23@oic.edu.np', 2147483647, 'kapan, Aakashedhara', '$2y$10$/JicFmEOOmABJlfp3lD/DOLT7pcAHSAVwwcZ5l2Chd0awNgBodt22', 1, 'active');
+(6, 'Pasang', 'Tasi Sherpa', 'pasangbca23@oic.edu.np', 2147483647, 'kapan, Aakashedhara', '$2y$10$/JicFmEOOmABJlfp3lD/DOLT7pcAHSAVwwcZ5l2Chd0awNgBodt22', 1, 'active'),
+(7, 'Namrata', 'Bomjan', 'namratabca23@oic.edu.np', 2147483647, 'Pepsicola, Lalitpur', '$2y$10$GUoIqN/QjHyWhjCy6ne6eecF2uqbTE4irly/qxk7ESXxALY7A8aJi', 1, 'active');
 
 -- --------------------------------------------------------
 
@@ -163,9 +157,9 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `customer_id`, `total_amount`, `order_status`, `order_date`, `shipping_name`, `shipping_phone`, `shipping_address`, `shipping_notes`, `rejection_reason`, `cancellation_reason`) VALUES
-(13, 2, 255.00, 'Ready for Pickup', '2025-12-19 17:12:47', 'Tasi Sherpa', '9803901467', 'Kapan, Aakashedhara', 'Call me when reached Nepal Bank', NULL, NULL),
+(13, 2, 255.00, 'Fulfilled', '2025-12-19 17:12:47', 'Tasi Sherpa', '9803901467', 'Kapan, Aakashedhara', 'Call me when reached Nepal Bank', NULL, NULL),
 (14, 2, 55.00, 'Cancelled', '2025-12-20 13:42:41', 'Tasi Sherpa', '9823712211', 'Gatthaghar Bus Stop', 'Call me when you reached Neha Suddha sakahari sweet and chat House', NULL, NULL),
-(15, 2, 55.00, 'Ready for Pickup', '2025-12-21 02:18:56', 'Tasi Sherpa', '9803901467', 'Kapan, Aakashedhara', 'Call me when you reach Neha chat house', NULL, NULL),
+(15, 2, 55.00, 'Fulfilled', '2025-12-21 02:18:56', 'Tasi Sherpa', '9803901467', 'Kapan, Aakashedhara', 'Call me when you reach Neha chat house', NULL, NULL),
 (16, 5, 120.00, 'Rejected', '2025-12-21 02:29:03', 'Neha Mahto', '2147483647', 'Bhaktapur, Gatthaghar', 'Call me when you reached the location', 'No stock', NULL),
 (18, 2, 55.00, 'Fulfilled', '2025-12-21 05:58:04', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, NULL),
 (19, 2, 80.00, 'Fulfilled', '2025-12-21 09:39:56', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, NULL),
@@ -183,14 +177,14 @@ INSERT INTO `orders` (`order_id`, `customer_id`, `total_amount`, `order_status`,
 (31, 2, 120.00, 'Rejected', '2025-12-21 18:14:30', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', 'No stock', NULL),
 (32, 2, 380.00, 'Cancelled', '2025-12-22 04:59:40', 'Tasi Sherpa', '9803901467', 'Kapan, Aakashedhara', 'Call me when you reached Nabil Bank', NULL, 'Cancelled by customer'),
 (33, 2, 190.00, 'Cancelled', '2025-12-22 05:29:16', 'Tasi Sherpa', '9803301576', 'Kapan, Aakashedhara', 'Near Nepal Bank', NULL, 'Cancelled by customer'),
-(34, 2, 80.00, 'Ready for Pickup', '2025-12-22 05:35:38', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, NULL),
+(34, 2, 80.00, 'Fulfilled', '2025-12-22 05:35:38', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, NULL),
 (35, 2, 270.00, 'Rejected', '2025-12-22 05:55:56', 'Tasi Sherpa', '9813132648', 'Kapan, Aakashedhara', 'Nepal Bank', 'No Stock', NULL),
-(36, 2, 215.00, 'Ready for Pickup', '2025-12-22 06:25:33', 'Tasi Sherpa', '9803901467', 'Kapan, Aakashedhara', 'Near Nabil Bank', NULL, NULL),
+(36, 2, 215.00, 'Fulfilled', '2025-12-22 06:25:33', 'Tasi Sherpa', '9803901467', 'Kapan, Aakashedhara', 'Near Nabil Bank', NULL, NULL),
 (37, 2, 95.00, 'Cancelled', '2025-12-22 06:36:18', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, 'Cancelled by customer'),
-(38, 2, 120.00, 'Pending', '2025-12-22 15:47:40', 'Tasi Sherpa', '9803901467', 'Kapan, Aakashedhara', 'Near Prabhu Bank', NULL, NULL),
-(39, 2, 150.00, 'Pending', '2025-12-24 04:47:10', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, NULL),
-(40, 2, 150.00, 'Pending', '2025-12-24 04:58:24', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, NULL),
-(41, 2, 200.00, 'Pending', '2025-12-24 14:23:41', 'Tasi Sherpa', '9822334455', 'Kapan, Aakashedhara', 'Near Nabil Bank', NULL, NULL),
+(38, 2, 120.00, 'Received', '2025-12-22 15:47:40', 'Tasi Sherpa', '9803901467', 'Kapan, Aakashedhara', 'Near Prabhu Bank', NULL, NULL),
+(39, 2, 150.00, 'Received', '2025-12-24 04:47:10', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, NULL),
+(40, 2, 150.00, 'Fulfilled', '2025-12-24 04:58:24', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, NULL),
+(41, 2, 200.00, 'Fulfilled', '2025-12-24 14:23:41', 'Tasi Sherpa', '9822334455', 'Kapan, Aakashedhara', 'Near Nabil Bank', NULL, NULL),
 (42, 2, 340.00, 'Fulfilled', '2025-12-24 14:37:15', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, NULL),
 (52, 2, 160.00, 'Fulfilled', '2025-12-01 04:30:00', 'Test Customer', '9800000000', 'Kathmandu', NULL, NULL, NULL),
 (53, 2, 215.00, 'Fulfilled', '2025-12-03 05:45:00', 'Test Customer', '9800000000', 'Kathmandu', NULL, NULL, NULL),
@@ -200,7 +194,12 @@ INSERT INTO `orders` (`order_id`, `customer_id`, `total_amount`, `order_status`,
 (57, 2, 275.00, 'Fulfilled', '2025-12-15 06:20:00', 'Test Customer', '9800000000', 'Kathmandu', NULL, NULL, NULL),
 (58, 2, 400.00, 'Fulfilled', '2025-12-18 12:45:00', 'Test Customer', '9800000000', 'Kathmandu', NULL, NULL, NULL),
 (59, 2, 330.00, 'Fulfilled', '2025-12-21 05:05:00', 'Test Customer', '9800000000', 'Kathmandu', NULL, NULL, NULL),
-(60, 2, 320.00, 'Fulfilled', '2025-12-24 09:55:00', 'Test Customer', '9800000000', 'Kathmandu', NULL, NULL, NULL);
+(60, 2, 320.00, 'Fulfilled', '2025-12-24 09:55:00', 'Test Customer', '9800000000', 'Kathmandu', NULL, NULL, NULL),
+(61, 5, 330.00, 'Fulfilled', '2025-12-26 13:06:34', 'Neha Mahto', '9823782211', 'Bhaktapur, Gatthaghar', '', NULL, NULL),
+(62, 5, 550.00, 'Fulfilled', '2025-12-26 13:07:14', 'Neha Mahto', '2147483647', 'Bhaktapur, Gatthaghar', '', NULL, NULL),
+(63, 6, 600.00, 'Fulfilled', '2025-12-26 13:09:43', 'Pasang Tasi Sherpa', '2147483647', 'kapan, Aakashedhara', '', NULL, NULL),
+(64, 6, 600.00, 'Fulfilled', '2025-12-26 13:10:03', 'Pasang Tasi Sherpa', '2147483647', 'kapan, Aakashedhara', '', NULL, NULL),
+(65, 7, 670.00, 'Fulfilled', '2025-12-27 07:20:57', 'Namrata Bomjan', '9823623830', 'Pepsicola, Lalitpur', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -274,7 +273,14 @@ INSERT INTO `order_items` (`item_id`, `order_id`, `product_id`, `farmer_id`, `qu
 (80, 59, 2, 1, 1, 80.00, 80.00),
 (81, 59, 8, 1, 2, 55.00, 110.00),
 (82, 60, 9, 1, 2, 120.00, 240.00),
-(83, 60, 8, 1, 1, 55.00, 55.00);
+(83, 60, 8, 1, 1, 55.00, 55.00),
+(84, 61, 8, 1, 6, 55.00, 330.00),
+(85, 62, 8, 1, 10, 55.00, 550.00),
+(86, 63, 20, 4, 5, 120.00, 600.00),
+(87, 64, 20, 4, 5, 120.00, 600.00),
+(88, 65, 20, 4, 1, 120.00, 120.00),
+(89, 65, 21, 2, 2, 220.00, 440.00),
+(90, 65, 8, 1, 2, 55.00, 110.00);
 
 -- --------------------------------------------------------
 
@@ -373,7 +379,57 @@ INSERT INTO `order_status_logs` (`log_id`, `order_id`, `old_status`, `new_status
 (73, 42, 'Processing', 'Dispatched', 'Farmer', 2, NULL, '2025-12-24 15:12:58'),
 (74, 42, 'Dispatched', 'Received', 'Admin', 1, NULL, '2025-12-24 15:13:16'),
 (75, 42, 'Received', 'Ready for Pickup', 'Admin', 1, NULL, '2025-12-24 15:13:18'),
-(76, 42, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-24 15:13:36');
+(76, 42, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-24 15:13:36'),
+(77, 62, 'Pending', 'Processing', 'Farmer', 1, NULL, '2025-12-26 13:09:01'),
+(78, 61, 'Pending', 'Processing', 'Farmer', 1, NULL, '2025-12-26 13:09:06'),
+(79, 62, 'Processing', 'Dispatched', 'Farmer', 1, NULL, '2025-12-26 13:09:11'),
+(80, 61, 'Processing', 'Dispatched', 'Farmer', 1, NULL, '2025-12-26 13:09:13'),
+(81, 62, 'Dispatched', 'Received', 'Admin', 1, NULL, '2025-12-26 13:10:49'),
+(82, 61, 'Dispatched', 'Received', 'Admin', 1, NULL, '2025-12-26 13:10:50'),
+(83, 62, 'Received', 'Ready for Pickup', 'Admin', 1, NULL, '2025-12-26 13:10:53'),
+(84, 61, 'Received', 'Ready for Pickup', 'Admin', 1, NULL, '2025-12-26 13:10:58'),
+(85, 62, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-26 13:11:13'),
+(86, 61, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-26 13:11:16'),
+(87, 15, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-26 13:11:32'),
+(88, 13, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-26 13:11:55'),
+(89, 41, 'Pending', 'Processing', 'Farmer', 2, NULL, '2025-12-27 07:22:19'),
+(90, 65, 'Pending', 'Processing', 'Farmer', 2, NULL, '2025-12-27 07:22:29'),
+(91, 40, 'Pending', 'Processing', 'Farmer', 2, NULL, '2025-12-27 07:22:34'),
+(92, 39, 'Pending', 'Processing', 'Farmer', 2, NULL, '2025-12-27 07:22:40'),
+(93, 41, 'Processing', 'Dispatched', 'Farmer', 2, NULL, '2025-12-27 07:22:50'),
+(94, 65, 'Processing', 'Processing', 'Farmer', 2, NULL, '2025-12-27 07:22:50'),
+(95, 65, 'Processing', 'Dispatched', 'Farmer', 2, NULL, '2025-12-27 07:22:59'),
+(96, 41, 'Dispatched', 'Dispatched', 'Farmer', 2, NULL, '2025-12-27 07:22:59'),
+(97, 41, 'Dispatched', 'Dispatched', 'Farmer', 2, NULL, '2025-12-27 07:22:59'),
+(98, 41, 'Dispatched', 'Dispatched', 'Farmer', 2, NULL, '2025-12-27 07:22:59'),
+(99, 41, 'Dispatched', 'Dispatched', 'Farmer', 2, NULL, '2025-12-27 07:22:59'),
+(100, 40, 'Processing', 'Dispatched', 'Farmer', 2, NULL, '2025-12-27 07:23:00'),
+(101, 39, 'Processing', 'Dispatched', 'Farmer', 2, NULL, '2025-12-27 07:23:02'),
+(102, 65, 'Dispatched', 'Received', 'Admin', 1, NULL, '2025-12-27 07:23:42'),
+(103, 40, 'Dispatched', 'Received', 'Admin', 1, NULL, '2025-12-27 07:23:43'),
+(104, 41, 'Dispatched', 'Received', 'Admin', 1, NULL, '2025-12-27 07:23:44'),
+(105, 39, 'Dispatched', 'Received', 'Admin', 1, NULL, '2025-12-27 07:23:45'),
+(106, 65, 'Received', 'Ready for Pickup', 'Admin', 1, NULL, '2025-12-27 07:23:49'),
+(107, 41, 'Received', 'Ready for Pickup', 'Admin', 1, NULL, '2025-12-27 07:23:54'),
+(108, 40, 'Received', 'Ready for Pickup', 'Admin', 1, NULL, '2025-12-27 07:23:54'),
+(109, 65, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-27 07:24:05'),
+(110, 41, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-27 07:24:12'),
+(111, 40, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-27 07:24:15'),
+(112, 36, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-27 07:24:20'),
+(113, 34, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-27 07:24:24'),
+(114, 64, 'Pending', 'Processing', 'Farmer', 4, NULL, '2025-12-27 07:26:36'),
+(115, 63, 'Pending', 'Processing', 'Farmer', 4, NULL, '2025-12-27 07:26:45'),
+(116, 38, 'Pending', 'Processing', 'Farmer', 4, NULL, '2025-12-27 07:26:59'),
+(117, 64, 'Processing', 'Dispatched', 'Farmer', 4, NULL, '2025-12-27 07:27:17'),
+(118, 63, 'Processing', 'Dispatched', 'Farmer', 4, NULL, '2025-12-27 07:27:18'),
+(119, 38, 'Processing', 'Dispatched', 'Farmer', 4, NULL, '2025-12-27 07:27:20'),
+(120, 64, 'Dispatched', 'Received', 'Admin', 1, NULL, '2025-12-27 07:27:37'),
+(121, 63, 'Dispatched', 'Received', 'Admin', 1, NULL, '2025-12-27 07:27:39'),
+(122, 38, 'Dispatched', 'Received', 'Admin', 1, NULL, '2025-12-27 07:27:41'),
+(123, 64, 'Received', 'Ready for Pickup', 'Admin', 1, NULL, '2025-12-27 07:27:44'),
+(124, 63, 'Received', 'Ready for Pickup', 'Admin', 1, NULL, '2025-12-27 07:27:52'),
+(125, 64, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-27 07:28:05'),
+(126, 63, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-27 07:28:07');
 
 -- --------------------------------------------------------
 
@@ -416,13 +472,13 @@ INSERT INTO `payments` (`payment_id`, `order_id`, `payment_method`, `payment_sta
 (36, 31, 'ONLINE', 'Refunded', '000DFLZ', 120.00, '2025-12-21 18:14:30'),
 (37, 32, 'ONLINE', 'Refunded', '000DFUN', 380.00, '2025-12-22 04:59:40'),
 (38, 33, 'COD', '', NULL, 0.00, '2025-12-22 05:29:16'),
-(39, 34, 'COD', 'Pending', NULL, 0.00, '2025-12-22 05:35:38'),
+(39, 34, 'COD', 'Paid', NULL, 80.00, '2025-12-22 05:35:38'),
 (40, 35, 'ONLINE', 'Refunded', '000DFW3', 270.00, '2025-12-22 05:55:56'),
 (41, 36, 'ONLINE', 'Paid', '000DFXA', 215.00, '2025-12-22 06:25:33'),
 (42, 37, 'ONLINE', 'Refunded', '000DFXI', 95.00, '2025-12-22 06:36:18'),
 (43, 38, 'COD', 'Pending', NULL, 0.00, '2025-12-22 15:47:40'),
 (44, 39, 'COD', 'Pending', NULL, 0.00, '2025-12-24 04:47:10'),
-(45, 40, 'COD', 'Pending', NULL, 0.00, '2025-12-24 04:58:24'),
+(45, 40, 'COD', 'Paid', NULL, 150.00, '2025-12-24 04:58:24'),
 (46, 41, 'ONLINE', 'Paid', '000DH3A', 200.00, '2025-12-24 14:23:42'),
 (47, 42, 'COD', 'Paid', NULL, 340.00, '2025-12-24 14:37:15'),
 (48, 52, 'COD', 'Paid', NULL, 160.00, '2025-12-01 04:30:00'),
@@ -433,7 +489,12 @@ INSERT INTO `payments` (`payment_id`, `order_id`, `payment_method`, `payment_sta
 (53, 57, 'COD', 'Paid', NULL, 275.00, '2025-12-15 06:20:00'),
 (54, 58, 'COD', 'Paid', NULL, 400.00, '2025-12-18 12:45:00'),
 (55, 59, 'COD', 'Paid', NULL, 330.00, '2025-12-21 05:05:00'),
-(56, 60, 'COD', 'Paid', NULL, 320.00, '2025-12-24 09:55:00');
+(56, 60, 'COD', 'Paid', NULL, 320.00, '2025-12-24 09:55:00'),
+(57, 61, 'COD', 'Paid', NULL, 330.00, '2025-12-26 13:06:34'),
+(58, 62, 'COD', 'Paid', NULL, 550.00, '2025-12-26 13:07:14'),
+(59, 63, 'COD', 'Paid', NULL, 600.00, '2025-12-26 13:09:43'),
+(60, 64, 'COD', 'Paid', NULL, 600.00, '2025-12-26 13:10:03'),
+(61, 65, 'COD', 'Paid', NULL, 670.00, '2025-12-27 07:20:57');
 
 -- --------------------------------------------------------
 
@@ -448,6 +509,7 @@ CREATE TABLE `products` (
   `category` varchar(50) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `stock_quantity` int(11) NOT NULL,
+  `threshold` int(11) DEFAULT 5,
   `description` text DEFAULT NULL,
   `image` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -457,27 +519,27 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `farmer_id`, `name`, `category`, `price`, `stock_quantity`, `description`, `image`, `created_at`) VALUES
-(2, 1, 'Carrot', 'fruits', 80.00, 93, 'Fresh Carrots', '307093611c273e428a38715e69ce8c70.webp', '2025-12-15 11:32:04'),
-(8, 1, 'Tomatoes', 'fruits', 55.00, 41, 'Fresh Organic Tomatoes', '86216febc2c40df4bfc9e5557338bf47.jpg', '2025-12-17 05:37:38'),
-(9, 4, 'Potato', 'vegetables', 120.00, 38, 'Fresh local organic Potatoes', 'eaf9b1660a9a20ee074430e0c30fb875.jpg', '2025-12-19 05:27:58'),
-(10, 1, 'Cauliflower', 'vegetables', 95.00, 56, 'Fresh Cauliflowers', '4a0a2246dd7f28ad4fe17f87ae5fe884.jpg', '2025-12-21 17:57:31'),
-(11, 1, 'Mushroom', 'vegetables', 150.00, 20, 'Fresh Mushrooms', '88a9716545ebcd70f067487af1e2686b.jpg', '2025-12-22 06:29:15'),
-(12, 2, 'Mushroom', 'vegetables', 399.00, 20, 'Fresh mushroom home grown', 'ac121f23fe61b66d2c08822e5bfb7c24.jpg', '2025-12-22 16:11:12'),
-(13, 2, 'Carrot', 'vegetables', 149.00, 30, 'Fresh Carrots No fertilizers used', '40218539b57e7ee45a83b6ae7a25ff20.jpg', '2025-12-22 16:11:52'),
-(14, 2, 'Garlic', 'herbs', 349.00, 30, 'Organic Garlic – Pure flavor, naturally grown.', '66b59fcdea7a30bc4026ec69a94c5a0d.jpg', '2025-12-22 16:13:57'),
-(15, 2, 'Peas', 'vegetables', 99.00, 100, 'Organic Peas – Fresh, sweet, and naturally grown.', '4d2ee4e7ac33a1c29b59d6c124b4be97.jpg', '2025-12-22 16:15:16'),
-(16, 2, 'Capsicum', 'vegetables', 119.00, 30, 'Organic Capsicum – colorful, and naturally grown', '803345d6c502f03bd3c0ee8a9c99a7fb.jpg', '2025-12-22 16:16:31'),
-(17, 2, 'Cabbage', 'vegetables', 99.00, 30, 'Organic Cabbage – Fresh and naturally grown.', '4a6a6763a24014edad5367d3aac5cd77.jpg', '2025-12-22 16:17:30'),
-(18, 4, 'Bittergourd', 'vegetables', 70.00, 40, 'Fresh BitterGourd', '5d4dfea9f59924a27603445cc48e188e.jpg', '2025-12-22 16:20:30'),
-(19, 4, 'Okra', 'vegetables', 80.00, 50, 'Fresh Okra', 'af20dfdcb91bbf3f0b75d672eceb0305.jpg', '2025-12-22 16:20:58'),
-(20, 4, 'Onion', 'vegetables', 120.00, 70, 'Fresh Organic Onion', '093ee64a8b95ac7d86fa3f1c1620cafe.jpg', '2025-12-22 16:21:32'),
-(21, 2, 'Ginger', 'vegetables', 220.00, 60, 'Fresh Organic Ginger', 'ff22d08c8a0d18255695140f1df8949d.jpg', '2025-12-22 16:23:29'),
-(22, 2, 'Cucumber', 'fruits', 100.00, 50, 'Fresh Organic Cucumber', '70d6f2c2a30ca9066f8021acfabd3713.jpg', '2025-12-22 16:24:35'),
-(23, 2, 'Corn', 'fruits', 140.00, 4, 'Organic Corn', '73a9ab3a15ddfd50a57fa067455fc99b.jpg', '2025-12-22 16:25:32'),
-(24, 2, 'Broccoli', 'vegetables', 170.00, 50, 'Organic Broccoli', 'c11264d41b23cdc746941311b1e4a49d.jpg', '2025-12-22 16:26:23'),
-(25, 2, 'Chilly', 'herbs', 200.00, 38, 'Organic Chilly - Spicyyyyyy', '32a20b9d8ef2f21d80df087dd3db07fd.jpg', '2025-12-22 16:27:06'),
-(26, 2, 'Beetroot', 'fruits', 150.00, 38, 'Organic Beetroot – Naturally sweet, rich, and a healthy boost for your blood.', '9056643f88417a2e2f0ff86ab2644119.jpg', '2025-12-22 16:28:26');
+INSERT INTO `products` (`product_id`, `farmer_id`, `name`, `category`, `price`, `stock_quantity`, `threshold`, `description`, `image`, `created_at`) VALUES
+(2, 1, 'Carrot', 'fruits', 80.00, 30, 5, 'Fresh Carrots', '307093611c273e428a38715e69ce8c70.webp', '2025-12-15 11:32:04'),
+(8, 1, 'Tomatoes', 'fruits', 55.00, 17, 20, 'Fresh Organic Tomatoes', '86216febc2c40df4bfc9e5557338bf47.jpg', '2025-12-17 05:37:38'),
+(9, 4, 'Potato', 'vegetables', 120.00, 38, 5, 'Fresh local organic Potatoes', 'eaf9b1660a9a20ee074430e0c30fb875.jpg', '2025-12-19 05:27:58'),
+(10, 1, 'Cauliflower', 'vegetables', 95.00, 28, 5, 'Fresh Cauliflowers', '4a0a2246dd7f28ad4fe17f87ae5fe884.jpg', '2025-12-21 17:57:31'),
+(11, 1, 'Mushroom', 'vegetables', 150.00, 20, 24, 'Fresh Mushrooms', '88a9716545ebcd70f067487af1e2686b.jpg', '2025-12-22 06:29:15'),
+(12, 2, 'Mushroom', 'vegetables', 399.00, 20, 5, 'Fresh mushroom home grown', 'ac121f23fe61b66d2c08822e5bfb7c24.jpg', '2025-12-22 16:11:12'),
+(13, 2, 'Carrot', 'vegetables', 149.00, 30, 5, 'Fresh Carrots No fertilizers used', '40218539b57e7ee45a83b6ae7a25ff20.jpg', '2025-12-22 16:11:52'),
+(14, 2, 'Garlic', 'herbs', 349.00, 30, 5, 'Organic Garlic – Pure flavor, naturally grown.', '66b59fcdea7a30bc4026ec69a94c5a0d.jpg', '2025-12-22 16:13:57'),
+(15, 2, 'Peas', 'vegetables', 99.00, 100, 5, 'Organic Peas – Fresh, sweet, and naturally grown.', '4d2ee4e7ac33a1c29b59d6c124b4be97.jpg', '2025-12-22 16:15:16'),
+(16, 2, 'Capsicum', 'vegetables', 119.00, 30, 5, 'Organic Capsicum – colorful, and naturally grown', '803345d6c502f03bd3c0ee8a9c99a7fb.jpg', '2025-12-22 16:16:31'),
+(17, 2, 'Cabbage', 'vegetables', 99.00, 30, 5, 'Organic Cabbage – Fresh and naturally grown.', '4a6a6763a24014edad5367d3aac5cd77.jpg', '2025-12-22 16:17:30'),
+(18, 4, 'Bittergourd', 'vegetables', 70.00, 40, 5, 'Fresh BitterGourd', '5d4dfea9f59924a27603445cc48e188e.jpg', '2025-12-22 16:20:30'),
+(19, 4, 'Okra', 'vegetables', 80.00, 50, 5, 'Fresh Okra', 'af20dfdcb91bbf3f0b75d672eceb0305.jpg', '2025-12-22 16:20:58'),
+(20, 4, 'Onion', 'vegetables', 120.00, 59, 5, 'Fresh Organic Onion', '093ee64a8b95ac7d86fa3f1c1620cafe.jpg', '2025-12-22 16:21:32'),
+(21, 2, 'Ginger', 'vegetables', 220.00, 58, 5, 'Fresh Organic Ginger', 'ff22d08c8a0d18255695140f1df8949d.jpg', '2025-12-22 16:23:29'),
+(22, 2, 'Cucumber', 'fruits', 100.00, 50, 5, 'Fresh Organic Cucumber', '70d6f2c2a30ca9066f8021acfabd3713.jpg', '2025-12-22 16:24:35'),
+(23, 2, 'Corn', 'fruits', 140.00, 4, 5, 'Organic Corn', '73a9ab3a15ddfd50a57fa067455fc99b.jpg', '2025-12-22 16:25:32'),
+(24, 2, 'Broccoli', 'vegetables', 170.00, 50, 5, 'Organic Broccoli', 'c11264d41b23cdc746941311b1e4a49d.jpg', '2025-12-22 16:26:23'),
+(25, 2, 'Chilly', 'herbs', 200.00, 38, 5, 'Organic Chilly - Spicyyyyyy', '32a20b9d8ef2f21d80df087dd3db07fd.jpg', '2025-12-22 16:27:06'),
+(26, 2, 'Beetroot', 'fruits', 150.00, 38, 5, 'Organic Beetroot – Naturally sweet, rich, and a healthy boost for your blood.', '9056643f88417a2e2f0ff86ab2644119.jpg', '2025-12-22 16:28:26');
 
 -- --------------------------------------------------------
 
@@ -592,7 +654,7 @@ ALTER TABLE `refunds`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `contactus`
@@ -604,7 +666,7 @@ ALTER TABLE `contactus`
 -- AUTO_INCREMENT for table `customer_registration`
 --
 ALTER TABLE `customer_registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `farmer_registration`
@@ -616,25 +678,25 @@ ALTER TABLE `farmer_registration`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `order_status_logs`
 --
 ALTER TABLE `order_status_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `products`

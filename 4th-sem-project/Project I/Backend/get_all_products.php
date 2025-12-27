@@ -5,7 +5,6 @@ header('Content-Type: application/json');
 
 // Check for specific Product ID (for Details Page)
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-// By default, fetch all. We can add limits if needed (e.g. ?limit=6 for home page)
 // Pagination parameters
 $limitParam = isset($_GET['limit']) ? (int)$_GET['limit'] : 8;
 $pageParam = isset($_GET['page']) ? (int)$_GET['page'] : 1;

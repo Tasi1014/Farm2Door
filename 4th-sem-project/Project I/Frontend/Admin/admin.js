@@ -80,7 +80,7 @@ async function fetchDashboardStats() {
 }
 
 // --- Management Tables ---
-let allData = []; // Local cache for filtering
+let allData = []; 
 let currentPage = 1;
 const itemsPerPage = 5;
 let totalItems = 0;

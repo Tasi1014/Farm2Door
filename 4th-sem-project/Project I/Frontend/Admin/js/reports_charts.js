@@ -339,12 +339,14 @@ function renderReportTable(type, data) {
     header.innerHTML = `<tr>
         <th>Date</th>
         <th>
-          <span class="has-tooltip" data-tooltip="Total gross money collected from customers (Gross Inflow).">Paid Flow</span>
+          <span class="has-tooltip" data-tooltip="Total gross money collected from customers (Gross Inflow).">Total Payments received</span>
         </th>
-        <th>Refunds</th>
+        <th>
+          <span class="has-tooltip" data-tooltip="Total money refunded to customers.">Total Refunds</span>
+        </th>
         <th>Admin Profit (10%)</th>
         <th>
-          <span class="has-tooltip" data-tooltip="The actual cash remaining in the platform after deducting refunds.">Net Platform Flow</span>
+          <span class="has-tooltip" data-tooltip="The actual cash remaining in the platform after deducting refunds.">Total Net Flow</span>
         </th>
       </tr>`;
 
@@ -408,7 +410,6 @@ function generateAdminActionableInsights(data) {
         </div>
         <div class="insight-action">
           <span class="restock-qty">+${item.needed.toFixed(1)}kg</span>
-          <span class="restock-label">Deficit to Safety</span>
         </div>
       </div>
     `
@@ -421,7 +422,7 @@ function generateAdminActionableInsights(data) {
         <div class="insight-main">
           <div class="insight-icon">✅</div>
           <div class="insight-text">
-            <h4>All inventory healthy</h4>
+            <h4>All inventory is sufficient</h4>
             <p>No products are currently below their safety targets.</p>
           </div>
         </div>
