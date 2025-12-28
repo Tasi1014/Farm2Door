@@ -26,7 +26,7 @@ if ($start && $end) {
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 } else {
-    // Default dashboard query
+    // Default dashboard
     $sql = "SELECT CONCAT(f.firstName, ' ', f.lastName) AS farmer_name, SUM(oi.subtotal) AS total
             FROM order_items oi
             JOIN farmer_registration f ON oi.farmer_id = f.farmer_id
