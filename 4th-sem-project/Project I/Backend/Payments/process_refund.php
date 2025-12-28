@@ -53,7 +53,7 @@ try {
         throw new Exception("Order or payment not found.");
     }
 
-    if ($order['payment_method'] !== 'ONLINE' || $order['payment_status'] !== 'Paid') {
+    if (!in_array($order['payment_method'], ['ONLINE']) || $order['payment_status'] !== 'Paid') {
         throw new Exception("Only paid online orders are eligible for refunds.");
     }
 

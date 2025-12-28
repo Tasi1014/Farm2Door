@@ -21,14 +21,14 @@ $sql = "SELECT day, status, SUM(amount) as total_amount FROM (
             -- 1. Money that ever came IN (Status Paid or Refunded means it was collected)
             SELECT DATE(payment_date) as day, 'Paid' as status, amount_paid as amount 
             FROM payments 
-            WHERE payment_status IN ('Paid', 'Refunded') AND payment_date BETWEEN ? AND ?
+            WHERE payment_status IN ('Paid', 'Refunded') AND DATE(payment_date) BETWEEN ? AND ?
             
             UNION ALL
             
             -- 2. Money that actually went OUT (Actual Refund event)
             SELECT DATE(refund_date) as day, 'Refunded' as status, refund_amount as amount 
             FROM refunds 
-            WHERE refund_date BETWEEN ? AND ?
+            WHERE DATE(refund_date) BETWEEN ? AND ?
         ) as combined
         GROUP BY day, status
         ORDER BY day ASC";

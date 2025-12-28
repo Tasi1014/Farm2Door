@@ -178,6 +178,27 @@ function placeOrder() {
               btn.disabled = false;
               btn.innerText = "Confirm Order";
             });
+        } else if (payment === "STRIPE") {
+          btn.innerText = "Redirecting to Stripe...";
+
+          fetch("../../Backend/Payments/create_stripe_session.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+          })
+            .then((res) => res.json())
+            .then((stripeData) => {
+              if (stripeData.success) {
+                window.location.href = stripeData.url;
+              } else {
+                throw new Error(stripeData.message || "Stripe session failed");
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+              alert("Stripe Error: " + err.message);
+              btn.disabled = false;
+              btn.innerText = "Confirm Order";
+            });
         } else {
           // Success for COD
           window.location.href = "order_success.html";
