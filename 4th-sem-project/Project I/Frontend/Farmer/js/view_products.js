@@ -97,8 +97,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Handle Clicks (New Simple Way)
   tableBody.addEventListener("click", (e) => {
     // Check if we clicked an Edit button
-    if (e.target.classList.contains("edit-btn")) {
-      const fullId = e.target.id;
+    const editBtn = e.target.closest(".edit-btn");
+    if (editBtn) {
+      const fullId = editBtn.id;
       const id = fullId.split("-")[1];
       const product = productList.find((p) => p.product_id == id);
       if (product) {
@@ -107,8 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Check if we clicked a Delete button
-    if (e.target.classList.contains("delete-btn")) {
-      const fullId = e.target.id;
+    const deleteBtn = e.target.closest(".delete-btn");
+    if (deleteBtn) {
+      const fullId = deleteBtn.id;
       const id = fullId.split("-")[1];
 
       if (confirm("Are you sure you want to delete this product?")) {
