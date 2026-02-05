@@ -174,7 +174,9 @@
   outline: none;
   cursor: pointer;
   background-color: #f8f9fa;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
 }
 
 .report-selector select:focus {

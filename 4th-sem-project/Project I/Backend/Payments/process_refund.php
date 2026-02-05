@@ -113,7 +113,7 @@ try {
             <h4 style='margin-top: 0;'>Refund Details:</h4>
             <p><strong>Refund Amount:</strong> Rs. " . number_format($refund_amount, 2) . "</p>
             <p><strong>Refund Transaction ID:</strong> " . $refund_transaction_id . "</p>
-            <p style='color: #d32f2f; font-size: 0.9em;'>* Please note that as per our service policy, 10% of the order amount has been deducted as a service and processing charge.</p>
+            <p style='color: #d32f2f; font-size: 0.9em;'>* Please note that as per our service policy, 10% of the order amount has been deducted as a processing charge.</p>
         </div>
 
         <p>The refunded amount should reflect in your account within 3–5 working days, depending on your bank or payment provider.</p>

@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const address = document.getElementById("consumer-address").value;
       const password = document.getElementById("consumer-password").value;
       const confirmPassword = document.getElementById(
-        "consumer-confirm-password"
+        "consumer-confirm-password",
       ).value;
       const terms = document.getElementById("consumer-terms").checked;
 
@@ -180,9 +180,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const phoneError = document.getElementById("phone-error");
       const passwordError = document.getElementById("password-error");
       const confirmPasswordError = document.getElementById(
-        "confirm-password-error"
+        "confirm-password-error",
       );
       const termsError = document.getElementById("terms-error");
+      const addressError = document.getElementById("address-error"); // Added missing element
       const successElement = document.getElementById("registration-success");
 
       // Clear previous errors
@@ -196,12 +197,13 @@ document.addEventListener("DOMContentLoaded", function () {
       isFormValid = validateName(lastName, lastNameError) && isFormValid;
       isFormValid = validateEmail(email, emailError) && isFormValid;
       isFormValid = validatePhone(phone, phoneError) && isFormValid;
+      isFormValid = validateAddress(address, addressError) && isFormValid; // Added frontend validation
       isFormValid = validatePassword(password, passwordError) && isFormValid;
       isFormValid =
         validateConfirmPassword(
           password,
           confirmPassword,
-          confirmPasswordError
+          confirmPasswordError,
         ) && isFormValid;
       isFormValid = validateTerms(terms, termsError) && isFormValid;
 
@@ -300,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const phone = document.getElementById("farmer-phone").value;
       const password = document.getElementById("farmer-password").value;
       const confirmPassword = document.getElementById(
-        "farmer-confirm-password"
+        "farmer-confirm-password",
       ).value;
       const terms = document.getElementById("farmer-terms").checked;
 
@@ -311,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const phoneError = document.getElementById("phone-error");
       const passwordError = document.getElementById("password-error");
       const confirmPasswordError = document.getElementById(
-        "confirm-password-error"
+        "confirm-password-error",
       );
       const termsError = document.getElementById("terms-error");
       const successElement = document.getElementById("registration-success");
@@ -327,7 +329,7 @@ document.addEventListener("DOMContentLoaded", function () {
         validateConfirmPassword(
           password,
           confirmPassword,
-          confirmPasswordError
+          confirmPasswordError,
         ) && isFormValid;
       isFormValid = validateTerms(terms, termsError) && isFormValid;
 

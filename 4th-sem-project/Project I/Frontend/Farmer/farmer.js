@@ -40,14 +40,16 @@ sidebarLinks.forEach((link) => {
 });
 
 // Toggle Profile Dropdown
-function toggleDropdown() {
+function toggleDropdown(event) {
+  if (event) event.stopPropagation();
   const dropdown = document.getElementById("userDropdown");
   dropdown.classList.toggle("show");
 }
 
 // Close dropdown when clicking outside
-window.onclick = function (event) {
+window.addEventListener("click", function (event) {
   const dropdown = document.getElementById("userDropdown");
+  if (!dropdown) return;
 
   // Check if the click is OUTSIDE the profile icon AND OUTSIDE the dropdown menu
   if (
@@ -58,7 +60,7 @@ window.onclick = function (event) {
       dropdown.classList.remove("show");
     }
   }
-};
+});
 
 // Toggle Sidebar (Mobile)
 function toggleSidebar() {
@@ -87,9 +89,9 @@ function fetchDashboardStats() {
 
         // Update sidebar names
         const sidebarName = document.getElementById("sidebarFarmerName");
-        if (sidebarName)
-          sidebarName.textContent =
-            document.querySelector(".user-info .name").textContent;
+        const userInfoName = document.querySelector(".user-info .name");
+        if (sidebarName && userInfoName)
+          sidebarName.textContent = userInfoName.textContent;
       } else {
         console.error("Failed to load stats:", data.message);
       }
@@ -121,8 +123,8 @@ function fetchRecentOrders() {
               <td>${order.customer_name}</td>
               <td>Rs. ${order.order_total.toLocaleString()}</td>
               <td><span class="status-badge ${statusClass}">${
-            order.order_status
-          }</span></td>
+                order.order_status
+              }</span></td>
             </tr>
           `;
         });

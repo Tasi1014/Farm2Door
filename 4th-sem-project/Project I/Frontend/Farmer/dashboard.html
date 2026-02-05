@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -56,8 +56,8 @@
         </div>
         <div id="google_translate_element" style="margin-right: 16px"></div>
         <div class="user-profile">
-          <div class="profile-icon" onclick="toggleDropdown()">
-            <i class="fa-solid fa-circle-user"></i>
+          <div class="profile-icon" onclick="toggleDropdown(event)">
+            <i class="fa-solid fa-user"></i>
           </div>
           <div class="dropdown-menu" id="userDropdown">
             <div class="user-info">
@@ -164,7 +164,7 @@
             includedLanguages: "en,ne", // English + Nepali
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
           },
-          "google_translate_element"
+          "google_translate_element",
         );
       }
     </script>

@@ -241,7 +241,9 @@ body {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.3);
   transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+  transition:
+    width 0.6s,
+    height 0.6s;
 }
 
 .btn:hover::before {
@@ -540,7 +542,8 @@ footer .socials a i {
   }
 
   .nav-actions {
-    width: 100%;
+    display: flex;
+    justify-content: flex-end;
     margin-top: 10px;
     gap: 10px;
   }

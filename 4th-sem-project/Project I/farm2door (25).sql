@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2025 at 11:05 AM
+-- Generation Time: Feb 05, 2026 at 01:15 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -73,7 +73,9 @@ INSERT INTO `contactus` (`id`, `Name`, `Email`, `Message`) VALUES
 (26, 'Tasi Sherpa', 'pasangbca23@oic.edu.np', 'hi'),
 (27, 'Tasi Sherpa', 'pasangbca23@oic.edu.np', 'Hi'),
 (28, 'Neha Mahto', 'mahtoneha2555@gmail.com', 'hi'),
-(29, 'Neha Mahto', 'mahtoneha2555@gmail.com', 'Hi');
+(29, 'Neha Mahto', 'mahtoneha2555@gmail.com', 'Hi'),
+(30, 'Tomatoes', 'sherpajack3@gmailcom', 'hello\\r\\n'),
+(31, 'Tomatoes', 'sherpajack3@gmailcom', 'hello\\r\\n');
 
 -- --------------------------------------------------------
 
@@ -102,7 +104,9 @@ INSERT INTO `customer_registration` (`id`, `firstName`, `lastName`, `Email`, `Ph
 (4, 'Neha', 'Mahto', 'rappid56@gmail.com', 2147483647, 'gatthaghar', '$2y$10$0eKGtHdHTNND4N/pgZPTP.CdJK1H7TnhTMn6uOvPtjZvJrVX4TxXq', 1, 'active'),
 (5, 'Neha', 'Mahto', 'mahtoneha2555@gmail.com', 2147483647, 'Bhaktapur, Gatthaghar', '$2y$10$9lT0Lxeln3PmurUqkzh.E.32UtxJLUES9Yq5gFlv8zZa1eHgbIJga', 1, 'active'),
 (6, 'Pasang', 'Tasi Sherpa', 'pasangbca23@oic.edu.np', 2147483647, 'kapan, Aakashedhara', '$2y$10$/JicFmEOOmABJlfp3lD/DOLT7pcAHSAVwwcZ5l2Chd0awNgBodt22', 1, 'active'),
-(7, 'Namrata', 'Bomjan', 'namratabca23@oic.edu.np', 2147483647, 'Pepsicola, Lalitpur', '$2y$10$GUoIqN/QjHyWhjCy6ne6eecF2uqbTE4irly/qxk7ESXxALY7A8aJi', 1, 'active');
+(7, 'Namrata', 'Bomjan', 'namratabca23@oic.edu.np', 2147483647, 'Pepsicola, Lalitpur', '$2y$10$GUoIqN/QjHyWhjCy6ne6eecF2uqbTE4irly/qxk7ESXxALY7A8aJi', 1, 'active'),
+(8, 'Bimal', 'Sherpa', 'sherpabimal09@gmail.com', 2147483647, 'kapan, Aakashedhara', '$2y$10$mdAjzgAtVOmNhD.7ORA./Owuj2yjyxZ67oMjI/EISg07Scop/WhNi', 1, 'active'),
+(9, 'Ram', 'Khatri', 'ram@gmail.com', 2147483647, 'Kapan, Aakashedhara', '$2y$10$fYHq32zQKbci4Uq6Pv.SnOaMV0R4I47uT3d38Ks0hhHWm23DNH.1C', 1, 'active');
 
 -- --------------------------------------------------------
 
@@ -130,7 +134,7 @@ CREATE TABLE `farmer_registration` (
 INSERT INTO `farmer_registration` (`farmer_id`, `firstName`, `lastName`, `Email`, `Password`, `Phone`, `Address`, `Terms`, `created_at`, `status`) VALUES
 (1, 'Tashi', 'Sherpa', 'sherpajack3@gmail.com', '$2y$10$aUVNr5V5LKiB0UBbncctmef4TsLb39dPvhCDIs..MzPL4mZUpkmyq', '9803901467', 'Kapan, Aakashedhara', 1, '2025-11-22 21:51:42', 'active'),
 (2, 'Neha', 'Mahto', 'mahtoneha2555@gmail.com', '$2y$10$MgNXX8GqHDJpV2QG8xHY/eS5qj0sqEFtfSit90/qjiRG5aRe9xQmO', '9823782211', 'Gatthaghar', 1, '2025-12-15 17:43:08', 'active'),
-(4, 'Anmol', 'Jogi', 'anmol11@gmail.com', '$2y$10$AcBtaIQp9KarytV/5/CW8eQlnwogI6qD5J2RFiI53uTDsSLIRTuTe', '9803301576', 'Mandikatar kapan', 1, '2025-12-19 11:10:23', 'active');
+(4, 'Anmol', 'Jogi', 'anmol11@gmail.com', '$2y$10$AcBtaIQp9KarytV/5/CW8eQlnwogI6qD5J2RFiI53uTDsSLIRTuTe', '9803301576', 'Mandikatar kapan', 1, '2025-12-19 11:10:23', 'blocked');
 
 -- --------------------------------------------------------
 
@@ -201,7 +205,12 @@ INSERT INTO `orders` (`order_id`, `customer_id`, `total_amount`, `order_status`,
 (64, 6, 600.00, 'Fulfilled', '2025-12-26 13:10:03', 'Pasang Tasi Sherpa', '2147483647', 'kapan, Aakashedhara', '', NULL, NULL),
 (65, 7, 670.00, 'Fulfilled', '2025-12-27 07:20:57', 'Namrata Bomjan', '9823623830', 'Pepsicola, Lalitpur', '', NULL, NULL),
 (66, 2, 320.00, 'Fulfilled', '2025-12-28 08:08:46', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, NULL),
-(67, 2, 140.00, 'Pending', '2025-12-28 10:03:01', 'Tasi Sherpa', '9803901467', 'Kapan, Aakashedhara', 'Call me when reached Aakashedhara', NULL, NULL);
+(68, 2, 280.00, 'Cancelled', '2025-12-28 10:25:39', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, 'Cancelled by customer'),
+(69, 2, 500.00, 'Fulfilled', '2025-12-28 14:58:06', 'Tasi Sherpa', '9823782211', 'Kapan, Aakashedhara', 'Call me when reached nehachathouse', NULL, NULL),
+(70, 5, 440.00, 'Pending', '2025-12-29 03:10:37', 'Neha Mahto', '9823782211', 'Bhaktapur, Gatthaghar', '', NULL, NULL),
+(71, 5, 150.00, 'Fulfilled', '2025-12-29 04:16:53', 'Neha Mahto', '2147483647', 'Bhaktapur, Gatthaghar', '', NULL, NULL),
+(72, 8, 200.00, 'Rejected', '2026-01-10 11:50:07', 'Bimal Sherpa', '2147483647', 'kapan, Aakashedhara', '', 'Out of Stock', NULL),
+(73, 2, 200.00, 'Cancelled', '2026-02-05 12:08:18', 'Tasi Sherpa', '2147483647', 'Kapan, Aakashedhara', '', NULL, 'Cancelled by customer');
 
 -- --------------------------------------------------------
 
@@ -285,7 +294,14 @@ INSERT INTO `order_items` (`item_id`, `order_id`, `product_id`, `farmer_id`, `qu
 (90, 65, 8, 1, 2, 55.00, 110.00),
 (91, 66, 22, 2, 1, 100.00, 100.00),
 (92, 66, 21, 2, 1, 220.00, 220.00),
-(93, 67, 23, 2, 1, 140.00, 140.00);
+(94, 68, 23, 2, 2, 140.00, 280.00),
+(95, 69, 25, 2, 1, 200.00, 200.00),
+(96, 69, 26, 2, 2, 150.00, 300.00),
+(97, 70, 25, 2, 1, 200.00, 200.00),
+(98, 70, 9, 4, 2, 120.00, 240.00),
+(99, 71, 26, 2, 1, 150.00, 150.00),
+(100, 72, 25, 2, 1, 200.00, 200.00),
+(101, 73, 25, 2, 1, 200.00, 200.00);
 
 -- --------------------------------------------------------
 
@@ -439,7 +455,25 @@ INSERT INTO `order_status_logs` (`log_id`, `order_id`, `old_status`, `new_status
 (128, 66, 'Processing', 'Dispatched', 'Farmer', 2, NULL, '2025-12-28 08:10:06'),
 (129, 66, 'Dispatched', 'Received', 'Admin', 1, NULL, '2025-12-28 08:10:13'),
 (130, 66, 'Received', 'Ready for Pickup', 'Admin', 1, NULL, '2025-12-28 08:10:17'),
-(131, 66, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-28 08:10:27');
+(131, 66, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-28 08:10:27'),
+(134, 68, 'Pending', 'Processing', 'Farmer', 2, NULL, '2025-12-28 10:26:34'),
+(135, 68, '0', 'Cancelled', 'Customer', 2, 'Cancelled by customer', '2025-12-28 10:29:35'),
+(136, 68, 'Cancelled', 'Refunded', 'Admin', 1, 'Processed refund of Rs. 252 (10% fee applied). Ref: REF-20251228-7BBD31ED', '2025-12-28 10:30:17'),
+(137, 69, 'Pending', 'Processing', 'Farmer', 2, NULL, '2025-12-28 15:00:00'),
+(138, 69, 'Processing', 'Dispatched', 'Farmer', 2, NULL, '2025-12-28 15:00:08'),
+(139, 69, 'Dispatched', 'Received', 'Admin', 1, NULL, '2025-12-28 15:00:34'),
+(140, 69, 'Received', 'Ready for Pickup', 'Admin', 1, NULL, '2025-12-28 15:00:37'),
+(141, 69, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2025-12-28 15:00:46'),
+(142, 72, 'Pending', 'Rejected', 'Farmer', 2, 'Out of Stock', '2026-01-10 11:53:11'),
+(143, 72, 'Rejected', 'Refunded', 'Admin', 1, 'Processed refund of Rs. 180 (10% fee applied). Ref: REF-20260110-B974C164', '2026-01-10 11:54:57'),
+(144, 71, 'Pending', 'Processing', 'Farmer', 2, NULL, '2026-01-10 12:01:49'),
+(145, 71, 'Processing', 'Dispatched', 'Farmer', 2, NULL, '2026-01-10 12:02:34'),
+(146, 71, 'Dispatched', 'Received', 'Admin', 1, NULL, '2026-01-10 12:02:56'),
+(147, 71, 'Received', 'Ready for Pickup', 'Admin', 1, NULL, '2026-01-10 12:03:06'),
+(148, 71, 'Ready for Pickup', 'Fulfilled', 'Admin', 1, NULL, '2026-01-10 12:03:26'),
+(149, 73, 'Pending', 'Processing', 'Farmer', 2, NULL, '2026-02-05 12:09:19'),
+(150, 73, '0', 'Cancelled', 'Customer', 2, 'Cancelled by customer', '2026-02-05 12:10:22'),
+(151, 73, 'Cancelled', 'Refunded', 'Admin', 1, 'Processed refund of Rs. 180 (10% fee applied). Ref: REF-20260205-C9EB766D', '2026-02-05 12:12:16');
 
 -- --------------------------------------------------------
 
@@ -506,7 +540,12 @@ INSERT INTO `payments` (`payment_id`, `order_id`, `payment_method`, `payment_sta
 (60, 64, 'COD', 'Paid', NULL, 600.00, '2025-12-26 13:10:03'),
 (61, 65, 'COD', 'Paid', NULL, 670.00, '2025-12-27 07:20:57'),
 (62, 66, 'COD', 'Paid', NULL, 320.00, '2025-12-28 08:08:46'),
-(63, 67, 'Stripe', 'Paid', 'pi_3SjGnxRwvvwKRc8Q1UiJo479', 140.00, '2025-12-28 10:03:01');
+(64, 68, 'ONLINE', 'Refunded', 'pi_3SjH9rRwvvwKRc8Q0KWCXW2y', 280.00, '2025-12-28 10:25:39'),
+(65, 69, 'ONLINE', 'Paid', 'pi_3SjLPJRwvvwKRc8Q18P9PSWa', 500.00, '2025-12-28 14:58:06'),
+(66, 70, 'ONLINE', 'Paid', 'pi_3SjWqMRwvvwKRc8Q057c7Svi', 440.00, '2025-12-29 03:10:37'),
+(67, 71, 'ONLINE', 'Paid', 'pi_3SjXsVRwvvwKRc8Q0t22sn2u', 150.00, '2025-12-29 04:16:54'),
+(68, 72, 'ONLINE', 'Refunded', 'pi_3So0fDRwvvwKRc8Q1epgknLQ', 200.00, '2026-01-10 11:50:07'),
+(69, 73, 'ONLINE', 'Refunded', 'pi_3SxRK6RwvvwKRc8Q02EI6l7d', 200.00, '2026-02-05 12:08:18');
 
 -- --------------------------------------------------------
 
@@ -534,7 +573,7 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`product_id`, `farmer_id`, `name`, `category`, `price`, `stock_quantity`, `threshold`, `description`, `image`, `created_at`) VALUES
 (2, 1, 'Carrot', 'fruits', 80.00, 30, 5, 'Fresh Carrots', '307093611c273e428a38715e69ce8c70.webp', '2025-12-15 11:32:04'),
 (8, 1, 'Tomatoes', 'fruits', 55.00, 17, 20, 'Fresh Organic Tomatoes', '86216febc2c40df4bfc9e5557338bf47.jpg', '2025-12-17 05:37:38'),
-(9, 4, 'Potato', 'vegetables', 120.00, 38, 5, 'Fresh local organic Potatoes', 'eaf9b1660a9a20ee074430e0c30fb875.jpg', '2025-12-19 05:27:58'),
+(9, 4, 'Potato', 'vegetables', 120.00, 36, 5, 'Fresh local organic Potatoes', 'eaf9b1660a9a20ee074430e0c30fb875.jpg', '2025-12-19 05:27:58'),
 (10, 1, 'Cauliflower', 'vegetables', 95.00, 28, 29, 'Fresh Cauliflowers', '4a0a2246dd7f28ad4fe17f87ae5fe884.jpg', '2025-12-21 17:57:31'),
 (11, 1, 'Mushroom', 'vegetables', 150.00, 20, 24, 'Fresh Mushrooms', '88a9716545ebcd70f067487af1e2686b.jpg', '2025-12-22 06:29:15'),
 (12, 2, 'Mushroom', 'vegetables', 399.00, 20, 5, 'Fresh mushroom home grown', 'ac121f23fe61b66d2c08822e5bfb7c24.jpg', '2025-12-22 16:11:12'),
@@ -548,10 +587,10 @@ INSERT INTO `products` (`product_id`, `farmer_id`, `name`, `category`, `price`, 
 (20, 4, 'Onion', 'vegetables', 120.00, 59, 5, 'Fresh Organic Onion', '093ee64a8b95ac7d86fa3f1c1620cafe.jpg', '2025-12-22 16:21:32'),
 (21, 2, 'Ginger', 'vegetables', 220.00, 57, 5, 'Fresh Organic Ginger', 'ff22d08c8a0d18255695140f1df8949d.jpg', '2025-12-22 16:23:29'),
 (22, 2, 'Cucumber', 'fruits', 100.00, 49, 5, 'Fresh Organic Cucumber', '70d6f2c2a30ca9066f8021acfabd3713.jpg', '2025-12-22 16:24:35'),
-(23, 2, 'Corn', 'fruits', 140.00, 3, 5, 'Organic Corn', '73a9ab3a15ddfd50a57fa067455fc99b.jpg', '2025-12-22 16:25:32'),
+(23, 2, 'Corn', 'fruits', 140.00, 4, 5, 'Organic Corn', '73a9ab3a15ddfd50a57fa067455fc99b.jpg', '2025-12-22 16:25:32'),
 (24, 2, 'Broccoli', 'vegetables', 170.00, 50, 5, 'Organic Broccoli', 'c11264d41b23cdc746941311b1e4a49d.jpg', '2025-12-22 16:26:23'),
-(25, 2, 'Chilly', 'herbs', 200.00, 38, 5, 'Organic Chilly - Spicyyyyyy', '32a20b9d8ef2f21d80df087dd3db07fd.jpg', '2025-12-22 16:27:06'),
-(26, 2, 'Beetroot', 'fruits', 150.00, 38, 5, 'Organic Beetroot – Naturally sweet, rich, and a healthy boost for your blood.', '9056643f88417a2e2f0ff86ab2644119.jpg', '2025-12-22 16:28:26');
+(25, 2, 'Chilly', 'herbs', 200.00, 35, 5, 'Organic Chilly - Spicyyyyyy', '32a20b9d8ef2f21d80df087dd3db07fd.jpg', '2025-12-22 16:27:06'),
+(26, 2, 'Beetroot', 'fruits', 150.00, 35, 5, 'Organic Beetroot – Naturally sweet, rich, and a healthy boost for your blood.', '9056643f88417a2e2f0ff86ab2644119.jpg', '2025-12-22 16:28:26');
 
 -- --------------------------------------------------------
 
@@ -579,7 +618,10 @@ INSERT INTO `refunds` (`refund_id`, `order_id`, `payment_id`, `refund_transactio
 (4, 31, 36, 'REF-20251221-12CF7ADD', 108.00, 'Cancelled/Rejected', '2025-12-21 18:16:02'),
 (5, 32, 37, 'REF-20251222-2DB615E8', 342.00, 'Cancelled/Rejected', '2025-12-22 05:04:34'),
 (6, 35, 40, 'REF-20251222-9C783DEE', 243.00, 'Cancelled/Rejected', '2025-12-22 05:58:03'),
-(7, 37, 42, 'REF-20251222-3166EFFF', 85.50, 'Cancelled/Rejected', '2025-12-22 06:38:52');
+(7, 37, 42, 'REF-20251222-3166EFFF', 85.50, 'Cancelled/Rejected', '2025-12-22 06:38:52'),
+(8, 68, 64, 'REF-20251228-7BBD31ED', 252.00, 'Cancelled/Rejected', '2025-12-28 10:30:17'),
+(9, 72, 68, 'REF-20260110-B974C164', 180.00, 'Cancelled/Rejected', '2026-01-10 11:54:57'),
+(10, 73, 69, 'REF-20260205-C9EB766D', 180.00, 'Cancelled/Rejected', '2026-02-05 12:12:16');
 
 --
 -- Indexes for dumped tables
@@ -666,19 +708,19 @@ ALTER TABLE `refunds`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `contactus`
 --
 ALTER TABLE `contactus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `customer_registration`
 --
 ALTER TABLE `customer_registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `farmer_registration`
@@ -690,25 +732,25 @@ ALTER TABLE `farmer_registration`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `order_status_logs`
 --
 ALTER TABLE `order_status_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -720,7 +762,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `refunds`
 --
 ALTER TABLE `refunds`
-  MODIFY `refund_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `refund_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

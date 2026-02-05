@@ -307,7 +307,7 @@ footer .socials a i {
   to {
     opacity: 1;
     transform: translateY(0);
-  }z
+  }
 }
 
 /* Responsive Design */
@@ -355,7 +355,8 @@ footer .socials a i {
     display: flex;
   }
   .nav-actions {
-    width: 100%;
+    display: flex;
+    justify-content: flex-end;
     margin-top: 10px;
     gap: 10px;
   }
@@ -370,7 +371,6 @@ footer .socials a i {
 
   /* Hero */
   .hero {
-    margin-top: 70px;
     padding: 6vw 5vw;
   }
   .hero h1 {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -44,12 +44,13 @@
 
     <div class="main-content">
       <div class="header">
-        <div style="display: flex; align-items: center;">
-            <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
-            <h1>Orders</h1>
+        <div style="display: flex; align-items: center">
+          <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
+          <h1>Orders</h1>
         </div>
+        <div id="google_translate_element" style="margin-right: 16px"></div>
         <div class="user-profile">
-          <div class="profile-icon" onclick="toggleDropdown()">
+          <div class="profile-icon" onclick="toggleDropdown(event)">
             <i class="fa-solid fa-user"></i>
           </div>
           <div class="dropdown-menu" id="userDropdown">
@@ -57,16 +58,26 @@
               <span class="name">Farmer User</span>
               <span class="role">Farmer</span>
             </div>
-            <a href="../Login/login.html" class="logout-item"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+            <a href="../Login/login.html" class="logout-item" id="logout-btn"
+              ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
+            >
           </div>
         </div>
       </div>
 
       <div class="orders-tabs">
-        <button class="tab-btn active" onclick="setFilter('pending')">Received</button>
-        <button class="tab-btn" onclick="setFilter('processing')">Processing</button>
-        <button class="tab-btn" onclick="setFilter('fulfilled')">Fulfilled</button>
-        <button class="tab-btn" onclick="setFilter('cancelled')">Cancelled/Rejected</button>
+        <button class="tab-btn active" onclick="setFilter('pending')">
+          Received
+        </button>
+        <button class="tab-btn" onclick="setFilter('processing')">
+          Processing
+        </button>
+        <button class="tab-btn" onclick="setFilter('fulfilled')">
+          Fulfilled
+        </button>
+        <button class="tab-btn" onclick="setFilter('cancelled')">
+          Cancelled/Rejected
+        </button>
       </div>
 
       <div id="orders-container" class="orders-list">
@@ -85,18 +96,32 @@
 
     <!-- Rejection Modal -->
     <div id="rejectionModal" class="modal">
-      <div class="modal-content" style="max-width: 400px;">
+      <div class="modal-content" style="max-width: 400px">
         <h3>Reason for Rejection</h3>
-        <textarea id="rejection-reason" placeholder="Enter reason..." style="width: 100%; margin: 15px 0; padding: 10px; border-radius: 8px; border: 1px solid #ddd;"></textarea>
-        <div style="display: flex; gap: 10px; justify-content: flex-end;">
-          <button class="btn-detail" onclick="closeRejectionModal()">Cancel</button>
-          <button class="btn-cancel" onclick="submitRejection()">Reject Order</button>
+        <textarea
+          id="rejection-reason"
+          placeholder="Enter reason..."
+          style="
+            width: 100%;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+          "
+        ></textarea>
+        <div style="display: flex; gap: 10px; justify-content: flex-end">
+          <button class="btn-detail" onclick="closeRejectionModal()">
+            Cancel
+          </button>
+          <button class="btn-cancel" onclick="submitRejection()">
+            Reject Order
+          </button>
         </div>
       </div>
     </div>
-    </div>
-    <script src="js/farmer-orders.js"></script>
-      <script type="text/javascript">
+    <script src="farmer.js?v=4"></script>
+    <script src="js/farmer-orders.js?v=2"></script>
+    <script type="text/javascript">
       function googleTranslateElementInit() {
         new google.translate.TranslateElement(
           {
@@ -104,7 +129,7 @@
             includedLanguages: "en,ne", // English + Nepali
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
           },
-          "google_translate_element"
+          "google_translate_element",
         );
       }
     </script>
@@ -112,6 +137,5 @@
       type="text/javascript"
       src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
     ></script>
-  </body>
   </body>
 </html>

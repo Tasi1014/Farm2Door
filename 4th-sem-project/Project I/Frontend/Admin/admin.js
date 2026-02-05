@@ -17,22 +17,24 @@ sidebarLinks.forEach((link) => {
 });
 
 // Toggle Profile Dropdown
-function toggleDropdown() {
+function toggleDropdown(event) {
+  if (event) event.stopPropagation();
   const dropdown = document.getElementById("userDropdown");
   if (dropdown) dropdown.classList.toggle("show");
 }
 
-window.onclick = function (event) {
+window.addEventListener("click", function (event) {
   const dropdown = document.getElementById("userDropdown");
   if (
+    dropdown &&
     !event.target.closest(".profile-icon") &&
     !event.target.closest(".dropdown-menu")
   ) {
-    if (dropdown && dropdown.classList.contains("show")) {
+    if (dropdown.classList.contains("show")) {
       dropdown.classList.remove("show");
     }
   }
-};
+});
 
 // --- Dashboard Stats ---
 function animateValue(id, start, end, duration) {
@@ -80,7 +82,7 @@ async function fetchDashboardStats() {
 }
 
 // --- Management Tables ---
-let allData = []; 
+let allData = [];
 let currentPage = 1;
 const itemsPerPage = 5;
 let totalItems = 0;
@@ -134,13 +136,13 @@ function renderTable(pageType, data) {
           <td>${item.address || "N/A"}</td>
           <td>
             <span class="status-badge ${statusClass}">${(
-        item.status || "active"
-      ).toUpperCase()}</span>
+              item.status || "active"
+            ).toUpperCase()}</span>
           </td>
           <td>
             <button class="action-btn ${buttonClass}" onclick="toggleUserStatus('${pageType}', ${
-        item.id
-      }, '${isBlocked ? "active" : "blocked"}')">
+              item.id
+            }, '${isBlocked ? "active" : "blocked"}')">
               ${buttonText}
             </button>
           </td>
@@ -230,7 +232,7 @@ async function toggleUserStatus(type, id, action) {
     action === "blocked"
       ? `Are you sure you want to block this ${type.slice(
           0,
-          -1
+          -1,
         )}? They will not be able to log in.`
       : `Are you sure you want to unblock this ${type.slice(0, -1)}?`;
 
@@ -300,15 +302,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Logout
-  const logoutBtn = document.querySelector(".logout-item");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", (e) => {
-      // e.preventDefault();
+  const logoutBtns = document.querySelectorAll(".logout-item, #logout-btn");
+  logoutBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
       fetch("../../Backend/logout.php")
         .then((res) => res.json())
         .then((data) => {
           if (data.success) window.location.href = "../Login/login.html";
-        });
+        })
+        .catch((err) => console.error("Logout failed:", err));
     });
-  }
+  });
 });
