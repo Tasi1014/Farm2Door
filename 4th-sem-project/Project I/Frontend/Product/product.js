@@ -47,13 +47,4 @@ document.addEventListener("DOMContentLoaded", () => {
     const prodSection = document.getElementById("product");
     if (prodSection) prodSection.scrollIntoView({ behavior: "smooth" });
   };
-
-  // 3. Hamburger Menu (if not already handled by common script)
-  const hamburger = document.querySelector(".hamburger");
-  const navLinks = document.querySelector(".nav-links");
-  if (hamburger && navLinks) {
-    hamburger.addEventListener("click", () => {
-      navLinks.classList.toggle("mobile-active");
-    });
-  }
 });

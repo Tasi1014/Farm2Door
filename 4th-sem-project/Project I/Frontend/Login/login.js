@@ -1,6 +1,3 @@
-// Mobile menu toggle
-const hamburger = document.querySelector(".hamburger");
-
 // Check if user is already logged in
 fetch("../../Backend/get_user_info.php")
   .then((response) => response.json())
@@ -15,15 +12,9 @@ fetch("../../Backend/get_user_info.php")
   })
   .catch((error) => console.error("Error checking auth:", error));
 
-const navLinks = document.querySelector(".nav-links");
-
 const consumer_success = document.getElementById("consumer-success");
 const farmer_success = document.getElementById("farmer-success");
 const admin_success = document.getElementById("admin-success");
-
-hamburger.addEventListener("click", () => {
-  navLinks.classList.toggle("mobile-active");
-});
 
 // Helper to get cookie
 function getCookie(name) {

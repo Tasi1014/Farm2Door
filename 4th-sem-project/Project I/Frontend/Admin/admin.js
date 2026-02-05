@@ -1,3 +1,12 @@
+window.addEventListener("pageshow", function (event) {
+  // If page is loaded from back/forward cache, force reload to re-run auth check
+  if (event.persisted) {
+    window.location.reload();
+  }
+  // Always check auth on load
+  checkAuth();
+});
+
 // Toggle Sidebar (Mobile)
 function toggleSidebar() {
   const sidebar = document.querySelector(".sidebar");

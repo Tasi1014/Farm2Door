@@ -14,77 +14,11 @@ html {
 body {
   font-family: "Poppins", Arial, sans-serif;
   background: #f9f9f9;
-  padding-top: 70px; /* space for navbar */
+  padding-top: 80px; /* space for navbar */
   line-height: 1.8;
 }
 
-.logo img {
-  height: 70px; /* adjust size */
-  width: auto; /* keeps proportions */
-  cursor: pointer;
-}
-
-/* Navbar - Modern Design */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background: linear-gradient(135deg, #006400, #008000, #009900);
-  color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(10px);
-}
-
-.logo {
-  font-size: clamp(1.8rem, 3vw, 2rem);
-  font-weight: bold;
-}
-
-/* Hamburger Menu */
-.hamburger {
-  display: none;
-  font-size: 2rem;
-  cursor: pointer;
-  color: white;
-  transition: transform 0.3s ease;
-}
-
-.hamburger:hover {
-  transform: scale(1.1);
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 25px;
-  transition: all 0.3s ease;
-}
-
-.nav-links li a {
-  text-decoration: none;
-  color: white;
-  font-size: clamp(1rem, 1.2vw, 1.3rem);
-  font-weight: 600;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.nav-links li a:hover,
-.nav-links li a.active {
-  color: black;
-}
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+/* Navbar styles are now in ../css/navbar.css */
 
 /* Search container - Glassmorphism */
 .search-container {
@@ -531,14 +465,6 @@ footer .socials a i {
 
   .nav-links {
     display: none;
-    flex-direction: column;
-    width: 100%;
-    gap: 15px;
-    margin-top: 10px;
-  }
-
-  .nav-links.mobile-active {
-    display: flex;
   }
 
   .nav-actions {

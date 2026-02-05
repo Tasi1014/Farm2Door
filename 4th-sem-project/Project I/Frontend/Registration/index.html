@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registration - Farm2Door</title>
     <link rel="stylesheet" href="registration.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -29,11 +30,56 @@
           <li><a href="../Product/product.html">Products</a></li>
           <li><a href="../About Us/aboutus.html">About Us</a></li>
           <li><a href="../Contact Us/contactus.html">Contact Us</a></li>
-          <li><a href="../Login/login.html">Login</a></li>
-          <li><a href="index.html ">Sign Up</a></li>
+          <li id="login-link"><a href="../Login/login.html">Login</a></li>
+          <li id="signup-link">
+            <a href="index.html" class="active">Sign Up</a>
+          </li>
+          <li id="profile-link" style="display: none">
+            <a href="#" id="profile-btn"
+              ><i class="fa-solid fa-user-circle"></i>
+              <span id="user-name">User</span></a
+            >
+            <div class="dropdown-content" id="profile-dropdown">
+              <!-- Will be populated by auth.js -->
+            </div>
+          </li>
         </ul>
+        <div class="nav-actions">
+          <i class="fa-solid fa-cart-shopping" id="cart" title="View Cart"></i>
+        </div>
       </nav>
     </header>
+
+    <!-- Sidebar for Mobile -->
+    <div class="sidebar">
+      <h2>Farm2Door</h2>
+      <ul class="sidebar-links">
+        <li>
+          <a href="../Home/index.html"
+            ><i class="fa-solid fa-house"></i> Home</a
+          >
+        </li>
+        <li>
+          <a href="../Product/product.html"
+            ><i class="fa-solid fa-basket-shopping"></i> Products</a
+          >
+        </li>
+        <li>
+          <a href="../About Us/aboutus.html"
+            ><i class="fa-solid fa-circle-info"></i> About Us</a
+          >
+        </li>
+        <li>
+          <a href="../Contact Us/contactus.html"
+            ><i class="fa-solid fa-envelope"></i> Contact Us</a
+          >
+        </li>
+        <!-- Auth links dynamically added by auth.js -->
+      </ul>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay"></div>
 
     <!-- Registration Selection Section -->
     <section class="registration-section">
@@ -46,7 +92,7 @@
         <div class="registration-options">
           <div
             class="registration-card consumer-registration"
-            onclick="window.location.href='consumer-register.html'"
+            onclick="window.location.href = 'consumer-register.html'"
           >
             <div class="registration-icon">
               <i class="fa-solid fa-shopping-cart"></i>
@@ -69,7 +115,7 @@
 
           <div
             class="registration-card farmer-registration"
-            onclick="window.location.href='farmer-register.html'"
+            onclick="window.location.href = 'farmer-register.html'"
           >
             <div class="registration-icon">
               <i class="fa-solid fa-tractor"></i>
@@ -102,6 +148,7 @@
       </div>
     </footer>
 
+    <script src="../js/auth.js"></script>
     <script src="registration.js"></script>
   </body>
 </html>

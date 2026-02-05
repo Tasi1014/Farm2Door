@@ -6,72 +6,18 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* Navbar (Shared) */
-.navbar {
-  display: flex;
-  align-items: center;
-  padding: 15px 30px;
-  background: #008000;
-  color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-.logo {
-  font-size: clamp(1.8rem, 3vw, 2rem);
-  font-weight: bold;
-}
-
-.logo img {
-  height: 70px;
-  width: auto;
-  cursor: pointer;
-}
-
-.hamburger {
-  display: none;
-  font-size: 2rem;
-  cursor: pointer;
-  color: white;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 25px;
-  transition: all 0.3s ease;
-  margin: auto;
-}
-
-.nav-links li a {
-  text-decoration: none;
-  color: white;
-  font-size: clamp(1rem, 1.2vw, 1.3rem);
-  font-weight: 600;
-  transition: color 0.3s;
-  cursor: pointer;
-}
-
-.nav-links li a:hover,
-.nav-links li a.active {
-  color: black;
-}
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+/* Navbar styles are now in ../css/navbar.css */
 
 /* About Section */
 .about {
-  margin-top: 80px; /* Adjusted for fixed navbar */
+  margin-top: 0;
   padding: 80px 10%;
-  background-color: #f0fff0; /* Light green solid background */
+  background-color: #f0fff0;
   text-align: center;
+}
+
+body {
+  padding-top: 80px;
 }
 
 .about-content {
@@ -240,17 +186,6 @@ footer .socials a:hover {
 
   .nav-links {
     display: none;
-    flex-direction: column;
-    width: 100%;
-    gap: 15px;
-    margin-top: 15px;
-    background: #006600;
-    padding: 20px;
-    border-radius: 10px;
-  }
-
-  .nav-links.mobile-active {
-    display: flex;
   }
 
   .team-cards {

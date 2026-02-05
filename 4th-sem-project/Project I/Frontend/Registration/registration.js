@@ -1,11 +1,3 @@
-// Mobile menu toggle
-const hamburger = document.querySelector(".hamburger");
-const navLinks = document.querySelector(".nav-links");
-
-hamburger.addEventListener("click", () => {
-  navLinks.classList.toggle("mobile-active");
-});
-
 // Form validation functions
 function validateName(name, errorElement) {
   const nameRegex = /^[a-zA-Z\s]{3,15}$/;

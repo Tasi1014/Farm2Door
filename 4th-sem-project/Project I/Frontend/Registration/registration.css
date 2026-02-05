@@ -8,7 +8,7 @@
 
 body {
   background: #f9f9f9;
-  padding-top: 70px;
+  padding-top: 80px;
 }
 
 .error {
@@ -21,55 +21,6 @@ body {
   color: green;
   text-align: center;
   font-weight: 500;
-}
-
-/* Navbar */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background: green;
-  color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-.logo img {
-  height: 70px;
-  width: auto;
-  cursor: pointer;
-}
-
-.hamburger {
-  display: none;
-  font-size: 2rem;
-  cursor: pointer;
-  color: white;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 25px;
-  transition: all 0.3s ease;
-}
-
-.nav-links li a {
-  text-decoration: none;
-  color: white;
-  font-size: clamp(1rem, 1.2vw, 1.3rem);
-  font-weight: 600;
-  transition: color 0.3s;
-  cursor: pointer;
-}
-
-.nav-links li a:hover,
-.nav-links li a.active {
-  color: black;
 }
 
 /* Registration Section */
@@ -386,31 +337,7 @@ footer .socials a i {
   box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
-  .navbar {
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding: 15px 20px;
-  }
-
-  .hamburger {
-    display: block;
-  }
-
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    gap: 15px;
-    margin-top: 10px;
-  }
-
-  .nav-links.mobile-active {
-    display: flex;
-  }
-
   .registration-form-container {
     padding: 30px 20px;
   }

@@ -1,5 +1,3 @@
-const hamburger = document.querySelector(".hamburger");
-const navLinks = document.querySelector(".nav-links");
 const shopNow = document.getElementById("shop");
 
 // Function to scroll to products section
@@ -12,9 +10,7 @@ shopNow.addEventListener("click", (e) => {
   goToProducts();
 });
 
-hamburger.addEventListener("click", () => {
-  navLinks.classList.toggle("mobile-active");
-});
+// Hamburger functionality is now handled globally in auth.js via toggleSidebar()
 
 // Hero Background Slider
 const hero = document.querySelector(".hero");
@@ -59,7 +55,7 @@ function handleSearch() {
   if (query) {
     // Redirect to Products page
     window.location.href = `../Product/product.html?search=${encodeURIComponent(
-      query
+      query,
     )}`;
   }
 }

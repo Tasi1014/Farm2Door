@@ -10,69 +10,10 @@
 body {
   font-family: "Poppins", Arial, sans-serif;
   background: #f9f9f9;
-  padding-top: 110px; /* Increased to prevent navbar overlap */
+  padding-top: 80px;
 }
 
-/* Navbar */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background: #008000;
-  color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-.logo {
-  font-size: clamp(1.8rem, 3vw, 2rem);
-  font-weight: bold;
-}
-
-.logo img {
-  height: 70px;
-  width: auto;
-  cursor: pointer;
-}
-
-/* Hamburger Menu */
-.hamburger {
-  display: none;
-  font-size: 2rem;
-  cursor: pointer;
-  color: white;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 25px;
-  transition: all 0.3s ease;
-}
-
-.nav-links li a {
-  text-decoration: none;
-  color: white;
-  font-size: clamp(1rem, 1.2vw, 1.3rem);
-  font-weight: 600;
-  transition: color 0.3s;
-  cursor: pointer;
-}
-
-.nav-links li a:hover,
-.nav-links li a.active {
-  color: black;
-}
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+/* Navbar styles are now in ../css/navbar.css */
 
 /* Search container */
 .search-container {
@@ -346,13 +287,6 @@ footer .socials a i {
   }
   .nav-links {
     display: none;
-    flex-direction: column;
-    width: 100%;
-    gap: 15px;
-    margin-top: 10px;
-  }
-  .nav-links.mobile-active {
-    display: flex;
   }
   .nav-actions {
     display: flex;

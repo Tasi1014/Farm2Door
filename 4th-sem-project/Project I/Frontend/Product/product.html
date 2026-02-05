@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -30,20 +30,20 @@
           <li><a href="../Contact Us/contactus.html">Contact Us</a></li>
           <li id="login-link"><a href="../Login/login.html">Login</a></li>
           <li id="signup-link">
-            <a href="../Registration/index.html ">Sign Up</a>
+            <a href="../Registration/index.html">Sign Up</a>
           </li>
           <li id="profile-link" style="display: none">
             <a href="#" id="profile-btn"
-              ><i class="fa-solid fa-user"></i>
+              ><i class="fa-solid fa-user-circle"></i>
               <span id="user-name">User</span></a
             >
             <div class="dropdown-content" id="profile-dropdown">
-              <a href="#" id="logout-btn">Logout</a>
+              <!-- Will be populated by auth.js -->
             </div>
           </li>
         </ul>
         <div class="nav-actions">
-          <i class="fa-solid fa-cart-shopping" id="cart"></i>
+          <i class="fa-solid fa-cart-shopping" id="cart" title="View Cart"></i>
         </div>
       </nav>
     </header>
@@ -123,19 +123,46 @@
       <div class="footer-content">
         <p>&copy; 2025 Farm2Door. All rights reserved.</p>
         <div class="socials">
-          <a href="javascript:void(0)"
-            ><i class="fa-brands fa-facebook-f"></i
-          ></a>
-          <a href="javascript:void(0)"><i class="fa-brands fa-twitter"></i></a>
-          <a href="javascript:void(0)"
-            ><i class="fa-brands fa-instagram"></i
-          ></a>
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
         </div>
       </div>
     </footer>
 
-    <script src="product.js"></script>
+    <!-- Sidebar for Mobile -->
+    <div class="sidebar">
+      <h2>Farm2Door</h2>
+      <ul class="sidebar-links">
+        <li>
+          <a href="../Home/index.html"
+            ><i class="fa-solid fa-house"></i> Home</a
+          >
+        </li>
+        <li>
+          <a href="product.html" class="active"
+            ><i class="fa-solid fa-basket-shopping"></i> Products</a
+          >
+        </li>
+        <li>
+          <a href="../About Us/aboutus.html"
+            ><i class="fa-solid fa-circle-info"></i> About Us</a
+          >
+        </li>
+        <li>
+          <a href="../Contact Us/contactus.html"
+            ><i class="fa-solid fa-envelope"></i> Contact Us</a
+          >
+        </li>
+        <!-- Auth links dynamically added by auth.js -->
+      </ul>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay"></div>
+
     <script src="../js/auth.js"></script>
+    <script src="product.js"></script>
     <script src="../js/load_products.js"></script>
     <script src="../js/cart.js?v=2"></script>
   </body>
