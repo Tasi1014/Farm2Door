@@ -198,6 +198,30 @@ body {
   text-decoration: underline;
 }
 
+.label-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.forgot-link {
+  color: #008000;
+  font-size: 0.85rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.label-group label {
+  margin-bottom: 0;
+}
+
+.forgot-link:hover {
+  color: black;
+  text-decoration: underline;
+}
+
 /* Footer */
 footer {
   background: green;
