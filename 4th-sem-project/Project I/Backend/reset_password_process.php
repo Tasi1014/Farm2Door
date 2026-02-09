@@ -28,6 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // 2. Verify token in DB (Check existence first to handle cleanup)
+    $userFound = false;
+    $table = '';
+    $idColumn = '';
+    $userId = null;
+    $expiryTime = 0;
+
+    // Check Consumer table
     $sqlSearch = "SELECT id, reset_expires FROM customer_registration WHERE reset_token = ? LIMIT 1";
     $stmtSearch = mysqli_prepare($conn, $sqlSearch);
     mysqli_stmt_bind_param($stmtSearch, "s", $token);
@@ -35,9 +42,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $resultSearch = mysqli_stmt_get_result($stmtSearch);
 
     if ($row = mysqli_fetch_assoc($resultSearch)) {
+        $userFound = true;
+        $table = 'customer_registration';
+        $idColumn = 'id';
         $userId = $row['id'];
         $expiryTime = strtotime($row['reset_expires']);
-        
+    } else {
+        // Not found in consumers, check Farmers
+        mysqli_stmt_close($stmtSearch);
+        $sqlSearch = "SELECT farmer_id, reset_expires FROM farmer_registration WHERE reset_token = ? LIMIT 1";
+        $stmtSearch = mysqli_prepare($conn, $sqlSearch);
+        mysqli_stmt_bind_param($stmtSearch, "s", $token);
+        mysqli_stmt_execute($stmtSearch);
+        $resultSearch = mysqli_stmt_get_result($stmtSearch);
+
+        if ($row = mysqli_fetch_assoc($resultSearch)) {
+            $userFound = true;
+            $table = 'farmer_registration';
+            $idColumn = 'farmer_id';
+            $userId = $row['farmer_id'];
+            $expiryTime = strtotime($row['reset_expires']);
+        }
+    }
+
+    if ($userFound) {
         // Use DB time for comparison to be safe
         $timeRes = mysqli_query($conn, "SELECT NOW() as now");
         $timeRow = mysqli_fetch_assoc($timeRes);
@@ -45,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($currentTime > $expiryTime) {
             // Token found but EXPIRED - Clean it up!
-            $clearSql = "UPDATE customer_registration SET reset_token = NULL, reset_expires = NULL WHERE id = ?";
+            $clearSql = "UPDATE $table SET reset_token = NULL, reset_expires = NULL WHERE $idColumn = ?";
             $clearStmt = mysqli_prepare($conn, $clearSql);
             mysqli_stmt_bind_param($clearStmt, "i", $userId);
             mysqli_stmt_execute($clearStmt);
@@ -58,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         // 3. Update password and clear token
-        $updateSql = "UPDATE customer_registration SET Password = ?, reset_token = NULL, reset_expires = NULL WHERE id = ?";
+        $updateSql = "UPDATE $table SET Password = ?, reset_token = NULL, reset_expires = NULL WHERE $idColumn = ?";
         $updateStmt = mysqli_prepare($conn, $updateSql);
         mysqli_stmt_bind_param($updateStmt, "si", $hashedPassword, $userId);
 
@@ -72,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode(['status' => 'error', 'message' => 'Invalid reset link. Please request a new one.']);
     }
 
-    mysqli_stmt_close($stmtSearch);
+    if (isset($stmtSearch)) mysqli_stmt_close($stmtSearch);
     mysqli_close($conn);
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);

@@ -15,7 +15,14 @@ include 'connection.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
 
-    // Check if email exists in customer_registration
+    $userFound = false;
+    $accountType = ''; // 'consumer' or 'farmer'
+    $userId = null;
+    $userName = '';
+    $idColumn = '';
+    $table = '';
+
+    // 1. Check if email exists in customer_registration
     $sql = "SELECT id, firstName FROM customer_registration WHERE Email = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $email);
@@ -23,14 +30,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_stmt_get_result($stmt);
 
     if ($row = mysqli_fetch_assoc($result)) {
+        $userFound = true;
+        $accountType = 'consumer';
         $userId = $row['id'];
         $userName = $row['firstName'];
+        $table = 'customer_registration';
+        $idColumn = 'id';
+    } else {
+        // 2. Not found in consumers, check farmer_registration
+        mysqli_stmt_close($stmt);
+        $sql = "SELECT farmer_id, firstName FROM farmer_registration WHERE Email = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
 
+        if ($row = mysqli_fetch_assoc($result)) {
+            $userFound = true;
+            $accountType = 'farmer';
+            $userId = $row['farmer_id'];
+            $userName = $row['firstName'];
+            $table = 'farmer_registration';
+            $idColumn = 'farmer_id';
+        }
+    }
+
+    if ($userFound) {
         // Generate secure token
         $token = bin2hex(random_bytes(32));
 
-        // Update DB with token and expiry (using DB NOW() to avoid timezone mismatch)
-        $updateSql = "UPDATE customer_registration SET reset_token = ?, reset_expires = DATE_ADD(NOW(), INTERVAL 15 MINUTE) WHERE id = ?";
+        // Update DB with token and expiry
+        $updateSql = "UPDATE $table SET reset_token = ?, reset_expires = DATE_ADD(NOW(), INTERVAL 15 MINUTE) WHERE $idColumn = ?";
         $updateStmt = mysqli_prepare($conn, $updateSql);
         
         if ($updateStmt) {
@@ -60,15 +90,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $mail->Body = '
                     <div style="font-family:Arial,sans-serif;background:#f4f6f8;padding:20px;">
                       <div style="max-width:600px;margin:auto;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,0.1);">
-                        <div style="background:#2e7d32;color:#fff;padding:20px;text-align:center;">
+                        <div style="background:#008000;color:#fff;padding:20px;text-align:center;">
                           <h2 style="margin:0;">🌱 Password Reset</h2>
                         </div>
                         <div style="padding:30px;color:#333;line-height:1.6;">
                           <p>Hello <strong>'.$userName.'</strong>,</p>
-                          <p>We received a request to reset your password for your Farm2Door account. Click the button below to set a new password:</p>
+                          <p>We received a request to reset your password for your Farm2Door/'.ucfirst($accountType).' account. Click the button below to set a new password:</p>
                           
                           <div style="text-align:center;margin:30px 0;">
-                            <a href="'.$resetLink.'" style="background:#2e7d32;color:#fff;padding:12px 25px;text-decoration:none;border-radius:5px;font-weight:bold;display:inline-block;">Reset Password</a>
+                            <a href="'.$resetLink.'" style="background:#008000;color:#fff;padding:12px 25px;text-decoration:none;border-radius:5px;font-weight:bold;display:inline-block;">Reset Password</a>
                           </div>
 
                           <p>This link will expire in <strong>15 minutes</strong>. If you did not request this, you can safely ignore this email.</p>
@@ -85,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     $mail->send();
                 } catch (Exception $e) {
-                    // Fail silently or log error
+                    // Fail silently
                 }
             }
             mysqli_stmt_close($updateStmt);
@@ -95,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Always send success to prevent email enumeration
     echo json_encode(['status' => 'success', 'message' => 'If an account exists with that email, a reset link has been sent. Please check your inbox.']);
     
-    mysqli_stmt_close($stmt);
+    if (isset($stmt)) mysqli_stmt_close($stmt);
     mysqli_close($conn);
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);

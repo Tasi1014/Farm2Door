@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 06, 2026 at 06:51 PM
+-- Generation Time: Feb 09, 2026 at 05:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -40,7 +40,9 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `customer_id`, `product_id`, `quantity`, `created_at`) VALUES
-(103, 5, 25, 1, '2026-02-06 04:42:28');
+(103, 5, 25, 1, '2026-02-06 04:42:28'),
+(112, 2, 25, 1, '2026-02-09 16:38:20'),
+(113, 2, 24, 1, '2026-02-09 16:38:29');
 
 -- --------------------------------------------------------
 
@@ -112,12 +114,12 @@ CREATE TABLE `customer_registration` (
 --
 
 INSERT INTO `customer_registration` (`id`, `firstName`, `lastName`, `Email`, `Phone`, `Address`, `Password`, `Terms`, `status`, `reset_token`, `reset_expires`) VALUES
-(2, 'Tasi', 'Sherpa', 'sherpajack3@gmail.com', 2147483647, 'Kapan, Aakashedhara', '$2y$10$Y87uZKryPSRNLw.SSofOdejl/PL/aoPLsD4rj9GLGck5pQlQLnLEW', 1, 'active', NULL, NULL),
+(2, 'Tasi', 'Sherpa', 'sherpajack3@gmail.com', 2147483647, 'Kapan, Aakashedhara', '$2y$10$W7GMDn4tVnilWRzJWlvCWOiwpQ0bUC32k8.qhJiUKxyn466GYfR.6', 1, 'active', NULL, NULL),
 (4, 'Neha', 'Mahto', 'rappid56@gmail.com', 2147483647, 'gatthaghar', '$2y$10$0eKGtHdHTNND4N/pgZPTP.CdJK1H7TnhTMn6uOvPtjZvJrVX4TxXq', 1, 'active', NULL, NULL),
 (5, 'Neha', 'Mahto', 'mahtoneha2555@gmail.com', 2147483647, 'Bhaktapur, Gatthaghar', '$2y$10$9lT0Lxeln3PmurUqkzh.E.32UtxJLUES9Yq5gFlv8zZa1eHgbIJga', 1, 'active', NULL, NULL),
 (6, 'Pasang', 'Tasi Sherpa', 'pasangbca23@oic.edu.np', 2147483647, 'kapan, Aakashedhara', '$2y$10$/JicFmEOOmABJlfp3lD/DOLT7pcAHSAVwwcZ5l2Chd0awNgBodt22', 1, 'active', NULL, NULL),
 (7, 'Namrata', 'Bomjan', 'namratabca23@oic.edu.np', 2147483647, 'Pepsicola, Lalitpur', '$2y$10$GUoIqN/QjHyWhjCy6ne6eecF2uqbTE4irly/qxk7ESXxALY7A8aJi', 1, 'active', NULL, NULL),
-(8, 'Bimal', 'Sherpa', 'sherpabimal09@gmail.com', 2147483647, 'kapan, Aakashedhara', '$2y$10$mdAjzgAtVOmNhD.7ORA./Owuj2yjyxZ67oMjI/EISg07Scop/WhNi', 1, 'blocked', NULL, NULL),
+(8, 'Bimal', 'Sherpa', 'sherpabimal09@gmail.com', 2147483647, 'kapan, Aakashedhara', '$2y$10$i.rRwgbV21po/to92Quim.FmAAX2YKkT.UNWKqiQMXUxmQtZEU.gG', 1, 'blocked', NULL, NULL),
 (9, 'Ram', 'Khatri', 'ram@gmail.com', 2147483647, 'Kapan, Aakashedhara', '$2y$10$fYHq32zQKbci4Uq6Pv.SnOaMV0R4I47uT3d38Ks0hhHWm23DNH.1C', 1, 'active', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -136,17 +138,19 @@ CREATE TABLE `farmer_registration` (
   `Address` varchar(255) DEFAULT NULL,
   `Terms` tinyint(1) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
-  `status` enum('active','blocked') DEFAULT 'active'
+  `status` enum('active','blocked') DEFAULT 'active',
+  `reset_token` varchar(255) DEFAULT NULL,
+  `reset_expires` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `farmer_registration`
 --
 
-INSERT INTO `farmer_registration` (`farmer_id`, `firstName`, `lastName`, `Email`, `Password`, `Phone`, `Address`, `Terms`, `created_at`, `status`) VALUES
-(1, 'Tashi', 'Sherpa', 'sherpajack3@gmail.com', '$2y$10$aUVNr5V5LKiB0UBbncctmef4TsLb39dPvhCDIs..MzPL4mZUpkmyq', '9803901467', 'Kapan, Aakashedhara', 1, '2025-11-22 21:51:42', 'blocked'),
-(2, 'Neha', 'Mahto', 'mahtoneha2555@gmail.com', '$2y$10$MgNXX8GqHDJpV2QG8xHY/eS5qj0sqEFtfSit90/qjiRG5aRe9xQmO', '9823782211', 'Gatthaghar', 1, '2025-12-15 17:43:08', 'active'),
-(4, 'Anmol', 'Jogi', 'anmol11@gmail.com', '$2y$10$AcBtaIQp9KarytV/5/CW8eQlnwogI6qD5J2RFiI53uTDsSLIRTuTe', '9803301576', 'Mandikatar kapan', 1, '2025-12-19 11:10:23', 'active');
+INSERT INTO `farmer_registration` (`farmer_id`, `firstName`, `lastName`, `Email`, `Password`, `Phone`, `Address`, `Terms`, `created_at`, `status`, `reset_token`, `reset_expires`) VALUES
+(1, 'Tashi', 'Sherpa', 'sherpajack3@gmail.com', '$2y$10$aUVNr5V5LKiB0UBbncctmef4TsLb39dPvhCDIs..MzPL4mZUpkmyq', '9803901467', 'Kapan, Aakashedhara', 1, '2025-11-22 21:51:42', 'active', NULL, NULL),
+(2, 'Neha', 'Mahto', 'mahtoneha2555@gmail.com', '$2y$10$MgNXX8GqHDJpV2QG8xHY/eS5qj0sqEFtfSit90/qjiRG5aRe9xQmO', '9823782211', 'Gatthaghar', 1, '2025-12-15 17:43:08', 'active', NULL, NULL),
+(4, 'Anmol', 'Jogi', 'anmol11@gmail.com', '$2y$10$AcBtaIQp9KarytV/5/CW8eQlnwogI6qD5J2RFiI53uTDsSLIRTuTe', '9803301576', 'Mandikatar kapan', 1, '2025-12-19 11:10:23', 'active', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -740,7 +744,7 @@ ALTER TABLE `refunds`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `contactus`

@@ -1,3 +1,19 @@
+// Check authentication and protect page
+function checkAuth() {
+  fetch("../../Backend/get_user_info.php")
+    .then((response) => response.json())
+    .then((data) => {
+      // If not logged in, OR if logged in but NOT an admin, redirect to login
+      if (!data.loggedIn || data.userType !== "admin") {
+        console.log("Not logged in or not admin. Redirecting...");
+        window.location.href = "../Login/login.html";
+      } else {
+        console.log("Logged in as Admin");
+      }
+    })
+    .catch((error) => console.error("Error checking auth:", error));
+}
+
 window.addEventListener("pageshow", function (event) {
   // If page is loaded from back/forward cache, force reload to re-run auth check
   if (event.persisted) {
