@@ -5,7 +5,9 @@ echo "<h2>Database Schema Update</h2>";
 
 $updates = [
     "ALTER TABLE farmer_registration ADD COLUMN status ENUM('active', 'blocked') DEFAULT 'active'",
-    "ALTER TABLE customer_registration ADD COLUMN status ENUM('active', 'blocked') DEFAULT 'active'"
+    "ALTER TABLE customer_registration ADD COLUMN status ENUM('active', 'blocked') DEFAULT 'active'",
+    "ALTER TABLE customer_registration MODIFY COLUMN Phone VARCHAR(15)",
+    "ALTER TABLE farmer_registration MODIFY COLUMN Phone VARCHAR(15)"
 ];
 
 foreach ($updates as $sql) {

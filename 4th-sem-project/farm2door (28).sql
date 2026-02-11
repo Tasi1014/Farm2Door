@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 09, 2026 at 05:59 PM
+-- Generation Time: Feb 11, 2026 at 01:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -100,7 +100,7 @@ CREATE TABLE `customer_registration` (
   `firstName` varchar(255) NOT NULL,
   `lastName` varchar(255) NOT NULL,
   `Email` varchar(50) NOT NULL,
-  `Phone` int(11) NOT NULL,
+  `Phone` varchar(15) DEFAULT NULL,
   `Address` varchar(255) NOT NULL,
   `Password` varchar(255) NOT NULL,
   `Terms` tinyint(1) NOT NULL,
@@ -114,13 +114,13 @@ CREATE TABLE `customer_registration` (
 --
 
 INSERT INTO `customer_registration` (`id`, `firstName`, `lastName`, `Email`, `Phone`, `Address`, `Password`, `Terms`, `status`, `reset_token`, `reset_expires`) VALUES
-(2, 'Tasi', 'Sherpa', 'sherpajack3@gmail.com', 2147483647, 'Kapan, Aakashedhara', '$2y$10$W7GMDn4tVnilWRzJWlvCWOiwpQ0bUC32k8.qhJiUKxyn466GYfR.6', 1, 'active', NULL, NULL),
-(4, 'Neha', 'Mahto', 'rappid56@gmail.com', 2147483647, 'gatthaghar', '$2y$10$0eKGtHdHTNND4N/pgZPTP.CdJK1H7TnhTMn6uOvPtjZvJrVX4TxXq', 1, 'active', NULL, NULL),
-(5, 'Neha', 'Mahto', 'mahtoneha2555@gmail.com', 2147483647, 'Bhaktapur, Gatthaghar', '$2y$10$9lT0Lxeln3PmurUqkzh.E.32UtxJLUES9Yq5gFlv8zZa1eHgbIJga', 1, 'active', NULL, NULL),
-(6, 'Pasang', 'Tasi Sherpa', 'pasangbca23@oic.edu.np', 2147483647, 'kapan, Aakashedhara', '$2y$10$/JicFmEOOmABJlfp3lD/DOLT7pcAHSAVwwcZ5l2Chd0awNgBodt22', 1, 'active', NULL, NULL),
-(7, 'Namrata', 'Bomjan', 'namratabca23@oic.edu.np', 2147483647, 'Pepsicola, Lalitpur', '$2y$10$GUoIqN/QjHyWhjCy6ne6eecF2uqbTE4irly/qxk7ESXxALY7A8aJi', 1, 'active', NULL, NULL),
-(8, 'Bimal', 'Sherpa', 'sherpabimal09@gmail.com', 2147483647, 'kapan, Aakashedhara', '$2y$10$i.rRwgbV21po/to92Quim.FmAAX2YKkT.UNWKqiQMXUxmQtZEU.gG', 1, 'blocked', NULL, NULL),
-(9, 'Ram', 'Khatri', 'ram@gmail.com', 2147483647, 'Kapan, Aakashedhara', '$2y$10$fYHq32zQKbci4Uq6Pv.SnOaMV0R4I47uT3d38Ks0hhHWm23DNH.1C', 1, 'active', NULL, NULL);
+(2, 'Tasi', 'Sherpa', 'sherpajack3@gmail.com', '9803901467', 'Kapan, Aakashedhara', '$2y$10$RoKkrCqGbm.raELmaGmZwO5OmbSbB0sK.0IxDmu1GPTHyo1AMl/eC', 1, 'active', NULL, NULL),
+(4, 'Neha', 'Mahto', 'rappid56@gmail.com', '9813132648', 'gatthaghar', '$2y$10$0eKGtHdHTNND4N/pgZPTP.CdJK1H7TnhTMn6uOvPtjZvJrVX4TxXq', 1, 'active', NULL, NULL),
+(5, 'Neha', 'Mahto', 'mahtoneha2555@gmail.com', '9823782211', 'Bhaktapur, Gatthaghar', '$2y$10$vvVZgTQVwZTPII4oSX4Uz.jiGOgE4GV7ZeU1w3hpN/uvr6ESQCTEC', 1, 'active', NULL, NULL),
+(6, 'Pasang', 'Tasi Sherpa', 'pasangbca23@oic.edu.np', '9803901467', 'kapan, Aakashedhara', '$2y$10$/JicFmEOOmABJlfp3lD/DOLT7pcAHSAVwwcZ5l2Chd0awNgBodt22', 1, 'active', NULL, NULL),
+(7, 'Namrata', 'Bomjan', 'namratabca23@oic.edu.np', '9813132648', 'Pepsicola, Lalitpur', '$2y$10$GUoIqN/QjHyWhjCy6ne6eecF2uqbTE4irly/qxk7ESXxALY7A8aJi', 1, 'active', NULL, NULL),
+(8, 'Bimal', 'Sherpa', 'sherpabimal09@gmail.com', '9823782211', 'kapan, Aakashedhara', '$2y$10$i.rRwgbV21po/to92Quim.FmAAX2YKkT.UNWKqiQMXUxmQtZEU.gG', 1, 'blocked', NULL, NULL),
+(9, 'Ram', 'Khatri', 'ram@gmail.com', '9803901467', 'Kapan, Aakashedhara', '$2y$10$fYHq32zQKbci4Uq6Pv.SnOaMV0R4I47uT3d38Ks0hhHWm23DNH.1C', 1, 'active', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -149,8 +149,8 @@ CREATE TABLE `farmer_registration` (
 
 INSERT INTO `farmer_registration` (`farmer_id`, `firstName`, `lastName`, `Email`, `Password`, `Phone`, `Address`, `Terms`, `created_at`, `status`, `reset_token`, `reset_expires`) VALUES
 (1, 'Tashi', 'Sherpa', 'sherpajack3@gmail.com', '$2y$10$aUVNr5V5LKiB0UBbncctmef4TsLb39dPvhCDIs..MzPL4mZUpkmyq', '9803901467', 'Kapan, Aakashedhara', 1, '2025-11-22 21:51:42', 'active', NULL, NULL),
-(2, 'Neha', 'Mahto', 'mahtoneha2555@gmail.com', '$2y$10$MgNXX8GqHDJpV2QG8xHY/eS5qj0sqEFtfSit90/qjiRG5aRe9xQmO', '9823782211', 'Gatthaghar', 1, '2025-12-15 17:43:08', 'active', NULL, NULL),
-(4, 'Anmol', 'Jogi', 'anmol11@gmail.com', '$2y$10$AcBtaIQp9KarytV/5/CW8eQlnwogI6qD5J2RFiI53uTDsSLIRTuTe', '9803301576', 'Mandikatar kapan', 1, '2025-12-19 11:10:23', 'active', NULL, NULL);
+(2, 'Neha', 'Mahto', 'mahtoneha2555@gmail.com', '$2y$10$MgNXX8GqHDJpV2QG8xHY/eS5qj0sqEFtfSit90/qjiRG5aRe9xQmO', '9813132648', 'Gatthaghar', 1, '2025-12-15 17:43:08', 'active', NULL, NULL),
+(4, 'Anmol', 'Jogi', 'anmol11@gmail.com', '$2y$10$AcBtaIQp9KarytV/5/CW8eQlnwogI6qD5J2RFiI53uTDsSLIRTuTe', '9823782211', 'Mandikatar kapan', 1, '2025-12-19 11:10:23', 'active', NULL, NULL);
 
 -- --------------------------------------------------------
 
