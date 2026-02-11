@@ -15,6 +15,10 @@ try {
     // Set Stripe API Key
     \Stripe\Stripe::setApiKey(STRIPE_SECRET_KEY);
 
+    // Force IPv4 resolution to prevent 10-15s timeout delays caused by IPv6 issues in local dev environments (XAMPP/Windows)
+    $curlClient = new \Stripe\HttpClient\CurlClient([CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4]);
+    \Stripe\ApiRequestor::setHttpClient($curlClient);
+
     // Prepare Line Items for Stripe
     $line_items = [];
     foreach ($order['cart_items'] as $item) {
