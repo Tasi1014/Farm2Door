@@ -52,8 +52,10 @@ while ($row = mysqli_fetch_assoc($result)) {
     }
     $daily_data[$day][$status] = $amount;
 
-    if ($status === 'Paid') $total_paid += $amount;
-    else if ($status === 'Refunded') $total_refunded += $amount;
+    if ($status === 'Paid'){
+        $total_paid += $amount;
+    } 
+else if ($status === 'Refunded') $total_refunded += $amount;
 }
 
 // Prepare chart response

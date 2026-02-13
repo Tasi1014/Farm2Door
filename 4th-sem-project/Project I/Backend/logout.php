@@ -14,5 +14,12 @@ if (isset($_COOKIE['c_pass'])) {
     setcookie('c_pass', '', time() - 3600, '/');
 }
 
+if (isset($_COOKIE['f_email'])) {
+    setcookie('f_email', '', time() - 3600, '/');
+}
+if (isset($_COOKIE['f_pass'])) {
+    setcookie('f_pass', '', time() - 3600, '/');
+}
+
 header('Content-Type: application/json');
 echo json_encode(['success' => true]);

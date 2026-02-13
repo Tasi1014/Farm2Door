@@ -38,13 +38,6 @@ try {
     mysqli_stmt_bind_param($updateStmt, "ssi", $new_status, $reason, $order_id);
     mysqli_stmt_execute($updateStmt);
 
-    // 3. Log the status change
-    $logSql = "INSERT INTO order_status_logs (order_id, old_status, new_status, actor_type, actor_id, rejection_reason) 
-               VALUES (?, ?, ?, 'Farmer', ?, ?)";
-    $logStmt = mysqli_prepare($conn, $logSql);
-    mysqli_stmt_bind_param($logStmt, "issis", $order_id, $old_status, $new_status, $farmer_id, $reason);
-    mysqli_stmt_execute($logStmt);
-
     mysqli_commit($conn);
 
     $response = ['success' => true, 'message' => "Order status updated to $new_status"];

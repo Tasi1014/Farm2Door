@@ -10,7 +10,6 @@ shopNow.addEventListener("click", (e) => {
   goToProducts();
 });
 
-// Hamburger functionality is now handled globally in auth.js via toggleSidebar()
 
 // Hero Background Slider
 const hero = document.querySelector(".hero");

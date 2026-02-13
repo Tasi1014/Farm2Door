@@ -2,7 +2,10 @@
 session_start();
 include 'connection.php';
 header('Content-Type: application/json');
-
+if (!isset($_SESSION['admin_id'])) {
+    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+    exit;
+}
 $response = ['success' => false, 'months' => [], 'amounts' => [], 'message' => ''];
 
 // Filter for revenue generating statuses for CURRENT MONTH daily

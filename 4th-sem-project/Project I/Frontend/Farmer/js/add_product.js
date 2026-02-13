@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Add Product Script Loaded");
   const addProductForm = document.querySelector("form");
   const addBtn = document.querySelector(".add-btn");
 
@@ -41,11 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
       addBtn.textContent = "Adding...";
 
       const formData = new FormData(addProductForm);
-      // Append checkbox/radio values if needed, or specific handling
-      // The form fields match the PHP expectation names:
-      // productName, category, price, quantity, description, image
-
-      // Clear previous alerts if any (optional)
 
       fetch("../../Backend/add_product.php", {
         method: "POST",
