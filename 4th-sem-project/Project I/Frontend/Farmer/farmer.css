@@ -65,6 +65,32 @@
 .mini-stat-card .stat-icon.products {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%232e7d32" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>');
 }
+.mini-stat-card .stat-icon.report {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%232e7d32" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>');
+}
+
+.report-dropdown {
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  font-size: 0.9rem;
+  color: #333;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.report-dropdown:hover {
+  border-color: #2e7d32;
+}
+
+.report-dropdown:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
 
 .mini-stat-card .stat-info {
   display: flex;

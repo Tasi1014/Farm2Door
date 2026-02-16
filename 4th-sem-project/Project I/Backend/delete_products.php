@@ -9,7 +9,7 @@ $response = [
     'message' => ''
 ];
 
-// Allow both Farmers and Admins
+// Allow both Farmers and Admins to delete products
 $is_farmer = isset($_SESSION['farmer_id']);
 $is_admin = isset($_SESSION['admin_id']);
 

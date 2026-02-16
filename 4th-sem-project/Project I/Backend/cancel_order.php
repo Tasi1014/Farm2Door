@@ -38,7 +38,6 @@ try {
         throw new Exception("Only processing orders can be cancelled.");
     }
 
-    $old_status = $order['order_status'];
 
     // 2. Fetch items to restore stock
     $itemsSql = "SELECT product_id, quantity FROM order_items WHERE order_id = ?";
@@ -73,12 +72,6 @@ try {
     mysqli_stmt_bind_param($updatePayStmt, "i", $order_id);
     mysqli_stmt_execute($updatePayStmt);
 
-    // 5. Log the status change
-    $logSql = "INSERT INTO order_status_logs (order_id, old_status, new_status, actor_type, actor_id, rejection_reason) 
-               VALUES (?, ?, 'Cancelled', 'Customer', ?, ?)";
-    $logStmt = mysqli_prepare($conn, $logSql);
-    mysqli_stmt_bind_param($logStmt, "iiss", $order_id, $old_status, $_SESSION['customer_id'], $reason);
-    mysqli_stmt_execute($logStmt);
 
     mysqli_commit($conn);
     echo json_encode(['success' => true, 'message' => 'Order cancelled successfully']);

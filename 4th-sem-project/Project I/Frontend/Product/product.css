@@ -332,7 +332,8 @@ footer .socials a i {
   /* Products */
   .product-cards {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
+    justify-content: center;
     gap: 12px;
     padding: 0 10px;
     width: 100%;

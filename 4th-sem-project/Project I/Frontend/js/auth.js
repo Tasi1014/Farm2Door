@@ -25,12 +25,10 @@ window.addEventListener("pageshow", function (event) {
   if (event.persisted) {
     window.location.reload();
   }
+  checkAuth();
 });
 
 function checkAuth() {
-  // Path relative to the HTML file executing this script
-  // All main pages (Home, Product, About Us, Contact Us) are 2 levels deep from Project Root
-  // e.g. Frontend/Home/index.html -> ../../Backend/get_user_info.php
   const apiUrl = "../../Backend/get_user_info.php";
 
   console.log("Checking auth at:", apiUrl);

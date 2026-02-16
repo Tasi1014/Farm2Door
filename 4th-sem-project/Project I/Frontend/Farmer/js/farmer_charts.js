@@ -201,7 +201,7 @@ function generateActionableInsights(data) {
           <span class="restock-label">Needed to reach Safety</span>
         </div>
       </div>
-    `
+    `,
       )
       .join("");
   } else {

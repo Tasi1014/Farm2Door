@@ -23,14 +23,23 @@ if (!$order_id || !$new_status) {
 }
 
 try {
+    //Verify Ownership
+    // Check if at least one item in this order belongs to the logged-in farmer
+    $checkSql = "SELECT 1 FROM order_items WHERE order_id = ? AND farmer_id = ? LIMIT 1";
+    $checkStmt = mysqli_prepare($conn, $checkSql);
+    mysqli_stmt_bind_param($checkStmt, "ii", $order_id, $farmer_id);
+    mysqli_stmt_execute($checkStmt);
+    mysqli_stmt_store_result($checkStmt);
+
+    if (mysqli_stmt_num_rows($checkStmt) === 0) {
+        echo json_encode(['success' => false, 'message' => 'Access denied: This order does not belong to you.']);
+        mysqli_stmt_close($checkStmt);
+        exit;
+    }
+    mysqli_stmt_close($checkStmt);
+
     mysqli_begin_transaction($conn);
 
-    // 1. Get current status for logging
-    $statusSql = "SELECT order_status FROM orders WHERE order_id = ? FOR UPDATE";
-    $statusStmt = mysqli_prepare($conn, $statusSql);
-    mysqli_stmt_bind_param($statusStmt, "i", $order_id);
-    mysqli_stmt_execute($statusStmt);
-    $old_status = mysqli_fetch_assoc(mysqli_stmt_get_result($statusStmt))['order_status'];
 
     // 2. Update order status and rejection reason if applicable
     $updateSql = "UPDATE orders SET order_status = ?, rejection_reason = ? WHERE order_id = ?";

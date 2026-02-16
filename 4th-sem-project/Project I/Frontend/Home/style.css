@@ -504,7 +504,8 @@ footer .socials a i {
   /* Make product-cards a grid on tablets: 2 columns */
   .product-cards {
     display: grid;
-    grid-template-columns: repeat(2, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
+    justify-content: center;
     gap: 20px;
     width: 100%;
     padding: 0 12px;

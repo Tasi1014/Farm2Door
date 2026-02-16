@@ -1,5 +1,6 @@
 <?php
 include 'connection.php';
+include 'validation.php';
 
 // PHPMailer namespaces
 use PHPMailer\PHPMailer\PHPMailer;
@@ -10,12 +11,32 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
+header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Sanitize inputs
-    $name    = mysqli_real_escape_string($conn, $_POST['name']);
-    $email   = mysqli_real_escape_string($conn, $_POST['email']);
-    $message = mysqli_real_escape_string($conn, $_POST['message']);
+    // Get inputs
+    $name    = isset($_POST['name']) ? trim($_POST['name']) : '';
+    $email   = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $message = isset($_POST['message']) ? trim($_POST['message']) : '';
+
+    // Validate
+    $errors = [];
+    $isFormValid = true;
+
+    $isFormValid = validateName($name, $errors, 'name') && $isFormValid;
+    $isFormValid = validateEmail($email, $errors) && $isFormValid;
+    $isFormValid = validateMessage($message, $errors) && $isFormValid;
+
+    if (!$isFormValid) {
+        echo json_encode(['status' => 'error', 'message' => 'Validation failed', 'errors' => $errors]);
+        exit;
+    }
+
+    // Sanitize for DB (though prepared statement is safe, trimming is good)
+    $name    = mysqli_real_escape_string($conn, $name);
+    $email   = mysqli_real_escape_string($conn, $email);
+    $message = mysqli_real_escape_string($conn, $message);
 
     // Insert into DB
     $sql = "INSERT INTO contactus (Name, Email, Message) VALUES (?, ?, ?)";
@@ -25,14 +46,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mysqli_stmt_execute($stmt)) {
 
         // JSON response to frontend
-        $response = json_encode([
+        $successResponse = [
             'status' => 'success',
             'message' => "Thank you $name for contacting us. We will reach you soon."
-        ]);
+        ];
 
         ignore_user_abort(true);
         ob_start();
-        echo $response;
+        echo json_encode($successResponse);
         $size = ob_get_length();
 
         header("Content-Encoding: none");

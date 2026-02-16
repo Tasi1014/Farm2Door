@@ -21,19 +21,13 @@ try {
     // If not, we still fetch stats but normally admin pages are protected.
     
     // 1. Total Revenue & Orders
-    // Revenue logic: 
-    // - Paid orders (ONLINE or COD fulfilled): 100% of order total
-    // - Refunded orders: 10% service charge from the total_amount (Admin keeps this portion)
+    // Revenue logic: Actual Cash Flow (Total Paid - Total Refunded)
     $orderSql = "
         SELECT 
-            SUM(CASE 
-                WHEN p.payment_status = 'Paid' THEN o.total_amount 
-                WHEN p.payment_status = 'Refunded' THEN o.total_amount * 0.10
-                ELSE 0 
-            END) as revenue, 
-            COUNT(o.order_id) as orders 
-        FROM orders o
-        JOIN payments p ON o.order_id = p.order_id
+            (SELECT SUM(amount_paid) FROM payments WHERE payment_status IN ('Paid', 'Refunded')) - 
+            (SELECT IFNULL(SUM(refund_amount), 0) FROM refunds) as revenue,
+            COUNT(order_id) as orders 
+        FROM orders
     ";
     $orderRes = mysqli_query($conn, $orderSql);
     $orderData = mysqli_fetch_assoc($orderRes);

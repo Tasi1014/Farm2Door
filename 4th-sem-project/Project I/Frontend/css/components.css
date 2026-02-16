@@ -1,8 +1,9 @@
 /* Product Cards */
 .product-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 300px));
+  justify-content: center;
+  gap: 30px;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
@@ -148,7 +149,9 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.3);
   transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+  transition:
+    width 0.6s,
+    height 0.6s;
 }
 
 .btn:hover::before {
@@ -198,7 +201,9 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.3);
   transform: translate(-50%, -50%);
-  transition: width 0.5s, height 0.5s;
+  transition:
+    width 0.5s,
+    height 0.5s;
 }
 
 .card-btn:hover::before {
@@ -251,7 +256,8 @@
 @media (max-width: 768px) {
   .product-cards {
     display: grid;
-    grid-template-columns: repeat(2, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
+    justify-content: center;
     gap: 20px;
     width: 100%;
     padding: 0 12px;
@@ -555,7 +561,9 @@
 
 #toast.show {
   visibility: visible;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation:
+    fadein 0.5s,
+    fadeout 0.5s 2.5s;
 }
 
 @keyframes fadein {

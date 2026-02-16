@@ -13,7 +13,11 @@ if (!isset($_SESSION['farmer_id'])) {
 
 $farmer_id = $_SESSION['farmer_id'];
 
-// Specific query provided by USER:
+
+// Handle date filters
+$start_date = isset($_GET['start_date']) ? $_GET['start_date'] : date('Y-m-d', strtotime('-30 days'));
+$end_date   = isset($_GET['end_date']) ? $_GET['end_date'] : date('Y-m-d');
+
 // Only completed orders whose payments are marked as Paid should be counted.
 $sql = "SELECT DATE(o.order_date) AS day,
                SUM(oi.subtotal) AS earnings
@@ -23,11 +27,12 @@ $sql = "SELECT DATE(o.order_date) AS day,
         WHERE oi.farmer_id = ?
           AND o.order_status IN ('Fulfilled')
           AND p.payment_status = 'Paid'
+          AND DATE(o.order_date) BETWEEN ? AND ?
         GROUP BY DATE(o.order_date)
         ORDER BY day";
 
 $stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "i", $farmer_id);
+mysqli_stmt_bind_param($stmt, "iss", $farmer_id, $start_date, $end_date);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 

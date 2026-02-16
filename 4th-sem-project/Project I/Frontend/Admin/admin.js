@@ -144,8 +144,10 @@ function renderTable(pageType, data) {
     return;
   }
 
-  data.forEach((item) => {
+  data.forEach((item, index) => {
     let row = "";
+    const serialNumber = (currentPage - 1) * itemsPerPage + (index + 1);
+
     if (pageType === "farmers" || pageType === "consumers") {
       const isBlocked = item.status === "blocked";
       const buttonText = isBlocked ? "Unblock" : "Block";
@@ -154,7 +156,7 @@ function renderTable(pageType, data) {
 
       row = `
         <tr>
-          <td>${item.id}</td>
+          <td>${serialNumber}</td>
           <td>${item.firstName} ${item.lastName}</td>
           <td>${item.email}</td>
           <td>${item.phone || "N/A"}</td>
@@ -165,7 +167,7 @@ function renderTable(pageType, data) {
             ).toUpperCase()}</span>
           </td>
           <td>
-            <button class="action-btn ${buttonClass}" onclick="toggleUserStatus('${pageType}', ${
+            <button class="action-btn ${buttonClass}" onclick="toggleUserStatus(this, '${pageType}', ${
               item.id
             }, '${isBlocked ? "active" : "blocked"}')">
               ${buttonText}
@@ -176,7 +178,10 @@ function renderTable(pageType, data) {
     } else if (pageType === "products") {
       row = `
         <tr>
-          <td><img src="../../Images/products/${item.image}" alt="${item.name}" style="width:50px; border-radius:4px" onerror="this.src='../../Images/logo.png'"></td>
+          <td>${serialNumber}</td>
+          <td><img src="../../Images/products/${item.image}" alt="${
+            item.name
+          }" style="width:50px; border-radius:4px" onerror="this.src='../../Images/logo.png'"></td>
           <td>${item.name}</td>
           <td>${item.category}</td>
           <td>Rs. ${item.price}</td>
@@ -252,7 +257,7 @@ function setupSearch(pageType) {
 }
 
 // --- Actions ---
-async function toggleUserStatus(type, id, action) {
+async function toggleUserStatus(btn, type, id, action) {
   const confirmMsg =
     action === "blocked"
       ? `Are you sure you want to block this ${type.slice(
@@ -262,6 +267,13 @@ async function toggleUserStatus(type, id, action) {
       : `Are you sure you want to unblock this ${type.slice(0, -1)}?`;
 
   if (confirm(confirmMsg)) {
+    const originalText = btn.innerText;
+    const loadingText = action === "blocked" ? "Blocking..." : "Unblocking...";
+
+    // Disable button and show loading state
+    btn.disabled = true;
+    btn.innerText = loadingText;
+
     try {
       const res = await fetch("../../Backend/Admin/toggle_user_status.php", {
         method: "POST",
@@ -274,10 +286,16 @@ async function toggleUserStatus(type, id, action) {
         fetchTableData(type, currentPage);
       } else {
         alert("Action failed: " + data.message);
+        // Re-enable on failure
+        btn.innerText = originalText;
+        btn.disabled = false;
       }
     } catch (err) {
       console.error("Status toggle error:", err);
       alert("An error occurred while updating status.");
+      // Re-enable on error
+      btn.innerText = originalText;
+      btn.disabled = false;
     }
   }
 }

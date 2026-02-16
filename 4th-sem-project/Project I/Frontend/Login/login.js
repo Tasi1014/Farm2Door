@@ -11,7 +11,6 @@ fetch("../../Backend/get_user_info.php")
     }
   })
   .catch((error) => console.error("Error checking auth:", error));
-
 const consumer_success = document.getElementById("consumer-success");
 const farmer_success = document.getElementById("farmer-success");
 const admin_success = document.getElementById("admin-success");
@@ -110,6 +109,26 @@ if (farmerForm) {
     passwordError.textContent = "";
     successElement.textContent = "";
 
+    // Frontend Validation (Pattern identical to backend)
+    let isFormValid = true;
+    const email = farmerForm
+      .querySelector('[name="farmer-email"]')
+      .value.trim();
+    const password = farmerForm
+      .querySelector('[name="farmer-password"]')
+      .value.trim();
+
+    if (email === "") {
+      emailError.textContent = "Email is required";
+      isFormValid = false;
+    }
+    if (password === "") {
+      passwordError.textContent = "Password is required";
+      isFormValid = false;
+    }
+
+    if (!isFormValid) return;
+
     fetch("../../Backend/farmer_login.php", {
       method: "POST",
       body: formData,
@@ -164,6 +183,26 @@ if (consumerForm) {
     generalError.textContent = "";
     successElement.textContent = "";
 
+    // Frontend Validation (Pattern identical to backend)
+    let isFormValid = true;
+    const email = consumerForm
+      .querySelector('[name="consumer-email"]')
+      .value.trim();
+    const password = consumerForm
+      .querySelector('[name="consumer-password"]')
+      .value.trim();
+
+    if (email === "") {
+      emailError.textContent = "Email is required";
+      isFormValid = false;
+    }
+    if (password === "") {
+      passwordError.textContent = "Password is required";
+      isFormValid = false;
+    }
+
+    if (!isFormValid) return;
+
     fetch("../../Backend/consumer_login.php", {
       method: "POST",
       body: formData,
@@ -211,6 +250,24 @@ if (adminForm) {
     emailError.textContent = "";
     passwordError.textContent = "";
     successElement.textContent = "";
+
+    // Frontend Validation (Pattern identical to backend)
+    let isFormValid = true;
+    const email = adminForm.querySelector('[name="admin-email"]').value.trim();
+    const password = adminForm
+      .querySelector('[name="admin-password"]')
+      .value.trim();
+
+    if (email === "") {
+      emailError.textContent = "Email is required";
+      isFormValid = false;
+    }
+    if (password === "") {
+      passwordError.textContent = "Password is required";
+      isFormValid = false;
+    }
+
+    if (!isFormValid) return;
 
     fetch("../../Backend/admin_login.php", {
       method: "POST",

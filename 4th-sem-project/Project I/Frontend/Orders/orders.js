@@ -51,7 +51,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (filter === "to-pay") {
       filtered = allOrders.filter(
-        (o) => o.payment_method === "ONLINE" && o.payment_status === "Pending"
+        (o) =>
+          o.payment_method === "COD" &&
+          !["Fulfilled", "Cancelled", "Rejected"].includes(o.order_status),
       );
     } else if (filter === "to-receive") {
       const activeStatuses = [
@@ -62,13 +64,13 @@ document.addEventListener("DOMContentLoaded", () => {
         "Ready for Pickup",
       ];
       filtered = allOrders.filter((o) =>
-        activeStatuses.includes(o.order_status)
+        activeStatuses.includes(o.order_status),
       );
     } else if (filter === "completed") {
       filtered = allOrders.filter((o) => o.order_status === "Fulfilled");
     } else if (filter === "cancelled") {
       filtered = allOrders.filter(
-        (o) => o.order_status === "Cancelled" || o.order_status === "Rejected"
+        (o) => o.order_status === "Cancelled" || o.order_status === "Rejected",
       );
     }
 
@@ -106,14 +108,15 @@ document.addEventListener("DOMContentLoaded", () => {
             year: "numeric",
             month: "short",
             day: "numeric",
-          }
+          },
         );
 
         // Smart Status Labeling
         let displayStatus = order.order_status;
+        let p_status = order.p_status || order.payment_status; // Handle both aliased and non-aliased
         let statusClass = order.order_status.toLowerCase().replace(/ /g, "-");
 
-        if (order.payment_status === "Refunded") {
+        if (p_status === "Refunded") {
           displayStatus = "Refunded";
           statusClass = "refunded";
         }
@@ -156,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        `../../Backend/get_order_items.php?order_id=${orderId}`
+        `../../Backend/get_order_items.php?order_id=${orderId}`,
       );
       const data = await response.json();
 
@@ -190,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <td>${item.quantity}</td>
                                     <td>Rs ${item.subtotal}</td>
                                 </tr>
-                            `
+                            `,
                               )
                               .join("")}
                         </tbody>
@@ -236,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                         <div class="info-group">
                             <label>Payment Status</label>
-                            <p>${order.payment_status}</p>
+                            <p>${order.p_status || order.payment_status || "Pending"}</p>
                         </div>
                         <div class="info-group">
                             <label>Amount Paid</label>

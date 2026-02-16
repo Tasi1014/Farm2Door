@@ -41,8 +41,6 @@ async function checkAuthAndLoadData() {
 
     // Auto-fill Form
     if (data.name) {
-      // Try to split name if needed, or just set it
-      // Backend returns 'name' (Full Name) ?
       document.getElementById("fullName").value = data.name || "";
     }
 

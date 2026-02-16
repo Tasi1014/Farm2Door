@@ -11,7 +11,7 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 // Fetch all orders with customer and payment info
-$sql = "SELECT o.*, p.payment_id, p.payment_method, p.payment_status, c.Email as customer_email 
+$sql = "SELECT o.*, p.payment_id, p.payment_method, COALESCE(p.payment_status, 'Pending') AS p_status, c.Email as customer_email 
         FROM orders o
         JOIN payments p ON o.order_id = p.order_id
         JOIN customer_registration c ON o.customer_id = c.id

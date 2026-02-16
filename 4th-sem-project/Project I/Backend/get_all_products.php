@@ -10,8 +10,7 @@ $limitParam = isset($_GET['limit']) ? (int)$_GET['limit'] : 8;
 $pageParam = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offsetParam = ($pageParam - 1) * $limitParam;
 
-// Join with farmer_registration to get the farmer's name (LEFT JOIN to show products even if farmer missing)
-// Filters
+// Join with farmer_registration to get the farmer's name 
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $category = isset($_GET['category']) ? trim($_GET['category']) : '';
 

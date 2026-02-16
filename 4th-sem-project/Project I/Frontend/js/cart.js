@@ -11,8 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- UI Injection ---
 function injectCartUI() {
-  // Cart Badge (if not present)
-  // Usually handled in setupCartIcon but we ensure styles are ready
 
   // Modal HTML
   if (!document.getElementById("cartModal")) {
@@ -101,7 +99,6 @@ function setupCartIcon() {
 
 // Exposed Function for "Add to Cart" buttons
 window.addToCart = function (event, quantity = 1) {
-  console.log("addToCart called. Quantity:", quantity); // DEBUG LOG
   if (event) event.stopPropagation();
 
   let btn = event.currentTarget || event.target;

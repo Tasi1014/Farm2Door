@@ -78,15 +78,8 @@ try {
     mysqli_stmt_bind_param($payUpdateStmt, "i", $payment_id);
     mysqli_stmt_execute($payUpdateStmt);
 
-    // 5. Log the action
-    $logSql = "INSERT INTO order_status_logs (order_id, old_status, new_status, actor_type, actor_id, rejection_reason) 
-               VALUES (?, ?, 'Refunded', 'Admin', ?, ?)";
-    $logStmt = mysqli_prepare($conn, $logSql);
-    $note = "Processed refund of Rs. $refund_amount (10% fee applied). Ref: $refund_transaction_id";
-    mysqli_stmt_bind_param($logStmt, "isis", $order_id, $order['order_status'], $admin_id, $note);
-    mysqli_stmt_execute($logStmt);
 
-    // 6. Send Automated Email
+    // 5. Send Automated Email
     $mail = new PHPMailer(true);
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';

@@ -51,7 +51,7 @@ try {
                             $cookie_options = [
                                 'expires' => time() + (86400 * 30),
                                 'path' => '/', // Global path
-                                'secure' => false, // Localhost isn't https
+                                'secure' => false, // Localhost https hudaina so false
                                 'httponly' => false, // JS needs to read it for autofill
                                 'samesite' => 'Lax'
                             ];

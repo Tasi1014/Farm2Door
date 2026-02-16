@@ -12,6 +12,11 @@ if (!$session_id) {
 
 try {
     \Stripe\Stripe::setApiKey(STRIPE_SECRET_KEY);
+    
+    // Force IPv4 resolution to prevent 10-15s timeout delays
+    $curlClient = new \Stripe\HttpClient\CurlClient([CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4]);
+    \Stripe\ApiRequestor::setHttpClient($curlClient);
+
     $checkout_session = \Stripe\Checkout\Session::retrieve($session_id);
 
     if ($checkout_session->payment_status !== 'paid') {

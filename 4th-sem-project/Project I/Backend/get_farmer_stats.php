@@ -22,8 +22,6 @@ try {
 
     $farmer_id = $_SESSION['farmer_id'];
 
-    // 1. Total Products & Dynamic Low Stock
-    // Dynamic Threshold = (Sales in last 30 days / 30) * 7. Minimum 5.
     $prodSql = "SELECT 
                     COUNT(*) as total,
                     SUM(CASE WHEN stock_quantity < p.threshold THEN 1 ELSE 0 END) as low_stock
@@ -42,9 +40,6 @@ try {
     mysqli_stmt_close($stmt);
 
     // 2. Total Earnings & Orders (from order_items)
-    // We need to check if table exists first to avoid crash if they didn't run setup yet?
-    // Assuming they DID run setup as per previous steps.
-    
     $orderSql = "SELECT 
                     COUNT(DISTINCT oi.order_id) as total_orders, 
                     SUM(oi.subtotal) as total_earnings 

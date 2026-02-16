@@ -88,4 +88,15 @@ function validateTerms($terms, &$errors) {
     return true;
 }
 
+function validateMessage($message, &$errors) {
+    if (trim($message) === "") {
+        $errors['message'] = "Message is required";
+        return false;
+    } elseif (strlen(trim($message)) < 10) {
+        $errors['message'] = "Message should be at least 10 characters long";
+        return false;
+    }
+    return true;
+}
+
 ?>

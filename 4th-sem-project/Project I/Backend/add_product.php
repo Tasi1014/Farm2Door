@@ -10,7 +10,7 @@ $response = [
     'errors' => []
 ];
 
-// 1. Check Auth (Farmer only)
+//Check Auth (Farmer only)
 if (!isset($_SESSION['farmer_id'])) {
     $response['message'] = 'Unauthorized. Please login as a farmer.';
     echo json_encode($response);
@@ -54,7 +54,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (empty($name)) $response['errors']['name'] = "Product name is required.";
     if (empty($price) || !is_numeric($price)) $response['errors']['price'] = "Valid price is required.";
     if (empty($quantity) || !is_numeric($quantity)) $response['errors']['quantity'] = "Valid quantity is required.";
-    
+    if (empty($threshold) || !is_numeric($threshold)) $response['errors']['threshold'] = "Valid threshold is required.";
+    if (empty($description)) $response['errors']['description'] = "Product description is required.";
+    if (empty($price) || !is_numeric($price) || $price < 0) {
+        $response['errors']['price'] = "Price must be a positive number.";
+    }
+    if (empty($quantity) || !is_numeric($quantity) || $quantity < 0) {
+        $response['errors']['quantity'] = "Quantity must be a positive number.";
+    }
+    if (empty($threshold) || !is_numeric($threshold) || $threshold < 0) {
+        $response['errors']['threshold'] = "Threshold must be a positive number.";
+    }
     //Handle Image Upload
     $imagePath = '';
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -82,11 +92,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $dest_path = $uploadFileDir . $newFileName;
             
             if(move_uploaded_file($fileTmpPath, $dest_path)) {
-                // Store relative path for frontend use (e.g. "../Images/products/filename.jpg")
-                // Or just store filename and prepend path in frontend. 
-                // Let's store the filename for flexibility, or the relative path from root.
-                // Storing filename 'products/filename.jpg' seems clean if we assume Images/ base.
-                // Let's store just the filename as requested by user "with the name of that image in the database".
                 $imagePath = $newFileName; 
             } else {
                 $response['errors']['image'] = "Error moving uploaded file.";
@@ -113,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if (empty($response['errors'])) {
-        // 3. Insert Product
+        // Insert Product
         $insertSql = "INSERT INTO products (farmer_id, name, category, price, stock_quantity, threshold, description, image) 
                       VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($conn, $insertSql);

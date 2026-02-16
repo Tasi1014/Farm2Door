@@ -23,7 +23,7 @@ function setFilter(filter) {
   document.querySelectorAll(".tab-btn").forEach((btn) => {
     btn.classList.toggle(
       "active",
-      btn.innerText.toLowerCase().includes(filter)
+      btn.innerText.toLowerCase().includes(filter),
     );
   });
   renderOrders();
@@ -61,15 +61,15 @@ function renderOrders() {
     const card = document.createElement("div");
     card.className = `order-card ${order.order_status.toLowerCase()}`;
 
-    let actionsHtml = "";
+    let actionsHtml = ""; // Declare and reset actionsHtml inside the loop
     if (order.order_status === "Pending") {
       actionsHtml = `
-                <button class="btn-detail" onclick="updateStatus(${order.order_id}, 'Processing')">Accept</button>
+                <button class="btn-detail" onclick="updateStatus(this, ${order.order_id}, 'Processing')">Accept</button>
                 <button class="btn-cancel" onclick="openRejectionModal(${order.order_id})">Reject</button>
             `;
     } else if (order.order_status === "Processing") {
       actionsHtml = `
-                <button class="btn-detail" onclick="updateStatus(${order.order_id}, 'Dispatched')">Mark Dispatched</button>
+                <button class="btn-detail" onclick="updateStatus(this, ${order.order_id}, 'Dispatched')">Mark Dispatched</button>
             `;
     }
 
@@ -81,8 +81,8 @@ function renderOrders() {
                     <span class="order-id">#${order.order_id}</span>
                 </div>
                 <span class="status-badge status-${order.order_status.toLowerCase()}">${
-      order.order_status
-    }</span>
+                  order.order_status
+                }</span>
             </div>
             <div class="order-body">
                 <div class="order-info-row">
@@ -97,9 +97,8 @@ function renderOrders() {
                     <strong>Farmer Total:</strong> Rs. ${order.farmer_total}
                 </div>
                 <div class="order-info-row">
-                    <strong>Payment:</strong> <span class="pay-method">${
-                      order.payment_method
-                    }</span> (${order.payment_status})
+                    <strong>Payment:</strong> <span class="pay-method">${order.payment_method}</span> 
+                    (${order.p_status || order.payment_status || "Pending"})
                 </div>
             </div>
             <div class="order-actions">
@@ -110,7 +109,14 @@ function renderOrders() {
   });
 }
 
-function updateStatus(orderId, status, reason = null) {
+function updateStatus(btn, orderId, status, reason = null) {
+  const originalText = btn ? btn.innerText : "";
+  if (btn) {
+    btn.disabled = true;
+    btn.innerText = status === "Processing" ? "Accepting..." : "Rejecting...";
+    if (status === "Dispatched") btn.innerText = "Dispatching...";
+  }
+
   fetch("../../Backend/update_farmer_order_status.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -123,6 +129,17 @@ function updateStatus(orderId, status, reason = null) {
         if (reason) closeRejectionModal();
       } else {
         alert(data.message);
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = originalText;
+        }
+      }
+    })
+    .catch((err) => {
+      console.error("Update status error:", err);
+      if (btn) {
+        btn.disabled = false;
+        btn.innerText = originalText;
       }
     });
 }
@@ -138,13 +155,13 @@ function closeRejectionModal() {
   document.getElementById("rejection-reason").value = "";
 }
 
-function submitRejection() {
+function submitRejection(btn) {
   const reason = document.getElementById("rejection-reason").value.trim();
   if (!reason) {
     alert("Please provide a reason for rejection.");
     return;
   }
-  updateStatus(activeRejectionId, "Rejected", reason);
+  updateStatus(btn, activeRejectionId, "Rejected", reason);
 }
 
 function viewDetails(orderId) {
@@ -172,7 +189,7 @@ function viewDetails(orderId) {
                                 <td>${item.quantity}</td>
                                 <td>Rs. ${item.subtotal}</td>
                             </tr>
-                        `
+                        `,
                           )
                           .join("")}
                     </tbody>
@@ -192,9 +209,7 @@ function viewDetails(orderId) {
             <div class="detail-section">
                 <h4><i class="fa-solid fa-credit-card"></i> Payment Info</h4>
                 <p><strong>Method:</strong> ${order.payment_method}</p>
-                <p><strong>Status:</strong> <span class="status-badge status-${order.payment_status.toLowerCase()}">${
-    order.payment_status
-  }</span></p>
+                <p><strong>Status:</strong> <span class="status-badge status-${(order.p_status || order.payment_status || "Pending").toString().toLowerCase()}">${order.p_status || order.payment_status || "Pending"}</span></p>
                 <p><strong>Farmer Share:</strong> Rs. ${order.farmer_total}</p>
             </div>
         </div>

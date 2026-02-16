@@ -1,40 +1,29 @@
 <?php
-// Prevent caching
-header("Cache-Control: no-cache, no-store, must-revalidate");
-header("Pragma: no-cache");
-header("Expires: 0");
-
 // Standardize Session
 session_set_cookie_params(0, '/');
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Buffer Output
-error_reporting(E_ALL);
-ini_set('display_errors', 0);
-ob_start();
-
 include 'connection.php';
 
-// Clear buffer
-ob_clean();
 header('Content-Type: application/json');
 
 $response = ['success' => false, 'message' => ''];
 
 try {
-    // 1. Check Auth
+    // 1. Check Auth (Strict Login)
     if (!isset($_SESSION['customer_id'])) {
-        $response['message'] = 'Please login to add items to cart';
-        $response['not_logged_in'] = true; // Flag for frontend
-        echo json_encode($response);
+        echo json_encode([
+            'success' => false, 
+            'not_logged_in' => true, 
+            'message' => 'Please login to add items to your cart'
+        ]);
         exit;
     }
 
     $customer_id = $_SESSION['customer_id'];
-
-    // 2. Get Input
+    //Get Input
     $input = json_decode(file_get_contents('php://input'), true);
     $product_id = isset($input['product_id']) ? intval($input['product_id']) : (isset($_POST['product_id']) ? intval($_POST['product_id']) : 0);
     $quantity = isset($input['quantity']) ? intval($input['quantity']) : (isset($_POST['quantity']) ? intval($_POST['quantity']) : 1);
@@ -43,7 +32,7 @@ try {
         throw new Exception('Invalid product ID');
     }
 
-    // 3. Logic: Check if exists
+
     // Prepare statements to prevent SQL Injection & errors
     if (!isset($conn)) {
         throw new Exception("Database connection failed");

@@ -12,7 +12,7 @@ if (!isset($_SESSION['customer_id'])) {
 $customer_id = $_SESSION['customer_id'];
 
 // Fetch orders with payment status
-$sql = "SELECT o.*, p.payment_method, p.payment_status, p.transaction_id, p.amount_paid
+$sql = "SELECT o.*, p.payment_method, COALESCE(p.payment_status, 'Pending') AS p_status, p.transaction_id, p.amount_paid
         FROM orders o
         LEFT JOIN payments p ON o.order_id = p.order_id
         WHERE o.customer_id = ?

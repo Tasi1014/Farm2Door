@@ -5,7 +5,11 @@ include 'connection.php';
 header('Content-Type: application/json');
 
 if (!isset($_SESSION['customer_id'])) {
-    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Unauthorized',
+        'not_logged_in' => true
+    ]);
     exit;
 }
 

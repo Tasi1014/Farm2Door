@@ -14,7 +14,7 @@ $farmer_id = $_SESSION['farmer_id'];
 
 // Fetch orders that contain at least one product from this farmer
 // We need order details, customer info, and total items for THIS farmer
-$sql = "SELECT DISTINCT o.*, p.payment_method, p.payment_status 
+$sql = "SELECT DISTINCT o.*, p.payment_method, COALESCE(p.payment_status, 'Pending') AS p_status 
         FROM orders o
         JOIN order_items oi ON o.order_id = oi.order_id
         JOIN payments p ON o.order_id = p.order_id

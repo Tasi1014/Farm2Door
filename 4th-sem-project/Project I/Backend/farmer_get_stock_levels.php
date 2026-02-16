@@ -13,8 +13,7 @@ if (!isset($_SESSION['farmer_id'])) {
 
 $farmer_id = $_SESSION['farmer_id'];
 
-// Fetch products and calculate dynamic threshold
-// Threshold = (Last 30 Days Sales / 30) * 7. Default to 5.
+
 $sql = "SELECT p.name, p.stock_quantity, p.threshold
         FROM products p
         WHERE p.farmer_id = ?

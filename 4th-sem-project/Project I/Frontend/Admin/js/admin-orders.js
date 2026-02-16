@@ -103,16 +103,14 @@ function renderOrders() {
             <div class="order-body">
                 <div class="order-info-row">
                     <strong>Customer:</strong> ${order.shipping_name} (${
-      order.shipping_phone
-    })
+                      order.shipping_phone
+                    })
                 </div>
                 <div class="order-info-row">
                     <strong>Total Amount:</strong> Rs. ${order.total_amount}
                 </div>
                 <div class="order-info-row">
-                    <strong>Payment:</strong> <span class="pay-method">${
-                      order.payment_method
-                    }</span> - ${order.payment_status}
+                    <strong>Payment:</strong> <span class="pay-method">${order.payment_method}</span> - ${(order.p_status || order.payment_status || "Pending").toString()}
                 </div>
             </div>
             <div class="order-actions">
@@ -176,7 +174,7 @@ function sendNotification(orderId, manualBtn = null) {
       cards.forEach((card) => {
         if (card.querySelector(".order-id")?.innerText.includes(orderId)) {
           btn = Array.from(card.querySelectorAll("button")).find((b) =>
-            b.innerText.includes("Email")
+            b.innerText.includes("Email"),
           );
         }
       });
@@ -212,7 +210,7 @@ function sendNotification(orderId, manualBtn = null) {
           return res.text().then((text) => {
             console.error("Response was not JSON. Actual response:", text);
             throw new Error(
-              "Server returned invalid JSON: " + text.substring(0, 100)
+              "Server returned invalid JSON: " + text.substring(0, 100),
             );
           });
         });
@@ -254,14 +252,14 @@ function openRefundModal(orderId) {
   info.innerHTML = `
         <div style="background: #f7f7f7; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
             <p style="margin: 0; display: flex; justify-content: space-between;"><strong>Order Amount:</strong> <span>Rs. ${total.toFixed(
-              2
+              2,
             )}</span></p>
             <p style="margin: 5px 0; color: #d32f2f; display: flex; justify-content: space-between;"><strong>Service Fee (10%):</strong> <span>- Rs. ${fee.toFixed(
-              2
+              2,
             )}</span></p>
             <hr style="border: 0; border-top: 1px solid #ddd; margin: 10px 0;">
             <p style="margin: 0; font-size: 1.1em; color: #4caf50; display: flex; justify-content: space-between;"><strong>Refund Amount:</strong> <span>Rs. ${netRefund.toFixed(
-              2
+              2,
             )}</span></p>
         </div>
         <p style="font-size: 0.85em; color: #666; margin-top: 10px;">Customer: ${
@@ -344,7 +342,7 @@ function viewDetails(orderId) {
                                 <td>${item.quantity}</td>
                                 <td>Rs. ${item.subtotal}</td>
                             </tr>
-                        `
+                        `,
                           )
                           .join("")}
                     </tbody>
@@ -363,9 +361,7 @@ function viewDetails(orderId) {
                 <h4><i class="fa-solid fa-credit-card"></i> Payment Details</h4>
                 <p><strong>Total Amount:</strong> Rs. ${order.total_amount}</p>
                 <p><strong>Method:</strong> ${order.payment_method}</p>
-                <p><strong>Status:</strong> <span class="status-badge status-${order.payment_status.toLowerCase()}">${
-    order.payment_status
-  }</span></p>
+                <p><strong>Status:</strong> <span class="status-badge status-${(order.p_status || order.payment_status || "Pending").toString().toLowerCase()}">${order.p_status || order.payment_status || "Pending"}</span></p>
             </div>
         </div>
     `;

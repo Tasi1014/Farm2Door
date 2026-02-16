@@ -75,7 +75,7 @@
       <div class="dashboard-grid">
         <!-- Chart Section -->
         <div class="chart-card">
-          <h3 class="card-title">Daily Sales Overview (Last 30 Days)</h3>
+          <h3 class="card-title">Daily Sales Overview</h3>
           <div
             id="monthly-earnings-chart"
             style="width: 100%; height: 400px"
@@ -105,12 +105,17 @@
               <span class="value" id="product">0</span>
             </div>
           </div>
-          <div class="report-selector">
-            <label for="dropdown">Report Type</label>
-            <select name="report_type" id="dropdown">
-              <option value="daily_sales">Daily Sales Overview</option>
-              <option value="stock_levels">Stock Levels Inventory</option>
-            </select>
+
+          <!-- Report Type Selector -->
+          <div class="mini-stat-card">
+            <div class="stat-icon report"></div>
+            <div class="stat-info">
+              <span class="label">REPORT TYPE</span>
+              <select id="dropdown" class="report-dropdown">
+                <option value="daily_sales">Daily Sales Overview</option>
+                <option value="stock_levels">Stock Levels</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
