@@ -228,7 +228,7 @@ function loadFinancialReport(data, start, end) {
   const desc = document.getElementById("reportDescription");
   if (desc) {
     desc.style.display = "block";
-    desc.innerText = `Financial trend from ${start} to ${end}. Includes only successful payments from consumers in the selected period; refunds are subtracted from gross paid to calculate net flow.`;
+    desc.innerText = `Financial trend from ${start} to ${end}. Includes only successful payments from consumers in the selected period; refunds are subtracted from gross paid to calculate net payments received.`;
   }
 
   // Render Line Chart (Paid vs Refunded)
@@ -430,3 +430,4 @@ function generateAdminActionableInsights(data) {
     `;
   }
 }
+ 
