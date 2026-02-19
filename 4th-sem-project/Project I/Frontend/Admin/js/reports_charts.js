@@ -74,6 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
+        console.log(data);
+
         if (type === "payments") {
           loadFinancialReport(data, start, end);
         } else {
@@ -210,18 +212,14 @@ function loadFinancialReport(data, start, end) {
   const summary = document.getElementById("financialSummary");
   if (summary) {
     summary.style.display = "grid";
-    document.getElementById(
-      "grossPaid"
-    ).innerText = `Rs. ${data.summary.total_paid.toLocaleString()}`;
-    document.getElementById(
-      "totalRefunded"
-    ).innerText = `Rs. ${data.summary.total_refunded.toLocaleString()}`;
-    document.getElementById(
-      "adminCommission"
-    ).innerText = `Rs. ${data.summary.commission.toLocaleString()}`;
-    document.getElementById(
-      "netFlow"
-    ).innerText = `Rs. ${data.summary.net_flow.toLocaleString()}`;
+    document.getElementById("grossPaid").innerText =
+      `Rs. ${data.summary.total_paid.toLocaleString()}`;
+    document.getElementById("totalRefunded").innerText =
+      `Rs. ${data.summary.total_refunded.toLocaleString()}`;
+    document.getElementById("adminCommission").innerText =
+      `Rs. ${data.summary.commission.toLocaleString()}`;
+    document.getElementById("netFlow").innerText =
+      `Rs. ${data.summary.net_flow.toLocaleString()}`;
   }
 
   // Show Description
@@ -403,8 +401,8 @@ function generateAdminActionableInsights(data) {
           <div class="insight-icon">⚠️</div>
           <div class="insight-text">
             <h4>${item.name} <small style="color:#888;">(Farmer: ${
-          item.farmer
-        })</small></h4>
+              item.farmer
+            })</small></h4>
             <p>Stock is below the manual alert level of ${item.target}kg.</p>
           </div>
         </div>
@@ -412,7 +410,7 @@ function generateAdminActionableInsights(data) {
           <span class="restock-qty">+${item.needed.toFixed(1)}kg</span>
         </div>
       </div>
-    `
+    `,
       )
       .join("");
   } else {
@@ -430,4 +428,3 @@ function generateAdminActionableInsights(data) {
     `;
   }
 }
- 

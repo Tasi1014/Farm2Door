@@ -35,6 +35,7 @@ function loadDailySalesChart() {
         console.error(data.message);
         return;
       }
+      console.log(data);
 
       Highcharts.chart("monthly-earnings-chart", {
         chart: { type: "areaspline" },

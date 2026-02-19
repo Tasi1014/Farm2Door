@@ -18,6 +18,8 @@ async function loadHubData() {
 
     const summaryData = await summaryResponse.json();
     const inventoryData = await inventoryResponse.json();
+    console.log(summaryData);
+    console.log(inventoryData);
 
     if (summaryData.success) {
       updateSummaryCards(summaryData.summary);

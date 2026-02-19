@@ -81,7 +81,7 @@ function renderOrders() {
       (order.order_status === "Cancelled" ||
         order.order_status === "Rejected") &&
       order.payment_method === "ONLINE" &&
-      order.payment_status === "Paid"
+      (order.p_status === "Paid" || order.payment_status === "Paid")
     ) {
       actionsHtml = `<button class="btn-cancel" onclick="openRefundModal(${order.order_id})">Process Refund</button>`;
     }
@@ -254,7 +254,7 @@ function openRefundModal(orderId) {
             <p style="margin: 0; display: flex; justify-content: space-between;"><strong>Order Amount:</strong> <span>Rs. ${total.toFixed(
               2,
             )}</span></p>
-            <p style="margin: 5px 0; color: #d32f2f; display: flex; justify-content: space-between;"><strong>Service Fee (10%):</strong> <span>- Rs. ${fee.toFixed(
+            <p style="margin: 5px 0; color: #d32f2f; display: flex; justify-content: space-between;"><strong>Processing Charge(10%):</strong> <span>- Rs. ${fee.toFixed(
               2,
             )}</span></p>
             <hr style="border: 0; border-top: 1px solid #ddd; margin: 10px 0;">
