@@ -103,7 +103,11 @@ document.addEventListener("DOMContentLoaded", () => {
   viewBy.addEventListener("change", fetchReport);
 });
 
+
+
 function renderChart(type, data, start, end) {
+
+  
   let chartOptions = {
     title: { text: null },
     credits: { enabled: false },
