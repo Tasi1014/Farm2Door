@@ -15,7 +15,7 @@ $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $category = isset($_GET['category']) ? trim($_GET['category']) : '';
 
 // Base query for counting (only active farmers)
-$countSql = "SELECT COUNT(*) as total FROM products p JOIN farmer_registration f ON p.farmer_id = f.farmer_id WHERE f.status = 'active'";
+$countSql = "SELECT COUNT(*) as total FROM products p JOIN farmer_registration f ON p.farmer_id = f.farmer_id WHERE f.status = 'active' AND p.is_deleted = 0";
 if (!empty($search) || !empty($category)) {
     if (!empty($search)) $countSql .= " AND p.name LIKE '%" . mysqli_real_escape_string($conn, $search) . "%'";
     if (!empty($category)) $countSql .= " AND p.category = '" . mysqli_real_escape_string($conn, $category) . "'";
@@ -27,7 +27,7 @@ $total = mysqli_fetch_assoc($countRes)['total'];
 $sql = "SELECT p.*, f.firstName, f.lastName 
         FROM products p 
         INNER JOIN farmer_registration f ON p.farmer_id = f.farmer_id 
-        WHERE f.status = 'active'";
+        WHERE f.status = 'active' AND p.is_deleted = 0";
 
 // Build WHERE clause
 $where_clauses = [];

@@ -29,7 +29,7 @@ if ($page  <= 0) $page  = 1;
 $offset = ($page - 1) * $limit;
 
 // First, count total products for this farmer
-$countSql = "SELECT COUNT(*) AS total FROM `products` WHERE farmer_id = ?";
+$countSql = "SELECT COUNT(*) AS total FROM `products` WHERE farmer_id = ? AND is_deleted = 0";
 $countStmt = mysqli_prepare($conn, $countSql);
 
 if ($countStmt) {
@@ -51,7 +51,7 @@ if ($countStmt) {
 
 // Now fetch only the current page
 $sql = "SELECT * FROM `products` 
-        WHERE farmer_id = ? 
+        WHERE farmer_id = ? AND is_deleted = 0
         ORDER BY created_at DESC
         LIMIT ? OFFSET ?";
 $stmt = mysqli_prepare($conn, $sql);

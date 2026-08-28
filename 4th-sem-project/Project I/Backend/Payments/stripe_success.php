@@ -56,13 +56,13 @@ try {
     $order_id = mysqli_insert_id($conn);
 
     // 2. Insert into order_items and update stock
-    $itemSql = "INSERT INTO order_items (order_id, product_id, farmer_id, quantity, price_per_unit, subtotal) VALUES (?, ?, ?, ?, ?, ?)";
+    $itemSql = "INSERT INTO order_items (order_id, product_id, product_name, image, farmer_id, quantity, price_per_unit, subtotal) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $itemStmt = mysqli_prepare($conn, $itemSql);
     $stockSql = "UPDATE products SET stock_quantity = stock_quantity - ? WHERE product_id = ?";
     $stockStmt = mysqli_prepare($conn, $stockSql);
 
     foreach ($pending['cart_items'] as $item) {
-        mysqli_stmt_bind_param($itemStmt, "iiiidd", $order_id, $item['product_id'], $item['farmer_id'], $item['quantity'], $item['price'], $item['subtotal']);
+        mysqli_stmt_bind_param($itemStmt, "iissiiid", $order_id, $item['product_id'], $item['name'], $item['image'], $item['farmer_id'], $item['quantity'], $item['price'], $item['subtotal']);
         mysqli_stmt_execute($itemStmt);
 
         mysqli_stmt_bind_param($stockStmt, "ii", $item['quantity'], $item['product_id']);

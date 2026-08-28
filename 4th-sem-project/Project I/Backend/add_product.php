@@ -30,6 +30,7 @@ $createTableSql = "CREATE TABLE IF NOT EXISTS `products` (
     `threshold` INT(11) DEFAULT 5,
     `description` TEXT,
     `image` VARCHAR(255) NOT NULL,
+    `is_deleted` TINYINT(1) DEFAULT 0,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`product_id`),
     FOREIGN KEY (`farmer_id`) REFERENCES `farmer_registration`(`farmer_id`) ON DELETE CASCADE
@@ -105,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Check if product with same name exists for this farmer
     if (empty($response['errors'])) {
-        $checkSql = "SELECT product_id FROM products WHERE farmer_id = ? AND name = ?";
+        $checkSql = "SELECT product_id FROM products WHERE farmer_id = ? AND name = ? AND is_deleted = 0";
         $checkStmt = mysqli_prepare($conn, $checkSql);
         mysqli_stmt_bind_param($checkStmt, "is", $farmer_id, $name);
         mysqli_stmt_execute($checkStmt);

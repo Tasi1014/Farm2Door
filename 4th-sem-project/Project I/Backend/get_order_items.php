@@ -29,11 +29,8 @@ if (!$order || $order['customer_id'] != $_SESSION['customer_id']) {
     exit;
 }
 
-// Fetch items joined with products for details
-$sql = "SELECT oi.*, p.name as product_name, p.image
-        FROM order_items oi
-        JOIN products p ON oi.product_id = p.product_id
-        WHERE oi.order_id = ?";
+// Fetch items from snapshot in order_items
+$sql = "SELECT * FROM order_items WHERE order_id = ?";
 
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "i", $order_id);

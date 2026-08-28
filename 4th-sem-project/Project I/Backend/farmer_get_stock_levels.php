@@ -16,7 +16,7 @@ $farmer_id = $_SESSION['farmer_id'];
 
 $sql = "SELECT p.name, p.stock_quantity, p.threshold
         FROM products p
-        WHERE p.farmer_id = ?
+        WHERE p.farmer_id = ? AND p.is_deleted = 0
         ORDER BY p.stock_quantity ASC";
 
 $stmt = mysqli_prepare($conn, $sql);

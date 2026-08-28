@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -70,6 +70,33 @@
       .item-info {
         flex: 1;
       }
+      .quantity-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 5px;
+      }
+      .qty-btn {
+        background: #f0f0f0;
+        border: none;
+        width: 25px;
+        height: 25px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        transition: 0.2s;
+      }
+      .qty-btn:hover {
+        background: #e0e0e0;
+      }
+      .qty-val {
+        font-weight: 600;
+        min-width: 20px;
+        text-align: center;
+      }
       .payment-option {
         border: 2px solid #ddd;
         border-radius: 8px;
@@ -126,7 +153,7 @@
           <img src="../../Images/logo.png" alt="Farm2Door Logo" />
         </div>
         <ul class="nav-links">
-          <li><a href="../Home/index.html" class="active">Home</a></li>
+          <li><a href="../Home/index.html">Home</a></li>
           <li><a href="../Product/product.html">Products</a></li>
           <li><a href="../About Us/aboutus.html">About Us</a></li>
           <li><a href="../Contact Us/contactus.html">Contact Us</a></li>

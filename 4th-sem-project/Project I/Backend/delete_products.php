@@ -27,14 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (!empty($product_id)) {
         if ($is_admin) {
-            // Admin can delete any product
-            $sql = "DELETE FROM `products` WHERE product_id = ?";
+            // Admin can delete any product (Soft delete)
+            $sql = "UPDATE `products` SET is_deleted = 1 WHERE product_id = ?";
             $stmt = mysqli_prepare($conn, $sql);
             mysqli_stmt_bind_param($stmt, "i", $product_id);
         } else {
-            // Farmer can only delete their own product
+            // Farmer can only delete their own product (Soft delete)
             $farmer_id = $_SESSION['farmer_id'];
-            $sql = "DELETE FROM `products` WHERE product_id = ? AND farmer_id = ?";
+            $sql = "UPDATE `products` SET is_deleted = 1 WHERE product_id = ? AND farmer_id = ?";
             $stmt = mysqli_prepare($conn, $sql);
             mysqli_stmt_bind_param($stmt, "ii", $product_id, $farmer_id);
         }

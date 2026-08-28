@@ -28,11 +28,9 @@ $result = mysqli_stmt_get_result($stmt);
 
 $orders = [];
 while ($order = mysqli_fetch_assoc($result)) {
-    // For each order, find the specific items belonging to this farmer
-    $itemsSql = "SELECT oi.*, pr.name as product_name, pr.image 
-                 FROM order_items oi
-                 JOIN products pr ON oi.product_id = pr.product_id
-                 WHERE oi.order_id = ? AND oi.farmer_id = ?";
+    // For each order, find the specific items belonging to this farmer (using snapshot)
+    $itemsSql = "SELECT * FROM order_items 
+                 WHERE order_id = ? AND farmer_id = ?";
     $itemsStmt = mysqli_prepare($conn, $itemsSql);
     mysqli_stmt_bind_param($itemsStmt, "ii", $order['order_id'], $farmer_id);
     mysqli_stmt_execute($itemsStmt);

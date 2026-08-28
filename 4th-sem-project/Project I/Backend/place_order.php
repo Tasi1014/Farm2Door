@@ -10,7 +10,7 @@ $response = [
 ];
 
 function fetchCartItems($conn, $customer_id) {
-    $cartSql = "SELECT c.product_id, c.quantity, p.price, p.farmer_id, p.stock_quantity, p.name
+    $cartSql = "SELECT c.product_id, c.quantity, p.price, p.farmer_id, p.stock_quantity, p.name, p.image
                 FROM cart c
                 JOIN products p ON c.product_id = p.product_id
                 WHERE c.customer_id = ?";
@@ -61,8 +61,8 @@ function insertPayment($conn, $order_id, $payment_method) {
 
 function insertOrderItemsAndUpdateStock($conn, $order_id, $cartItems) {
     $itemSql = "INSERT INTO order_items 
-                (order_id, product_id, farmer_id, quantity, price_per_unit, subtotal)
-                VALUES (?, ?, ?, ?, ?, ?)";
+                (order_id, product_id, product_name, image, farmer_id, quantity, price_per_unit, subtotal)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $itemStmt = mysqli_prepare($conn, $itemSql);
 
     $stockSql = "UPDATE products SET stock_quantity = stock_quantity - ? WHERE product_id = ?";
@@ -71,9 +71,11 @@ function insertOrderItemsAndUpdateStock($conn, $order_id, $cartItems) {
     foreach ($cartItems as $item) {
         mysqli_stmt_bind_param(
             $itemStmt,
-            "iiiidd",
+            "iissiiid",
             $order_id,
             $item['product_id'],
+            $item['name'],
+            $item['image'],
             $item['farmer_id'],
             $item['quantity'],
             $item['price'],

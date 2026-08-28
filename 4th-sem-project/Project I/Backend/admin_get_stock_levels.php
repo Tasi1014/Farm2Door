@@ -12,7 +12,7 @@ $farmer_id = $input['farmer_id'] ?? 'overall';
 
 $params = [];
 $types = "";
-$where = " WHERE 1=1 ";
+$where = " WHERE p.is_deleted = 0 ";
 
 if ($farmer_id !== 'overall') {
     $where .= " AND p.farmer_id = ? ";

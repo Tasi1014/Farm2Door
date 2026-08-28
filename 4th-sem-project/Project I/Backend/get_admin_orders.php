@@ -22,10 +22,8 @@ $orders = [];
 
 while ($order = mysqli_fetch_assoc($result)) {
     // Fetch all items and their farmer info
-    $itemsSql = "SELECT oi.*, pr.name as product_name, pr.image, 
-                        CONCAT(f.firstName, ' ', f.lastName) as farmer_name 
+    $itemsSql = "SELECT oi.*, CONCAT(f.firstName, ' ', f.lastName) as farmer_name 
                  FROM order_items oi
-                 JOIN products pr ON oi.product_id = pr.product_id
                  JOIN farmer_registration f ON oi.farmer_id = f.farmer_id
                  WHERE oi.order_id = ?";
     $itemsStmt = mysqli_prepare($conn, $itemsSql);

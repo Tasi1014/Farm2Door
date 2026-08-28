@@ -67,12 +67,16 @@ async function loadCartSummary() {
     let html = "";
     data.items.forEach((item) => {
       html += `
-                <div class="order-item">
+                <div class="order-item" data-cart-id="${item.cart_id}">
                     <div style="display:flex; align-items:center;">
                         <img src="../../Images/products/${item.image}" alt="${item.name}">
                         <div class="item-info">
                             <h4 style="margin:0;">${item.name}</h4>
-                            <small>Qty: ${item.quantity}</small>
+                            <div class="quantity-controls">
+                                <button class="qty-btn" onclick="changeQuantity(${item.cart_id}, ${item.quantity - 1})">-</button>
+                                <span class="qty-val">${item.quantity}</span>
+                                <button class="qty-btn" onclick="changeQuantity(${item.cart_id}, ${item.quantity + 1})">+</button>
+                            </div>
                         </div>
                     </div>
                     <span style="font-weight:bold;">Rs ${item.subtotal}</span>
@@ -84,6 +88,24 @@ async function loadCartSummary() {
     totalEl.textContent = `Rs ${data.total_price}`;
   } catch (err) {
     console.error("Cart Load Error:", err);
+  }
+}
+
+async function changeQuantity(cartId, newQuantity) {
+  try {
+    const res = await fetch("../../Backend/update_cart.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cart_id: cartId, quantity: newQuantity }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      loadCartSummary(); // Refresh summary
+    } else {
+      alert(data.message || "Failed to update quantity");
+    }
+  } catch (err) {
+    console.error("Update Cart Error:", err);
   }
 }
 
